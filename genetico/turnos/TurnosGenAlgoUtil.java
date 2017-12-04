@@ -32,12 +32,24 @@ public class TurnosGenAlgoUtil {
 	// Lista de profesores, mas un simbolo especial para representar un turno vacío
 	public static enum Profesor = {ANA, BONIATO, CARLA, DOMINGO, ELISA, FEDERICO, GERTRUDIS, VACIO}
 
-	private static final List<Profesor> PROFESORADO = Collections.unmodifiableList(Arrays.asList(values()));
-  	private static final int NPROFESORES = PROFESORADO.size()-1;
+	private static final List<Profesor> PROFESORADO{
+		auto tmp = Arrays.asList(Profesor.values());
+		tmp.remove(VACIO)
+		PROFESORADO = Collections.unmodifiableList(tmp);
+	} 
+
+  	private static final int NPROFESORES = PROFESORADO.size();
   	private static final Random RANDOM = new Random();
 
-  	private static final restricciones;
-  	private static final preferencias;
+  	private static final Map<Profesor, Collection<Integer>> restricciones 
+  	{
+  		restricciones.put(ANA, {1,2,3});
+  	}
+
+  	private static final Map<Profesor, Collection<Integer>> preferencias
+  	{
+  		preferencias.put(ANA, {1,2,3});
+  	}
 
 	/****************************
 	* Genetic Algorithm Functions
@@ -86,20 +98,58 @@ public class TurnosGenAlgoUtil {
 		* Calcula cuantas preferencias satisface el individuo
 		*/
 		private static int preferenciasFitness(Individual<Profesor> individual){
-
+			turnos = individual.getRepresentation();
+			int nPreferencias = 0;
+			for(int i = 0; i <= nTurnos; i++){
+				Profesor turno = turnos.get(i);
+				if(turno != VACIO && preferencias.get(turno).contains(i)){
+					nPreferencias += 1;
+				}
+			}
+			return nPreferencias;
 		}
 
 		/*
 		* Calcula cuantas restricciones viola el individuo
 		*/
 		public static int restriccionesVioladas(Individual<Profesor> individual){
-
+			turnos = individual.getRepresentation();
+			int nRestricciones = 0;
+			for(int i = 0; i <= nTurnos; i++){
+				Profesor turno = turnos.get(i);
+				if(turno != VACIO && restricciones.get(turno).contains(i)){
+					nRestricciones += 1;
+				}
+			}
+			return nRestricciones;
 		}
 
 		/*
 		* Calcula como de equilibrada es la distribucion de turnos sugerida por el individuo
 		*/
 		private static double equilibrioFitness(Individual<Profesor> individual){
+			// Realizamos una cuenta de cuantos turnos corresponden a cada profesor
+			Map<Profesor, Integer> turnosAsignados;
+			for (Profesor profe : PROFESORADO){
+				turnosAsignados.put(profe, 0);
+			}
+			int turnosTotales = 0;
+			for(Profesor turno : individual.getRepresentation()){
+				if (turno != VACIO){
+					turnosAsignados.put(turnosAsignados.get(turno) + 1);
+					turnosTotales += 1;
+				}
+			}
+
+			// Calculamos la diferencia absoluta de cada 
+			double media = turnosTotales / NPROFESORES;
+			double desviacion = 0;
+
+			for(Profesor profe : PROFESORADO){
+				desviacion += abs(turnosAsignados.get(profe) - media);
+			}
+
+			return desviacion;
 
 		}
 

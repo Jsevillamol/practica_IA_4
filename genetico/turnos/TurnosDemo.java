@@ -55,15 +55,17 @@ public class TurnosDemo {
 			}
 
 			GeneticAlgorithm<Profesor> ga = new GeneticAlgorithm<Profesor>(boardSize,
-					TurnosGenAlgoUtil.getFiniteAlphabetForBoardOfSize(boardSize), 0.15);
+					TurnosGenAlgoUtil.getFiniteAlphabet()), 0.15);
 
 			// Run for a set amount of time
 			Individual<Profesor> bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 1000L);
 
 			System.out.println("Max Time (1 second) Best Individual=\n"
-					+ NQueensGenAlgoUtil.getBoardForIndividual(bestIndividual));
-			System.out.println("Board Size      = " + boardSize);
-			System.out.println("# Board Layouts = " + (new BigDecimal(boardSize)).pow(boardSize));
+					+ bestIndividual);
+			System.out.println("nTurnos      = " + TurnosGenAlgoUtil.nTurnos);
+			System.out.println("nExamenes      = " + TurnosGenAlgoUtil.nExamenes);
+			System.out.println("# Possible individuals = " + (
+				new BigDecimal(TurnosGenAlgoUtil.nTurnos)).pow(TurnosGenAlgoUtil.NPROFESORES + 1));
 			System.out.println("Fitness         = " + fitnessFunction.apply(bestIndividual));
 			System.out.println("Is Goal         = " + goalTest.isGoalState(bestIndividual));
 			System.out.println("Population Size = " + ga.getPopulationSize());
@@ -75,9 +77,11 @@ public class TurnosDemo {
 
 			System.out.println("");
 			System.out
-					.println("Goal Test Best Individual=\n" + NQueensGenAlgoUtil.getBoardForIndividual(bestIndividual));
-			System.out.println("Board Size      = " + boardSize);
-			System.out.println("# Board Layouts = " + (new BigDecimal(boardSize)).pow(boardSize));
+					.println("Goal Test Best Individual=\n" + bestIndividual);
+			System.out.println("nTurnos      = " + TurnosGenAlgoUtil.nTurnos);
+			System.out.println("nExamenes      = " + TurnosGenAlgoUtil.nExamenes);
+			System.out.println("# Possible individuals = " + (
+				new BigDecimal(TurnosGenAlgoUtil.nTurnos)).pow(TurnosGenAlgoUtil.NPROFESORES + 1));
 			System.out.println("Fitness         = " + fitnessFunction.apply(bestIndividual));
 			System.out.println("Is Goal         = " + goalTest.isGoalState(bestIndividual));
 			System.out.println("Population Size = " + ga.getPopulationSize());
@@ -86,23 +90,6 @@ public class TurnosDemo {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	private static void printInstrumentation(Properties properties) {
-		Iterator<Object> keys = properties.keySet().iterator();
-		while (keys.hasNext()) {
-			String key = (String) keys.next();
-			String property = properties.getProperty(key);
-			System.out.println(key + " : " + property);
-		}
-
-	}
-
-	private static void printActions(List<Action> actions) {
-		for (int i = 0; i < actions.size(); i++) {
-			String action = actions.get(i).toString();
-			System.out.println(action);
 		}
 	}
 
