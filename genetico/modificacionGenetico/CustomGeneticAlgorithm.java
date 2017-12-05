@@ -52,7 +52,7 @@ import aima.core.util.Util;
  *            individuals in the population (this is to provide flexibility in
  *            terms of how a problem can be encoded).
  */
-public class GeneticAlgorithm<A> {
+public class CustomGeneticAlgorithm<A> {
 	protected static final String POPULATION_SIZE = "populationSize";
 	protected static final String ITERATIONS = "iterations";
 	protected static final String TIME_IN_MILLISECONDS = "timeInMSec";
@@ -62,15 +62,21 @@ public class GeneticAlgorithm<A> {
 	protected int individualLength;
 	protected List<A> finiteAlphabet;
 	protected double mutationProbability;
+	protected double crossProbability = 1.0; // Probability of creating a crossed baby for next generation instead of just passing a non-crossed individual
 	
+	protected boolean siblingsStrategy = false;
+	protected boolean destructiveStrategy = true;
+
+	protected boolean twoPointCross = false;
+
 	protected Random random;
 	private List<ProgressTracer<A>> progressTracers = new ArrayList<ProgressTracer<A>>();
 
-	public GeneticAlgorithm(int individualLength, Collection<A> finiteAlphabet, double mutationProbability) {
+	public CustomGeneticAlgorithm(int individualLength, Collection<A> finiteAlphabet, double mutationProbability) {
 		this(individualLength, finiteAlphabet, mutationProbability, new Random());
 	}
 
-	public GeneticAlgorithm(int individualLength, Collection<A> finiteAlphabet, double mutationProbability,
+	public CustomGeneticAlgorithm(int individualLength, Collection<A> finiteAlphabet, double mutationProbability,
 			Random random) {
 		this.individualLength = individualLength;
 		this.finiteAlphabet = new ArrayList<A>(finiteAlphabet);
@@ -237,23 +243,59 @@ public class GeneticAlgorithm<A> {
 	protected List<Individual<A>> nextGeneration(List<Individual<A>> population, FitnessFunction<A> fitnessFn) {
 		// new_population <- empty set
 		List<Individual<A>> newPopulation = new ArrayList<Individual<A>>(population.size());
-		// for i = 1 to SIZE(population) do
-		for (int i = 0; i < population.size(); i++) {
-			// x <- RANDOM-SELECTION(population, FITNESS-FN)
-			Individual<A> x = randomSelection(population, fitnessFn);
-			// y <- RANDOM-SELECTION(population, FITNESS-FN)
-			Individual<A> y = randomSelection(population, fitnessFn);
-			// child <- REPRODUCE(x, y)
-			Individual<A> child = reproduce(x, y);
-			// if (small random probability) then child <- MUTATE(child)
-			if (random.nextDouble() <= mutationProbability) {
-				child = mutate(child);
+		
+		// Generate children
+		while (newPopulation.size() < population.size()){
+
+			if(random.nextDouble() <= crossProbability){
+				// Perform a cross
+
+				List<Individual<A>> children = ArrayList<>();
+
+				// x <- RANDOM-SELECTION(population, FITNESS-FN)
+				Individual<A> x = randomSelection(population, fitnessFn);
+				// y <- RANDOM-SELECTION(population, FITNESS-FN)
+				Individual<A> y = randomSelection(population, fitnessFn);
+
+				// children <- REPRODUCE(x, y)
+				children = reproduce(x, y);
+
+				if(!destructiveStrategy){
+					// Between children and parents, selects the one with greatest fitness
+					children.add(x);
+					children.add(y);
+
+					Collections.sort(
+						children, 
+						(i1,i2)->fitnessFn.apply(i1) < fitnessFn.apply(i2)
+					);
+
+					children.remove(children.size()-1);
+					children.remove(children.size()-1);
+				}
+
+				for(int i = 0; i < children.size() && newPopulation.size() < population.size(); i++){
+					auto child = children.get(i);
+					child = maybeMutate(child);
+					newPopulation.add(child);
+				}
+
+			} else { // Dont cross
+				Individual<A> child = randomSelection(population, fitnessFn);
+				child = maybeMutate(child);
+				newPopulation.add(child);
 			}
-			// add child to new_population
-			newPopulation.add(child);
+			
 		}
-		notifyProgressTracers(getIterations(), population);
-		return newPopulation;
+	}
+
+	protected Individual<A> maybeMutate(Individual<A> child){
+		// if (small random probability) then child <- MUTATE(child)
+		if (random.nextDouble() <= mutationProbability) {
+			child = mutate(child);
+		}
+
+		return child;
 	}
 
 	// RANDOM-SELECTION(population, FITNESS-FN)
@@ -285,20 +327,54 @@ public class GeneticAlgorithm<A> {
 		return selected;
 	}
 
-	// function REPRODUCE(x, y) returns an individual
+
+	// function REPRODUCE(x, y) returns a list of individuals
 	// inputs: x, y, parent individuals
-	protected Individual<A> reproduce(Individual<A> x, Individual<A> y) {
+	protected List<Individual<A>> reproduce(Individual<A> x, Individual<A> y) {
+		
+		List<Individual<A>> children = new ArrayList<>();
+
 		// n <- LENGTH(x);
 		// Note: this is = this.individualLength
 		// c <- random number from 1 to n
 		int c = randomOffset(individualLength);
+
+		if(twoPointCross){
+			int c2 = c + randomOffset(individualLength - c);
+		}
+
 		// return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c+1, n))
 		List<A> childRepresentation = new ArrayList<A>();
-		childRepresentation.addAll(x.getRepresentation().subList(0, c));
-		childRepresentation.addAll(y.getRepresentation().subList(c, individualLength));
+
+		if(!twoPointCross){
+			childRepresentation.addAll(x.getRepresentation().subList(0, c));
+			childRepresentation.addAll(y.getRepresentation().subList(c, individualLength));
+		} else {
+			childRepresentation.addAll(x.getRepresentation().subList(0, c));
+			childRepresentation.addAll(y.getRepresentation().subList(c, c2));
+			childRepresentation.addAll(x.getRepresentation().subList(c2, individualLength));
+		}
 
 		Individual<A> child = new Individual<A>(childRepresentation);
-		return child;
+		children.add(child);
+
+		if(siblingsStrategy){
+			List<A> child2Representation = new ArrayList<A>();
+
+			if(!twoPointCross){
+				child2Representation.addAll(y.getRepresentation().subList(0, c));
+				child2Representation.addAll(x.getRepresentation().subList(c, individualLength));
+			} else {
+				child2Representation.addAll(y.getRepresentation().subList(0, c));
+				child2Representation.addAll(x.getRepresentation().subList(c, c2));
+				child2Representation.addAll(y.getRepresentation().subList(c2, individualLength));
+			}
+
+			Individual<A> child2 = new Individual<A>(child2Representation);
+			children.add(child2);
+		}
+
+		return children;
 	}
 
 	protected Individual<A> mutate(Individual<A> child) {
