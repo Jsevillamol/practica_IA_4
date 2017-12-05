@@ -7,29 +7,10 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-import aima.core.agent.Action;
-import aima.core.environment.nqueens.AttackingPairsHeuristic;
-import aima.core.environment.nqueens.NQueensBoard;
-import aima.core.environment.nqueens.NQueensBoard.Config;
-import aima.core.environment.nqueens.NQueensFunctionFactory;
-import aima.core.environment.nqueens.NQueensGenAlgoUtil;
-import aima.core.environment.nqueens.NQueensGoalTest;
-import aima.core.search.framework.SearchAgent;
-import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.GoalTest;
-import aima.core.search.framework.problem.Problem;
-import aima.core.search.framework.qsearch.GraphSearch;
-import aima.core.search.framework.qsearch.TreeSearch;
 import aima.core.search.local.FitnessFunction;
 import aima.core.search.local.GeneticAlgorithm;
-import aima.core.search.local.HillClimbingSearch;
 import aima.core.search.local.Individual;
-import aima.core.search.local.Scheduler;
-import aima.core.search.local.SimulatedAnnealingSearch;
-import aima.core.search.uninformed.BreadthFirstSearch;
-import aima.core.search.uninformed.DepthFirstSearch;
-import aima.core.search.uninformed.DepthLimitedSearch;
-import aima.core.search.uninformed.IterativeDeepeningSearch;
 
 /**
  * @author Jaime Sevilla

@@ -155,10 +155,23 @@ public class TurnosGenAlgoUtil {
 
 	}
 
+	public static class int contarTurnosNoVacios(Individual<Profesor> individuo){
+		int turnosTotales = 0;
+			for(Profesor turno : individual.getRepresentation()){
+				if (turno != VACIO){
+					turnosTotales += 1;
+				}
+			}
+		return turnosTotales;
+	}
+
 	public static class TurnosGenAlgoGoalTest implements GoalTest {
 
 		public boolean isGoalState(Object state) {
-			return TurnosFitnessFunction.restriccionesVioladas((Individual<Profesor>) state)) == 0;
+			Individual<Profesor> individuo = (Individual<Profesor>) state
+			boolean restriccionesRespetadas = TurnosFitnessFunction.restriccionesVioladas(individuo)) == 0;
+			boolean examenesCubiertos = contarTurnosNoVacios(individuo) == nExamenes;
+			return restriccionesRespetadas && examenesCubiertos;
 		}
 	}
 
