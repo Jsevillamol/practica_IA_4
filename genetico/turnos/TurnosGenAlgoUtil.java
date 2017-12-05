@@ -1,6 +1,7 @@
 package genetico.turnos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Collection;
 import java.util.List;
 import java.util.Random;
@@ -30,24 +31,30 @@ public class TurnosGenAlgoUtil {
 	private static final int nTurnos = 16;
 
 	// Lista de profesores, mas un simbolo especial para representar un turno vacío
-	public static enum Profesor = {ANA, BONIATO, CARLA, DOMINGO, ELISA, FEDERICO, GERTRUDIS, VACIO}
+	public static enum Profesor {ANA, BONIATO, CARLA, DOMINGO, ELISA, FEDERICO, GERTRUDIS, VACIO}
 
-	private static final List<Profesor> PROFESORADO{
+	private static final List<Profesor> PROFESORADO;
+
+	static {
 		auto tmp = Arrays.asList(Profesor.values());
-		tmp.remove(VACIO)
+		tmp.remove(VACIO);
 		PROFESORADO = Collections.unmodifiableList(tmp);
 	} 
 
   	private static final int NPROFESORES = PROFESORADO.size();
   	private static final Random RANDOM = new Random();
 
-  	private static final Map<Profesor, Collection<Integer>> restricciones 
+  	private static final Map<Profesor, Collection<Integer>> restricciones;
+  	static
   	{
+  		restricciones = HashMap<>();
   		restricciones.put(ANA, {1,2,3});
   	}
 
-  	private static final Map<Profesor, Collection<Integer>> preferencias
+  	private static final Map<Profesor, Collection<Integer>> preferencias;
+  	static
   	{
+  		preferencias = HashMap<>();
   		preferencias.put(ANA, {1,2,3});
   	}
 
@@ -155,7 +162,7 @@ public class TurnosGenAlgoUtil {
 
 	}
 
-	public static class int contarTurnosNoVacios(Individual<Profesor> individuo){
+	public static int contarTurnosNoVacios(Individual<Profesor> individuo){
 		int turnosTotales = 0;
 			for(Profesor turno : individual.getRepresentation()){
 				if (turno != VACIO){
@@ -168,8 +175,8 @@ public class TurnosGenAlgoUtil {
 	public static class TurnosGenAlgoGoalTest implements GoalTest {
 
 		public boolean isGoalState(Object state) {
-			Individual<Profesor> individuo = (Individual<Profesor>) state
-			boolean restriccionesRespetadas = TurnosFitnessFunction.restriccionesVioladas(individuo)) == 0;
+			Individual<Profesor> individuo = (Individual<Profesor>) state;
+			boolean restriccionesRespetadas = TurnosFitnessFunction.restriccionesVioladas(individuo) == 0;
 			boolean examenesCubiertos = contarTurnosNoVacios(individuo) == nExamenes;
 			return restriccionesRespetadas && examenesCubiertos;
 		}
@@ -192,18 +199,19 @@ public class TurnosGenAlgoUtil {
 	* Tomado de https://stackoverflow.com/a/29868630/4841832
 	*/
 	private static int[] getRandomSelection (int k, int n) {
-    if (k > n) throw new IllegalArgumentException(
-        "Cannot choose " + k + " elements out of " + n + "."
-    );
+	    if (k > n) throw new IllegalArgumentException(
+	        "Cannot choose " + k + " elements out of " + n + "."
+	    );
 
-    HashMap<Integer, Integer> hash = new HashMap<Integer, Integer>(2*k);
-    int[] output = new int[k];
+	    HashMap<Integer, Integer> hash = new HashMap<Integer, Integer>(2*k);
+	    int[] output = new int[k];
 
-    for (int i = 0; i < k; i++) {
-        int j = i + RANDOM.nextInt(n - i);
-        output[i] = (hash.containsKey(j) ? hash.remove(j) : j);
-        if (j > i) hash.put(j, (hash.containsKey(i) ? hash.remove(i) : i));
-    }
-    return output;
-}
+	    for (int i = 0; i < k; i++) {
+	        int j = i + RANDOM.nextInt(n - i);
+	        output[i] = (hash.containsKey(j) ? hash.remove(j) : j);
+	        if (j > i) hash.put(j, (hash.containsKey(i) ? hash.remove(i) : i));
+	    }
+
+	    return output;
+	}
 }

@@ -35,8 +35,10 @@ public class TurnosDemo {
 				population.add(TurnosGenAlgoUtil.generateRandomIndividual(boardSize));
 			}
 
-			GeneticAlgorithm<Profesor> ga = new GeneticAlgorithm<Profesor>(boardSize,
-					TurnosGenAlgoUtil.getFiniteAlphabet()), 0.15);
+			GeneticAlgorithm<Profesor> ga = new GeneticAlgorithm<Profesor>(
+													boardSize,
+													TurnosGenAlgoUtil.getFiniteAlphabet(), 
+													0.15);
 
 			// Run for a set amount of time
 			Individual<Profesor> bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 1000L);
