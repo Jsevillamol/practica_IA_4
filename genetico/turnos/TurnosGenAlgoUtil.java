@@ -34,7 +34,6 @@ public class TurnosGenAlgoUtil {
 	public static enum Profesor {ANA, BONIATO, CARLA, DOMINGO, ELISA, FEDERICO, GERTRUDIS, VACIO}
 
 	private static final List<Profesor> PROFESORADO;
-
 	static {
 		auto tmp = Arrays.asList(Profesor.values());
 		tmp.remove(VACIO);

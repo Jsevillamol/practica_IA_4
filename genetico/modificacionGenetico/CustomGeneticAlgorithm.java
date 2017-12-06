@@ -62,12 +62,15 @@ public class CustomGeneticAlgorithm<A> {
 	protected int individualLength;
 	protected List<A> finiteAlphabet;
 	protected double mutationProbability;
-	protected double crossProbability = 1.0; // Probability of creating a crossed baby for next generation instead of just passing a non-crossed individual
-	
-	protected boolean siblingsStrategy = false;
-	protected boolean destructiveStrategy = true;
 
-	protected boolean twoPointCross = false;
+	// Parte obligatoria
+	protected double crossProbability = 1.0; // Probability of creating a crossed baby for next generation instead of just passing a non-crossed individual
+	protected boolean siblingsStrategy = false; // Create two children per cross
+	protected boolean destructiveStrategy = true; // if false, pass highest fitness indiv between parents and children in a cross
+
+	// Parte opcional
+	protected boolean twoPointCross = false; // In a cross, cut the genome in two points to cross it
+	protected boolean alleleExchangeMutation = false; // if false, we use allele random substitution instead
 
 	protected Random random;
 	private List<ProgressTracer<A>> progressTracers = new ArrayList<ProgressTracer<A>>();
@@ -378,12 +381,26 @@ public class CustomGeneticAlgorithm<A> {
 	}
 
 	protected Individual<A> mutate(Individual<A> child) {
-		int mutateOffset = randomOffset(individualLength);
-		int alphaOffset = randomOffset(finiteAlphabet.size());
 
 		List<A> mutatedRepresentation = new ArrayList<A>(child.getRepresentation());
 
-		mutatedRepresentation.set(mutateOffset, finiteAlphabet.get(alphaOffset));
+		if(!alleleExchangeMutation){
+			// Random replacement
+			int mutateOffset = randomOffset(individualLength);
+			int alphaOffset = randomOffset(finiteAlphabet.size());
+			mutatedRepresentation.set(mutateOffset, finiteAlphabet.get(alphaOffset));
+		} else {
+			// Alelo exchange
+			int alleleIndex1 = randomOffset(individualLength);
+			int alleleIndex2 = randomOffset(individualLenght);
+
+			A allele1 = mutatedRepresentation.get(alleleIndex1);
+			A allele2 = mutatedRepresentation.get(alleleIndex1);
+
+			mutatedRepresentation.put(alleleIndex1, allele2);
+			mutatedRepresentation.put(alleleIndex2, allele1);
+
+		}
 
 		Individual<A> mutatedChild = new Individual<A>(mutatedRepresentation);
 
