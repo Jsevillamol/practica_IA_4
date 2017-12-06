@@ -174,6 +174,13 @@ public class TurnosGenAlgoUtil {
 		}
 	}
 
+	/*
+	 * Loads the input data from a txt file
+	 */
+	public void loadInput(String path){
+
+	}
+
 
 	/*
 	* Devuelve una selección aleatoria uniforme de k números menores o iguales que n
