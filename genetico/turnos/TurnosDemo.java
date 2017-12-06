@@ -27,21 +27,21 @@ public class TurnosDemo {
 	public static void GeneticAlgorithmSearchDemo() {
 		System.out.println("\nTurnos Demo GeneticAlgorithm  -->");
 		try {
-			FitnessFunction<Profesor> fitnessFunction = TurnosGenAlgoUtil.getFitnessFunction();
+			FitnessFunction<String> fitnessFunction = TurnosGenAlgoUtil.getFitnessFunction();
 			GoalTest goalTest = TurnosGenAlgoUtil.getGoalTest();
 			// Generate an initial population
-			Set<Individual<Profesor>> population = new HashSet<Individual<Profesor>>();
+			Set<Individual<String>> population = new HashSet<Individual<String>>();
 			for (int i = 0; i < 50; i++) {
 				population.add(TurnosGenAlgoUtil.generateRandomIndividual(boardSize));
 			}
 
-			GeneticAlgorithm<Profesor> ga = new GeneticAlgorithm<Profesor>(
+			GeneticAlgorithm<String> ga = new GeneticAlgorithm<String>(
 													boardSize,
 													TurnosGenAlgoUtil.getFiniteAlphabet(), 
 													0.15);
 
 			// Run for a set amount of time
-			Individual<Profesor> bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 1000L);
+			Individual<String> bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 1000L);
 
 			System.out.println("Max Time (1 second) Best Individual=\n"
 					+ bestIndividual);

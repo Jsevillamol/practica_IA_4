@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import aima.core.search.framework.problem.GoalTest;
@@ -27,41 +28,33 @@ public class TurnosGenAlgoUtil {
 	/**************
     * Problem data
 	*******************/
-	private static final int nExamenes = 8;
-	private static final int nTurnos = 16;
+	public static final int nExamenes = 8;
+	public static final int nTurnos = 16;
 
-	// Lista de profesores, mas un simbolo especial para representar un turno vacío
-	public static enum Profesor {ANA, BONIATO, CARLA, DOMINGO, ELISA, FEDERICO, GERTRUDIS, VACIO}
+	// Lista de profesores, mas un simbolo especial al final para representar el turno vacío
+	public static final List<String> profesorado  = {"ANA", "BONIATO", "CARLA", "DOMINGO", "ELISA", "FEDERICO", "GERTRUDIS", "VACIO"};
 
-	private static final List<Profesor> PROFESORADO;
-	static {
-		auto tmp = Arrays.asList(Profesor.values());
-		tmp.remove(VACIO);
-		PROFESORADO = Collections.unmodifiableList(tmp);
-	} 
+  	public static final int nProfesores = profesorado.size();
+  	public static final Random RANDOM = new Random();
 
-  	private static final int NPROFESORES = PROFESORADO.size();
-  	private static final Random RANDOM = new Random();
-
-  	private static final Map<Profesor, Collection<Integer>> restricciones;
+  	public static final Map<String, Collection<Integer>> restricciones = new HashMap<>();
   	static
   	{
-  		restricciones = HashMap<>();
-  		restricciones.put(ANA, {1,2,3});
+  	  	restricciones.put("ANA", asList(1, 2, 3));
   	}
 
-  	private static final Map<Profesor, Collection<Integer>> preferencias;
+  	public static final Map<String, Collection<Integer>> preferencias = new HashMap<>();
   	static
   	{
-  		preferencias = HashMap<>();
-  		preferencias.put(ANA, {1,2,3});
+
+  		preferencias.put("ANA", asList(1,2,3));
   	}
 
 	/****************************
 	* Genetic Algorithm Functions
 	*****************************/
 
-	public static FitnessFunction<Profesor> getFitnessFunction() {
+	public static FitnessFunction<String> getFitnessFunction() {
 		return new TurnosFitnessFunction();
 	}
 	
@@ -70,31 +63,31 @@ public class TurnosGenAlgoUtil {
 	}
 	
 
-	public static Individual<Profesor> generateRandomIndividual(int boardSize) {
-		List<Profesor> individualRepresentation = new ArrayList<Profesor>();
+	public static Individual<String> generateRandomIndividual(int boardSize) {
+		List<String> individualRepresentation = new ArrayList<String>();
 
 		// Inicializamos la representacion con todo turnos vacios
 		for (int i = 0; i < nTurnos; i++) {
-			individualRepresentation.add(Profesor.VACIO);
+			individualRepresentation.add("VACIO");
 		}
 		
 		// Seleccionamos aleatoriamente nExamenes turnos y los asignamos a profesores aleatorios
 		for (int i : getRandomSelection(nExamenes, nTurnos)){
-			int randomIndex = RANDOM.nextInt(NPROFESORES);
-			individualRepresentation.set(i, PROFESORADO.get(randomIndex));
+			int randomIndex = RANDOM.nextInt(nProfesores);
+			individualRepresentation.set(i, profesorado.get(randomIndex));
 		}
 
-		Individual<Profesor> individual = new Individual<Profesor>(individualRepresentation);
+		Individual<String> individual = new Individual<String>(individualRepresentation);
 		return individual;
 	}
 
-	public static Collection<Profesor> getFiniteAlphabet()) {
-		return Profesor.values();
+	public static Collection<String> getFiniteAlphabet() {
+		return profesorado;
 	}
 	
-	public static class TurnosFitnessFunction implements FitnessFunction<Profesor> {
+	public static class TurnosFitnessFunction implements FitnessFunction<String> {
 
-		public double apply(Individual<Profesor> individual) {
+		public double apply(Individual<String> individual) {
 			double fitness = 0;
 			fitness = preferenciasFitness(individual) - restriccionesVioladas(individual) + equilibrioFitness(individual);
 			return fitness;
@@ -103,12 +96,12 @@ public class TurnosGenAlgoUtil {
 		/*
 		* Calcula cuantas preferencias satisface el individuo
 		*/
-		private static int preferenciasFitness(Individual<Profesor> individual){
+		private static int preferenciasFitness(Individual<String> individual){
 			turnos = individual.getRepresentation();
 			int nPreferencias = 0;
 			for(int i = 0; i <= nTurnos; i++){
-				Profesor turno = turnos.get(i);
-				if(turno != VACIO && preferencias.get(turno).contains(i)){
+				String turno = turnos.get(i);
+				if(turno != "VACIO" && preferencias.get(turno).contains(i)){
 					nPreferencias += 1;
 				}
 			}
@@ -118,12 +111,12 @@ public class TurnosGenAlgoUtil {
 		/*
 		* Calcula cuantas restricciones viola el individuo
 		*/
-		public static int restriccionesVioladas(Individual<Profesor> individual){
+		public static int restriccionesVioladas(Individual<String> individual){
 			turnos = individual.getRepresentation();
 			int nRestricciones = 0;
 			for(int i = 0; i <= nTurnos; i++){
-				Profesor turno = turnos.get(i);
-				if(turno != VACIO && restricciones.get(turno).contains(i)){
+				String turno = turnos.get(i);
+				if(turno != "VACIO" && restricciones.get(turno).contains(i)){
 					nRestricciones += 1;
 				}
 			}
@@ -133,26 +126,26 @@ public class TurnosGenAlgoUtil {
 		/*
 		* Calcula como de equilibrada es la distribucion de turnos sugerida por el individuo
 		*/
-		private static double equilibrioFitness(Individual<Profesor> individual){
+		private static double equilibrioFitness(Individual<String> individual){
 			// Realizamos una cuenta de cuantos turnos corresponden a cada profesor
-			Map<Profesor, Integer> turnosAsignados;
-			for (Profesor profe : PROFESORADO){
-				turnosAsignados.put(profe, 0);
+			Map<String, Integer> turnosAsignados;
+			for (String profe : profesorado){
+				if(profe != "VACIO") turnosAsignados.put(profe, 0);
 			}
 			int turnosTotales = 0;
-			for(Profesor turno : individual.getRepresentation()){
-				if (turno != VACIO){
+			for(String turno : individual.getRepresentation()){
+				if (turno != "VACIO"){
 					turnosAsignados.put(turnosAsignados.get(turno) + 1);
 					turnosTotales += 1;
 				}
 			}
 
 			// Calculamos la diferencia absoluta de cada 
-			double media = turnosTotales / NPROFESORES;
+			double media = turnosTotales / nProfesores;
 			double desviacion = 0;
 
-			for(Profesor profe : PROFESORADO){
-				desviacion += abs(turnosAsignados.get(profe) - media);
+			for(String profe : profesorado){
+				if(profe != "VACIO") desviacion += abs(turnosAsignados.get(profe) - media);
 			}
 
 			return desviacion;
@@ -161,10 +154,10 @@ public class TurnosGenAlgoUtil {
 
 	}
 
-	public static int contarTurnosNoVacios(Individual<Profesor> individuo){
+	public static int contarTurnosNoVacios(Individual<String> individuo){
 		int turnosTotales = 0;
-			for(Profesor turno : individual.getRepresentation()){
-				if (turno != VACIO){
+			for(String turno : individuo.getRepresentation()){
+				if (turno != "VACIO"){
 					turnosTotales += 1;
 				}
 			}
@@ -174,22 +167,11 @@ public class TurnosGenAlgoUtil {
 	public static class TurnosGenAlgoGoalTest implements GoalTest {
 
 		public boolean isGoalState(Object state) {
-			Individual<Profesor> individuo = (Individual<Profesor>) state;
+			Individual<String> individuo = (Individual<String>) state;
 			boolean restriccionesRespetadas = TurnosFitnessFunction.restriccionesVioladas(individuo) == 0;
 			boolean examenesCubiertos = contarTurnosNoVacios(individuo) == nExamenes;
 			return restriccionesRespetadas && examenesCubiertos;
 		}
-	}
-
-	public static NQueensBoard getBoardForIndividual(Individual<Integer> individual) {
-		int boardSize = individual.length();
-		NQueensBoard board = new NQueensBoard(boardSize);
-		for (int i = 0; i < boardSize; i++) {
-			int pos = individual.getRepresentation().get(i);
-			board.addQueenAt(new XYLocation(i, pos));
-		}
-
-		return board;
 	}
 
 
