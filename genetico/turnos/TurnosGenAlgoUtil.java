@@ -87,14 +87,19 @@ public class TurnosGenAlgoUtil {
 	
 	public static class TurnosFitnessFunction implements FitnessFunction<String> {
 
+		static private boolean preferenciasOrdenadas = false; // si es true, las preferencias con índices más bajos añaden más utilidad
+		static private boolean turnosConsecutivos = false; // if true, la asignacion de turnos consecutivos da mas fitness
+
 		public double apply(Individual<String> individual) {
 			double fitness = 0;
 			fitness = preferenciasFitness(individual) - restriccionesVioladas(individual) + equilibrioFitness(individual);
+			if(turnosConsecutivos) fitness += turnosConsecutivosAsignados(individual);
 			return fitness;
 		}
 
 		/*
 		* Calcula cuantas preferencias satisface el individuo
+		* Si preferenciasOrdenadas = true, entonces da más importancia a las preferencias con indices mas bajos de cada profesor
 		*/
 		private static int preferenciasFitness(Individual<String> individual){
 			turnos = individual.getRepresentation();
@@ -102,7 +107,11 @@ public class TurnosGenAlgoUtil {
 			for(int i = 0; i <= nTurnos; i++){
 				String turno = turnos.get(i);
 				if(turno != "VACIO" && preferencias.get(turno).contains(i)){
-					nPreferencias += 1;
+					if(! preferenciasOrdenadas) nPreferencias += 1;
+					else {
+						nPreferencias += nTurnos - preferencias.get(turno).indexOf(i);
+					}
+					
 				}
 			}
 			return nPreferencias;
@@ -150,6 +159,21 @@ public class TurnosGenAlgoUtil {
 
 			return desviacion;
 
+		}
+
+		/*
+		 * Calcula los turnos consecutivos
+		 */
+		public static int turnosConsecutivosAsignados(Individual<String> individual){
+			turnos = individual.getRepresentation();
+			int nRachas = 0;
+			String current = "VACIO";
+			for(int i = 0; i <= nTurnos; i++){
+				String turno = turnos.get(i);
+				if(turno == current) nRachas += 1;
+				else current = turno;
+			}
+			return nRachas;
 		}
 
 	}
