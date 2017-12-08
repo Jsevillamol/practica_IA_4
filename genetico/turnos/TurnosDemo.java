@@ -32,11 +32,11 @@ public class TurnosDemo {
 			// Generate an initial population
 			Set<Individual<String>> population = new HashSet<Individual<String>>();
 			for (int i = 0; i < 50; i++) {
-				population.add(TurnosGenAlgoUtil.generateRandomIndividual(boardSize));
+				population.add(TurnosGenAlgoUtil.generateRandomIndividual());
 			}
 
 			GeneticAlgorithm<String> ga = new GeneticAlgorithm<String>(
-													boardSize,
+													TurnosGenAlgoUtil.nTurnos,
 													TurnosGenAlgoUtil.getFiniteAlphabet(), 
 													0.15);
 
@@ -48,7 +48,7 @@ public class TurnosDemo {
 			System.out.println("nTurnos      = " + TurnosGenAlgoUtil.nTurnos);
 			System.out.println("nExamenes      = " + TurnosGenAlgoUtil.nExamenes);
 			System.out.println("# Possible individuals = " + (
-				new BigDecimal(TurnosGenAlgoUtil.nTurnos)).pow(TurnosGenAlgoUtil.NPROFESORES + 1));
+				new BigDecimal(TurnosGenAlgoUtil.nTurnos)).pow(TurnosGenAlgoUtil.nProfesores));
 			System.out.println("Fitness         = " + fitnessFunction.apply(bestIndividual));
 			System.out.println("Is Goal         = " + goalTest.isGoalState(bestIndividual));
 			System.out.println("Population Size = " + ga.getPopulationSize());
@@ -64,7 +64,7 @@ public class TurnosDemo {
 			System.out.println("nTurnos      = " + TurnosGenAlgoUtil.nTurnos);
 			System.out.println("nExamenes      = " + TurnosGenAlgoUtil.nExamenes);
 			System.out.println("# Possible individuals = " + (
-				new BigDecimal(TurnosGenAlgoUtil.nTurnos)).pow(TurnosGenAlgoUtil.NPROFESORES + 1));
+				new BigDecimal(TurnosGenAlgoUtil.nTurnos)).pow(TurnosGenAlgoUtil.nProfesores));
 			System.out.println("Fitness         = " + fitnessFunction.apply(bestIndividual));
 			System.out.println("Is Goal         = " + goalTest.isGoalState(bestIndividual));
 			System.out.println("Population Size = " + ga.getPopulationSize());

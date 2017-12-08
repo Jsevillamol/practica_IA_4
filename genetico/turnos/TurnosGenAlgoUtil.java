@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Arrays;
 
 import aima.core.search.framework.problem.GoalTest;
 import aima.core.search.local.FitnessFunction;
@@ -32,22 +33,22 @@ public class TurnosGenAlgoUtil {
 	public static final int nTurnos = 16;
 
 	// Lista de profesores, mas un simbolo especial al final para representar el turno vacío
-	public static final List<String> profesorado  = {"ANA", "BONIATO", "CARLA", "DOMINGO", "ELISA", "FEDERICO", "GERTRUDIS", "VACIO"};
+	public static final List<String> profesorado  = Arrays.asList("ANA", "BONIATO", "CARLA", "DOMINGO", "ELISA", "FEDERICO", "GERTRUDIS", "VACIO");
 
   	public static final int nProfesores = profesorado.size();
   	public static final Random RANDOM = new Random();
 
-  	public static final Map<String, Collection<Integer>> restricciones = new HashMap<>();
+  	public static final Map<String, List<Integer>> restricciones = new HashMap<>();
   	static
   	{
-  	  	restricciones.put("ANA", asList(1, 2, 3));
+  	  	restricciones.put("ANA", Arrays.asList(1, 2, 3));
   	}
 
-  	public static final Map<String, Collection<Integer>> preferencias = new HashMap<>();
+  	public static final Map<String, List<Integer>> preferencias = new HashMap<>();
   	static
   	{
 
-  		preferencias.put("ANA", asList(1,2,3));
+  		preferencias.put("ANA", Arrays.asList(1,2,3));
   	}
 
 	/****************************
@@ -63,7 +64,7 @@ public class TurnosGenAlgoUtil {
 	}
 	
 
-	public static Individual<String> generateRandomIndividual(int boardSize) {
+	public static Individual<String> generateRandomIndividual() {
 		List<String> individualRepresentation = new ArrayList<String>();
 
 		// Inicializamos la representacion con todo turnos vacios
@@ -102,7 +103,7 @@ public class TurnosGenAlgoUtil {
 		* Si preferenciasOrdenadas = true, entonces da más importancia a las preferencias con indices mas bajos de cada profesor
 		*/
 		private static int preferenciasFitness(Individual<String> individual){
-			turnos = individual.getRepresentation();
+			List<String> turnos = individual.getRepresentation();
 			int nPreferencias = 0;
 			for(int i = 0; i <= nTurnos; i++){
 				String turno = turnos.get(i);
@@ -121,7 +122,7 @@ public class TurnosGenAlgoUtil {
 		* Calcula cuantas restricciones viola el individuo
 		*/
 		public static int restriccionesVioladas(Individual<String> individual){
-			turnos = individual.getRepresentation();
+			List<String> turnos = individual.getRepresentation();
 			int nRestricciones = 0;
 			for(int i = 0; i <= nTurnos; i++){
 				String turno = turnos.get(i);
@@ -137,14 +138,14 @@ public class TurnosGenAlgoUtil {
 		*/
 		private static double equilibrioFitness(Individual<String> individual){
 			// Realizamos una cuenta de cuantos turnos corresponden a cada profesor
-			Map<String, Integer> turnosAsignados;
+			Map<String, Integer> turnosAsignados = new HashMap<>();
 			for (String profe : profesorado){
 				if(profe != "VACIO") turnosAsignados.put(profe, 0);
 			}
 			int turnosTotales = 0;
 			for(String turno : individual.getRepresentation()){
 				if (turno != "VACIO"){
-					turnosAsignados.put(turnosAsignados.get(turno) + 1);
+					turnosAsignados.put(turno, turnosAsignados.get(turno) + 1);
 					turnosTotales += 1;
 				}
 			}
@@ -154,7 +155,7 @@ public class TurnosGenAlgoUtil {
 			double desviacion = 0;
 
 			for(String profe : profesorado){
-				if(profe != "VACIO") desviacion += abs(turnosAsignados.get(profe) - media);
+				if(profe != "VACIO") desviacion += Math.abs(turnosAsignados.get(profe) - media);
 			}
 
 			return desviacion;
@@ -165,7 +166,7 @@ public class TurnosGenAlgoUtil {
 		 * Calcula los turnos consecutivos
 		 */
 		public static int turnosConsecutivosAsignados(Individual<String> individual){
-			turnos = individual.getRepresentation();
+			List<String> turnos = individual.getRepresentation();
 			int nRachas = 0;
 			String current = "VACIO";
 			for(int i = 0; i <= nTurnos; i++){
