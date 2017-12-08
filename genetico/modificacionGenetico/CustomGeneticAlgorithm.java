@@ -72,6 +72,10 @@ public class CustomGeneticAlgorithm<A> {
 	protected boolean twoPointCross = false; // In a cross, cut the genome in two points to cross it
 	protected boolean alleleExchangeMutation = false; // if false, we use allele random substitution instead
 
+	enum SelectionMechanism{MONTECARLO, ELITIST, TOURNAMENT};
+	protected SelectionMechanism selectionMechanism = MONTECARLO;
+	protected double underdogProbability = 0.0; // If performing tournament selection, this is the probability of the worst individual winning the torunament 
+
 	protected Random random;
 	private List<ProgressTracer<A>> progressTracers = new ArrayList<ProgressTracer<A>>();
 
@@ -307,24 +311,51 @@ public class CustomGeneticAlgorithm<A> {
 		// (just to avoid problems with rounding errors)
 		Individual<A> selected = population.get(population.size() - 1);
 
-		// Determine all of the fitness values
-		double[] fValues = new double[population.size()];
-		for (int i = 0; i < population.size(); i++) {
-			fValues[i] = fitnessFn.apply(population.get(i));
-		}
-		// Normalize the fitness values
-		fValues = Util.normalize(fValues);
-		double prob = random.nextDouble();
-		double totalSoFar = 0.0;
-		for (int i = 0; i < fValues.length; i++) {
-			// Are at last element so assign by default
-			// in case there are rounding issues with the normalized values
-			totalSoFar += fValues[i];
-			if (prob <= totalSoFar) {
-				selected = population.get(i);
-				break;
+		
+		switch(selectionMechanism)
+		case MONTECARLO:
+		
+			// Determine all of the fitness values
+			double[] fValues = new double[population.size()];
+			for (int i = 0; i < population.size(); i++) {
+				fValues[i] = fitnessFn.apply(population.get(i));
 			}
-		}
+			// Normalize the fitness values
+			fValues = Util.normalize(fValues);
+
+			double prob = random.nextDouble();
+			double totalSoFar = 0.0;
+			for (int i = 0; i < fValues.length; i++) {
+				// Are at last element so assign by default
+				// in case there are rounding issues with the normalized values
+				totalSoFar += fValues[i];
+				if (prob <= totalSoFar) {
+					selected = population.get(i);
+					break;
+				}
+			}
+
+			break;
+
+		case ELITIST:
+			break;
+		case TOURNAMENT:
+			Individual<A> contestant1 = population.get( Random.nextInt(population.size()) );
+			Individual<A> contestant2 = population.get( Random.nextInt(population.size()) );
+			double prob = random.nextDouble();
+			if (prob < underdogProbability){
+				// the underdog wins
+				selected = (fitnessFn.apply(contestant1) < fitnessFn.apply(contestant2)) ? contestant1 : contestant2;
+			} else {
+				// the best individual wins
+				selected = (fitnessFn.apply(contestant1) < fitnessFn.apply(contestant2)) ? contestant2 : contestant1;
+			}
+
+			break;
+
+		default:
+			println("ERROR. SELECTION MECHANISM NOT IMPLEMENTED");
+		
 
 		selected.incDescendants();
 		return selected;
