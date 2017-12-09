@@ -1,7 +1,8 @@
 #!/usr/bin/make
 all:
-	javac turnos/TurnosDemo.java turnos/TurnosGenAlgoUtil.java -d . -cp ../aima-core.jar
-	java turnos.TurnosDemo -cp ../aima-core.jar:.
+	mkdir output
+	javac turnos/TurnosDemo.java turnos/TurnosGenAlgoUtil.java -d output -cp ../aima-core.jar
+	java output/turnos.TurnosDemo -cp ../aima-core.jar:.:output/*
 
 clean:
-	rm *.class
+	rm -r output

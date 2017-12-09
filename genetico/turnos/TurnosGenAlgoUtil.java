@@ -1,4 +1,4 @@
-package genetico.turnos;
+package turnos;
 
 import java.util.ArrayList;
 import java.util.HashMap;

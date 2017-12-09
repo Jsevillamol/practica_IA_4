@@ -1,6 +1,13 @@
 package aima.core.search.local;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
+
+import aima.core.search.local.GeneticAlgorithm;
+import aima.core.search.local.Individual;
+import aima.core.search.local.FitnessFunction;
 
 public class CustomGeneticAlgorithm<A> extends GeneticAlgorithm {
 
@@ -18,13 +25,14 @@ public class CustomGeneticAlgorithm<A> extends GeneticAlgorithm {
 	/**If false, we use allele random substitution instead*/
 	protected boolean alleleExchangeMutation = false;
 
-	enum SelectionMechanism{MONTECARLO, ELITIST, TOURNAMENT};
+	enum SelectionMechanism {MONTECARLO, ELITIST, TOURNAMENT};
 	protected SelectionMechanism selectionMechanism = MONTECARLO;
 	/**If performing tournament selection, this is the probability of the worst individual winning the torunament */
 	protected double underdogProbability = 0.0;
 
 
 	/**Primitive operation which is responsible for creating the next generation.*/
+	@Override
 	protected List<Individual<A>> nextGeneration(List<Individual<A>> population, FitnessFunction<A> fitnessFn) {
 		// new_population <- empty set
 		List<Individual<A>> newPopulation = new ArrayList<Individual<A>>(population.size());
@@ -34,7 +42,7 @@ public class CustomGeneticAlgorithm<A> extends GeneticAlgorithm {
 
 			if(random.nextDouble() <= crossProbability){// Perform a cross
 
-				List<Individual<A>> children = ArrayList<>();
+				List<Individual<A>> children = new ArrayList<>();
 
 				// x <- RANDOM-SELECTION(population, FITNESS-FN)
 				Individual<A> x = randomSelection(population, fitnessFn);
@@ -86,49 +94,52 @@ public class CustomGeneticAlgorithm<A> extends GeneticAlgorithm {
 		Individual<A> selected = population.get(population.size() - 1);
 	
 
-		switch(selectionMechanism)
-		case MONTECARLO:
+		switch(selectionMechanism){
+			case MONTECARLO:
 
-		// Determine all of the fitness values
-		double[] fValues = new double[population.size()];
-		for (int i = 0; i < population.size(); i++) {
-			fValues[i] = fitnessFn.apply(population.get(i));
-		}
-		// Normalize the fitness values
-		fValues = Util.normalize(fValues);
+				// Determine all of the fitness values
+				double[] fValues = new double[population.size()];
+				for (int i = 0; i < population.size(); i++) {
+					fValues[i] = fitnessFn.apply(population.get(i));
+				}
+				// Normalize the fitness values
+				fValues = Util.normalize(fValues);
 
-		double prob = random.nextDouble();
-		double totalSoFar = 0.0;
-		for (int i = 0; i < fValues.length; i++) {
-			// Are at last element so assign by default
-			// in case there are rounding issues with the normalized values
-			totalSoFar += fValues[i];
-			if (prob <= totalSoFar) {
-				selected = population.get(i);
+				double prob = random.nextDouble();
+				double totalSoFar = 0.0;
+				for (int i = 0; i < fValues.length; i++) {
+					// Are at last element so assign by default
+					// in case there are rounding issues with the normalized values
+					totalSoFar += fValues[i];
+					if (prob <= totalSoFar) {
+						selected = population.get(i);
+						break;
+					}
+				}
+
 				break;
-			}
+
+			case ELITIST:
+				break;
+
+			case TOURNAMENT:
+				Individual<A> contestant1 = population.get( Random.nextInt(population.size()) );
+				Individual<A> contestant2 = population.get( Random.nextInt(population.size()) );
+				double prob = random.nextDouble();
+				if (prob < underdogProbability){
+					// the underdog wins
+					selected = (fitnessFn.apply(contestant1) < fitnessFn.apply(contestant2)) ? contestant1 : contestant2;
+				} else {
+					// the best individual wins
+					selected = (fitnessFn.apply(contestant1) < fitnessFn.apply(contestant2)) ? contestant2 : contestant1;
+				}
+
+			break;
+
+			default:
+				println("ERROR. SELECTION MECHANISM NOT IMPLEMENTED");
+
 		}
-
-		break;
-
-		case ELITIST:
-		break;
-		case TOURNAMENT:
-		Individual<A> contestant1 = population.get( Random.nextInt(population.size()) );
-		Individual<A> contestant2 = population.get( Random.nextInt(population.size()) );
-		double prob = random.nextDouble();
-		if (prob < underdogProbability){
-			// the underdog wins
-			selected = (fitnessFn.apply(contestant1) < fitnessFn.apply(contestant2)) ? contestant1 : contestant2;
-		} else {
-			// the best individual wins
-			selected = (fitnessFn.apply(contestant1) < fitnessFn.apply(contestant2)) ? contestant2 : contestant1;
-		}
-
-		break;
-
-		default:
-		println("ERROR. SELECTION MECHANISM NOT IMPLEMENTED");
 
 
 		selected.incDescendants();

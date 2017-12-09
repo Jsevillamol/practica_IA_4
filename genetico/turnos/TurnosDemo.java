@@ -1,4 +1,4 @@
-package genetico.turnos;
+package turnos;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
