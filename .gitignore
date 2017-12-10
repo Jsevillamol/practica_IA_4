@@ -1,4 +1,4 @@
 *.class
 *.pdf
 aima/*
-.idea/
+genetico/AimaLib-1.9.1/bin/
