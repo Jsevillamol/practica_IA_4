@@ -127,7 +127,6 @@ public class Turnos {
 		System.out.println("max time = " + maxTime);
 
 
-
     }
 	
 	/**

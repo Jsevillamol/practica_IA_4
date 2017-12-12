@@ -20,10 +20,12 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
     // Parte opcional
     /**In a cross, cut the genome in two points to cross it*/
     protected boolean twoPointCross = false;
-    /**If false, we use allele random substitution instead*/
-    protected boolean alleleExchangeMutation = false;
 
-    enum SelectionMechanism {MONTECARLO, ELITIST, TOURNAMENT}
+    /**Mutation mechanisms are allele substitution and allele exchange*/
+    enum MutationMechanism {SUBSTITUTION, EXCHANGE}
+    protected MutationMechanism mutationMechanism = SUBSTITUTION;
+
+    enum SelectionMechanism {MONTECARLO, TOURNAMENT}
     protected SelectionMechanism selectionMechanism = SelectionMechanism.MONTECARLO;
     /**If performing tournament selection, this is the probability of the worst individual winning the torunament */
     protected double underdogProbability = 0.0;
@@ -119,9 +121,6 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
 
                 break;
 
-            case ELITIST:
-                break;
-
             case TOURNAMENT:
                 Individual<String> contestant1 = population.get( random.nextInt(population.size()) );
                 Individual<String> contestant2 = population.get( random.nextInt(population.size()) );
@@ -188,22 +187,27 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
 
         List<String> mutatedRepresentation = new ArrayList<>(child.getRepresentation());
 
-        if(!alleleExchangeMutation){
-            // Random replacement
-            int mutateOffset = randomOffset(individualLength);
-            int alphaOffset = randomOffset(finiteAlphabet.size());
-            mutatedRepresentation.set(mutateOffset, finiteAlphabet.get(alphaOffset));
-        } else {
-            // Alelo exchange
-            int alleleIndex1 = randomOffset(individualLength);
-            int alleleIndex2 = randomOffset(individualLength);
+        switch (mutationMechanism){
+            case SUBSTITUTION:
+                // Random replacement
+                int mutateOffset = randomOffset(individualLength);
+                int alphaOffset = randomOffset(finiteAlphabet.size());
+                mutatedRepresentation.set(mutateOffset, finiteAlphabet.get(alphaOffset));
+                break;
+            case EXCHANGE:
+                // Alelo exchange
+                int alleleIndex1 = randomOffset(individualLength);
+                int alleleIndex2 = randomOffset(individualLength);
 
-            String allele1 = mutatedRepresentation.get(alleleIndex1);
-            String allele2 = mutatedRepresentation.get(alleleIndex1);
+                String allele1 = mutatedRepresentation.get(alleleIndex1);
+                String allele2 = mutatedRepresentation.get(alleleIndex1);
 
-            mutatedRepresentation.set(alleleIndex1, allele2);
-            mutatedRepresentation.set(alleleIndex2, allele1);
-
+                mutatedRepresentation.set(alleleIndex1, allele2);
+                mutatedRepresentation.set(alleleIndex2, allele1);
+                break;
+            default:
+                System.out.println("ERROR. MUTATION MECHANISM NOT IMPLEMENTED");
+                break;
         }
 
         Individual<String> mutatedChild = new Individual<String>(mutatedRepresentation);
