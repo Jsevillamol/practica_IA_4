@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="aima-core">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/release/aima-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/release/aima-gui.jar!/" />
+      <root url="jar://$PROJECT_DIR$/release/aimax-osm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/release/commons-compress-1.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

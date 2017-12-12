@@ -26,8 +26,9 @@ public class TurnosFitnessFunction implements FitnessFunction<String> {
 
     @Override
     public double apply(Individual<String> individual) {
-        double fitness = 0;
-        fitness = preferenciasFitness(individual) - TurnosUtil.restriccionesVioladas(individual, restricciones) + TurnosUtil.equilibrioFitness(individual, profesorado);
+        double fitness = preferenciasFitness(individual);
+        fitness +=  4*nTurnos - 4*TurnosUtil.restriccionesVioladas(individual, restricciones);
+        fitness += TurnosUtil.equilibrioFitness(individual, profesorado);
         if(turnosConsecutivos) fitness += TurnosUtil.turnosConsecutivosAsignados(individual);
         return fitness;
     }

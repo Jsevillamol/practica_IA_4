@@ -54,7 +54,7 @@ public class Turnos {
 		GeneticAlgorithm<String> ga = new GeneticAlgorithm<>(nTurnos, profesorado,0.15);
 
 		Individual<String> bestIndividual = ga.geneticAlgorithm(population,
-				fitnessFunction, goalTest, 1000L);
+				fitnessFunction, goalTest, TurnosUtil.MAX_TIME);
 
 		TurnosUtil.showInfo(ga, bestIndividual, fitnessFunction, goalTest, nTurnos, nExamenes, nProfesores);
 	}

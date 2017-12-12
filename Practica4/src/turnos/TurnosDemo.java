@@ -52,7 +52,8 @@ public class TurnosDemo {
                 0.15);
 
         // Run for a set amount of time
-        Individual<String> bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 1000L);
+        Individual<String> bestIndividual = ga.geneticAlgorithm(population,
+                fitnessFunction, goalTest, TurnosUtil.MAX_TIME);
 
         TurnosUtil.showInfo(ga, bestIndividual, fitnessFunction, goalTest,
                 nTurnos, nExamenes, nProfesores);
