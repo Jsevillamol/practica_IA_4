@@ -44,16 +44,14 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
         while (newPopulation.size() < population.size()){
 
             if(random.nextDouble() <= crossProbability){// Perform a cross
-
-                List<Individual<String>> children = new ArrayList<>();
-
                 // x <- RANDOM-SELECTION(population, FITNESS-FN)
                 Individual<String> x = randomSelection(population, fitnessFn);
+
                 // y <- RANDOM-SELECTION(population, FITNESS-FN)
                 Individual<String> y = randomSelection(population, fitnessFn);
 
                 // children <- REPRODUCE_MANY(x, y)
-                children = reproduceMany(x, y);
+                List<Individual<String>> children = reproduceMany(x, y);
 
                 if(!destructiveStrategy){
                     // Between children and parents, selects the one with greatest fitness
