@@ -16,7 +16,7 @@ public class Turnos {
 
 	public static final boolean customGeneticAlgorithm = true;
 	/**Repite el algoritmo RERUNS veces o hasta que encuentra una solucion*/
-	private static final int RERUNS = 10;
+	private static final int RERUNS = 100;
 
 	private static int nExamenes;
 	private static int nTurnos = 16;
@@ -39,7 +39,7 @@ public class Turnos {
 		try {
 			Scanner sc = new Scanner(new File(args[0]));
 			readData(sc); //Guarda los datos en las variable globales.
-			System.out.println("Data read");
+			System.out.println("Data read from file " + args[0]);
 			findSolution();
 			String[] newArgs = Arrays.copyOfRange(args, 1, args.length);
 			if (true) main(newArgs);//Para repetir infinitamente

@@ -15,7 +15,7 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
     /**Create two children per cross*/
     protected boolean siblingsStrategy = false;
     /**Allways use the children (as oposed to use the best between parents and children in each cross)*/
-    protected boolean destructiveStrategy = true;
+    protected boolean destructiveStrategy = false;
 
     // Parte opcional
     /**In a cross, cut the genome in two points to cross it*/
@@ -60,8 +60,8 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
 
                     children.sort(Comparator.comparingDouble(fitnessFn::apply));
 
-                    children.remove(children.size()-1);
-                    children.remove(children.size()-1);
+                    children.remove(0);
+                    children.remove(0);
                 }
 
                 for(Individual<String> child : children)
