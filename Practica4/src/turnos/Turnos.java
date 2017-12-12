@@ -50,7 +50,7 @@ public class Turnos {
 	}
 
 	private static void findSolution() {
-		FitnessFunction<String> fitnessFunction = new TurnosFitnessFunction(profesorado, restricciones, preferencias, nTurnos);
+		FitnessFunction<String> fitnessFunction = new TurnosFitnessFunction(profesorado, restricciones, preferencias, nTurnos, nExamenes);
 		GoalTest goalTest = new TurnosGoalTest((TurnosFitnessFunction) fitnessFunction, restricciones, nExamenes);
 		GeneticAlgorithm<String> ga;
 		if (customGeneticAlgorithm)

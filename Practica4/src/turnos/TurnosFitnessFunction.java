@@ -15,16 +15,19 @@ public class TurnosFitnessFunction implements FitnessFunction<String> {
     static private boolean turnosConsecutivos = false;		// si es true, la asignacion de turnos consecutivos da mas fitness
 
     private int nTurnos;
+    private int nExamenes;
     public List<String> profesorado;
     private Map<String, List<Integer>> restricciones;
     private Map<String, List<Integer>> preferencias;
 
 
-    public TurnosFitnessFunction(List<String> profesorado, Map<String, List<Integer>> restricciones, Map<String, List<Integer>> preferencias, int nTurnos){
+    public TurnosFitnessFunction(List<String> profesorado, Map<String, List<Integer>> restricciones,
+                                 Map<String, List<Integer>> preferencias, int nTurnos, int nExamenes){
         this.profesorado = profesorado;
         this.restricciones = restricciones;
         this.preferencias = preferencias;
         this.nTurnos = nTurnos;
+        this.nExamenes = nExamenes;
     }
 
     @Override
@@ -32,6 +35,8 @@ public class TurnosFitnessFunction implements FitnessFunction<String> {
         double fitness = preferenciasFitness(individual);
         fitness +=  restrictionsWeight*(nTurnos - TurnosUtil.restriccionesVioladas(individual, restricciones));
         fitness += TurnosUtil.equilibrioFitness(individual, profesorado);
+        int turnosNoVacios = TurnosUtil.contarTurnosNoVacios(individual);
+        fitness += 8*(nTurnos-Math.abs(nExamenes-turnosNoVacios));//Gran penalizacion
         if(turnosConsecutivos) fitness += TurnosUtil.turnosConsecutivosAsignados(individual);
         return fitness;
     }

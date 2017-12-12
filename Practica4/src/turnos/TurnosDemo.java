@@ -35,7 +35,8 @@ public class TurnosDemo {
         FitnessFunction<String> fitnessFunction = new TurnosFitnessFunction(profesorado,
                 restricciones,
                 preferencias,
-                nTurnos);
+                nTurnos,
+                nExamenes);
         GoalTest goalTest = new TurnosGoalTest((TurnosFitnessFunction) fitnessFunction, restricciones,
                 nExamenes);
         // Generate an initial population
