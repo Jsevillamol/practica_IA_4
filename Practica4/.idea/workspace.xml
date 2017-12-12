@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1a041c74-7263-420a-84e1-25069c639e49" name="Default" comment="Lectura de fichero">
       <change beforePath="$PROJECT_DIR$/src/turnos/Turnos.java" afterPath="$PROJECT_DIR$/src/turnos/Turnos.java" />
-      <change beforePath="$PROJECT_DIR$/src/turnos/TurnosUtil.java" afterPath="$PROJECT_DIR$/src/turnos/TurnosUtil.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Turnos.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Turnos.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/turnos/Turnos.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-270">
-              <caret line="40" column="70" lean-forward="false" selection-start-line="40" selection-start-column="70" selection-end-line="40" selection-end-column="70" />
+            <state relative-caret-position="-684">
+              <caret line="23" column="4" lean-forward="true" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
               <folding>
                 <element signature="docComment;field#RERUNS#0;class#Turnos#0" expanded="false" />
                 <element signature="method#readData#0;class#Turnos#0" expanded="false" />
@@ -39,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TurnosUtil.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TurnosUtil.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/turnos/TurnosUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="466">
-              <caret line="130" column="16" lean-forward="true" selection-start-line="130" selection-start-column="16" selection-end-line="130" selection-end-column="16" />
+            <state relative-caret-position="1188">
+              <caret line="113" column="0" lean-forward="true" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
               <folding>
                 <element signature="docComment;method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
                 <element signature="method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
@@ -134,8 +133,8 @@
         <option value="$PROJECT_DIR$/src/turnos/TurnosDemo.java" />
         <option value="$PROJECT_DIR$/src/turnos/TurnosFitnessFunction.java" />
         <option value="$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java" />
-        <option value="$PROJECT_DIR$/src/turnos/Turnos.java" />
         <option value="$PROJECT_DIR$/src/turnos/TurnosUtil.java" />
+        <option value="$PROJECT_DIR$/src/turnos/Turnos.java" />
       </list>
     </option>
   </component>
@@ -242,7 +241,7 @@
       </extension>
       <option name="MAIN_CLASS_NAME" value="turnos.Turnos" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="archivosConfPrueba/configuracionConvocatoria1.txt" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -389,7 +388,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44894895" sideWeight="0.50269026" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17586912" sideWeight="0.49423522" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3404908" sideWeight="0.49423522" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6651652" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -696,22 +695,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/turnos/Turnos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-270">
-          <caret line="40" column="70" lean-forward="false" selection-start-line="40" selection-start-column="70" selection-end-line="40" selection-end-column="70" />
-          <folding>
-            <element signature="docComment;field#RERUNS#0;class#Turnos#0" expanded="false" />
-            <element signature="method#readData#0;class#Turnos#0" expanded="false" />
-            <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/turnos/TurnosUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="466">
-          <caret line="130" column="16" lean-forward="true" selection-start-line="130" selection-start-column="16" selection-end-line="130" selection-end-column="16" />
+        <state relative-caret-position="1188">
+          <caret line="113" column="0" lean-forward="true" selection-start-line="113" selection-start-column="0" selection-end-line="113" selection-end-column="0" />
           <folding>
             <element signature="docComment;method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
@@ -720,6 +707,18 @@
             <element signature="docComment;method#showInfo#0;class#TurnosUtil#0" expanded="false" />
             <element signature="docComment;method#turnosConsecutivosAsignados#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#turnosConsecutivosAsignados#0;class#TurnosUtil#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/turnos/Turnos.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-684">
+          <caret line="23" column="4" lean-forward="true" selection-start-line="23" selection-start-column="4" selection-end-line="23" selection-end-column="4" />
+          <folding>
+            <element signature="docComment;field#RERUNS#0;class#Turnos#0" expanded="false" />
+            <element signature="method#readData#0;class#Turnos#0" expanded="false" />
+            <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
           </folding>
         </state>
       </provider>

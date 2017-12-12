@@ -41,7 +41,8 @@ public class Turnos {
 			readData(sc); //Guarda los datos en las variable globales.
 			System.out.println("Data read");
 			findSolution();
-			//if (true) main(args);//Para repetir infinitamente
+			String[] newArgs = Arrays.copyOfRange(args, 1, args.length);
+			if (true) main(newArgs);//Para repetir infinitamente
 		} catch (FileNotFoundException e) {
 			System.err.println("Fichero mal especificado.");
 			System.exit(1);
@@ -112,7 +113,7 @@ public class Turnos {
         double meanIter = totalIter / RERUNS;
         double meanTime = totalTime / RERUNS;
 
-        System.out.println("Results after" + RERUNS + "attempts");
+        System.out.println("Results after " + RERUNS + " attempts");
 
         System.out.println("min fitness = " + minFitness);
 		System.out.println("mean fitness = " + meanFitness);
