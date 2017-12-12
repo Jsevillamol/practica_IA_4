@@ -23,7 +23,7 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
 
     /**Mutation mechanisms are allele substitution and allele exchange*/
     enum MutationMechanism {SUBSTITUTION, EXCHANGE}
-    protected MutationMechanism mutationMechanism = SUBSTITUTION;
+    protected MutationMechanism mutationMechanism = MutationMechanism.SUBSTITUTION;
 
     enum SelectionMechanism {MONTECARLO, TOURNAMENT}
     protected SelectionMechanism selectionMechanism = SelectionMechanism.MONTECARLO;

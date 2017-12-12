@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1a041c74-7263-420a-84e1-25069c639e49" name="Default" comment="Lectura de fichero">
       <change beforePath="$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java" afterPath="$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java" />
-      <change beforePath="$PROJECT_DIR$/src/turnos/Turnos.java" afterPath="$PROJECT_DIR$/src/turnos/Turnos.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -70,17 +69,17 @@
       <file leaf-file-name="CustomGeneticAlgorithm.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="185" column="0" lean-forward="false" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
+            <state relative-caret-position="306">
+              <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding>
                 <element signature="method#CustomGeneticAlgorithm#0;class#CustomGeneticAlgorithm#0" expanded="false" />
                 <element signature="docComment;method#nextGeneration#0;class#CustomGeneticAlgorithm#0" expanded="false" />
                 <element signature="method#nextGeneration#0;class#CustomGeneticAlgorithm#0" expanded="false" />
                 <element signature="method#randomSelection#0;class#CustomGeneticAlgorithm#0" expanded="false" />
-                <element signature="e#3811#3847#0" expanded="false" />
-                <element signature="e#4598#4641#0" expanded="false" />
+                <element signature="e#3829#3865#0" expanded="false" />
+                <element signature="e#4616#4659#0" expanded="false" />
                 <element signature="method#reproduceMany#0;class#CustomGeneticAlgorithm#0" expanded="false" />
-                <element signature="e#6184#6202#0" expanded="false" />
+                <element signature="e#6202#6220#0" expanded="false" />
                 <element signature="docComment;method#cross#0;class#CustomGeneticAlgorithm#0" expanded="false" />
                 <element signature="method#cross#0;class#CustomGeneticAlgorithm#0" expanded="false" />
                 <element signature="method#mutate#0;class#CustomGeneticAlgorithm#0" expanded="false" />
@@ -695,17 +694,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="185" column="0" lean-forward="false" selection-start-line="185" selection-start-column="0" selection-end-line="185" selection-end-column="0" />
+        <state relative-caret-position="306">
+          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding>
             <element signature="method#CustomGeneticAlgorithm#0;class#CustomGeneticAlgorithm#0" expanded="false" />
             <element signature="docComment;method#nextGeneration#0;class#CustomGeneticAlgorithm#0" expanded="false" />
             <element signature="method#nextGeneration#0;class#CustomGeneticAlgorithm#0" expanded="false" />
             <element signature="method#randomSelection#0;class#CustomGeneticAlgorithm#0" expanded="false" />
-            <element signature="e#3811#3847#0" expanded="false" />
-            <element signature="e#4598#4641#0" expanded="false" />
+            <element signature="e#3829#3865#0" expanded="false" />
+            <element signature="e#4616#4659#0" expanded="false" />
             <element signature="method#reproduceMany#0;class#CustomGeneticAlgorithm#0" expanded="false" />
-            <element signature="e#6184#6202#0" expanded="false" />
+            <element signature="e#6202#6220#0" expanded="false" />
             <element signature="docComment;method#cross#0;class#CustomGeneticAlgorithm#0" expanded="false" />
             <element signature="method#cross#0;class#CustomGeneticAlgorithm#0" expanded="false" />
             <element signature="method#mutate#0;class#CustomGeneticAlgorithm#0" expanded="false" />
