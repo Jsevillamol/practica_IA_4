@@ -28,14 +28,13 @@ public class TurnosDemo {
 
 			GeneticAlgorithm<String> ga = new GeneticAlgorithm<String>(
 													TurnosGenAlgoUtil.nTurnos,
-													TurnosGenAlgoUtil.getFiniteAlphabet(), 
+													TurnosGenAlgoUtil.getFiniteAlphabet(),
 													0.15);
 
 			// Run for a set amount of time
 			Individual<String> bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, 1000L);
 
-			System.out.println("Max Time (1 second) Best Individual=\n"
-					+ bestIndividual);
+			System.out.println("Max Time (1 second) Best Individual=\n" + bestIndividual);
 			System.out.println("nTurnos      = " + TurnosGenAlgoUtil.nTurnos);
 			System.out.println("nExamenes      = " + TurnosGenAlgoUtil.nExamenes);
 			System.out.println("# Possible individuals = " + (

@@ -1,5 +1,5 @@
 14
-Antonio, Belen, Fernando, Guillermo, Juanan, Marlon, Raquel, Virginia
+Antonio, Belén, Fernando, Guillermo, Juanan, Marlon, Raquel, Virginia
 Antonio:
 Belén: 3,4,7,8,11,12,15,16
 Fernando: 1,2,15,16
