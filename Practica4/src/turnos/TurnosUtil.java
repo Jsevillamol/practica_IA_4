@@ -88,14 +88,14 @@ public class TurnosUtil {
     static double equilibrioFitness(Individual<String> individual, List<String> profesorado){
         // Realizamos una cuenta de cuantos turnos corresponden a cada profesor
         Map<String, Integer> turnosAsignados = new HashMap<>();
-        for (String profe : profesorado){
-            if(!(profe.equals("VACIO"))) turnosAsignados.put(profe, 0);
-        }
+        for (String profe : profesorado)
+            if(!profe.equals("VACIO")) turnosAsignados.put(profe, 0);
+
         int turnosTotales = 0;
         for(String turno : individual.getRepresentation()){
-            if (!(turno.equals("VACIO"))){
+            if (!turno.equals("VACIO")){
                 turnosAsignados.put(turno, turnosAsignados.get(turno) + 1);
-                turnosTotales += 1;
+                turnosTotales ++;
             }
         }
 
@@ -104,10 +104,11 @@ public class TurnosUtil {
         double desviacion = 0;
 
         for(String profe : profesorado){
-            if(!(profe.equals("VACIO"))) desviacion += Math.abs(turnosAsignados.get(profe) - media);
+            if(!profe.equals("VACIO")) desviacion += Math.abs(turnosAsignados.get(profe) - media);
         }
 
-        return desviacion;
+        //La desviacion está acotada por el caso peor: solo un profe trabaja.
+        return turnosTotales + (profesorado.size()-2)*media - desviacion;
 
     }
 
