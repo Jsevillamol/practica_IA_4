@@ -128,7 +128,7 @@ public class TurnosUtil {
     public static int restriccionesVioladas(Individual<String> individual, Map<String, List<Integer>> restricciones){
         List<String> turnos = individual.getRepresentation();
         int nRestricciones = 0;
-        int i=0;
+        int i=1;
         for(String turno : turnos){
             if(!(turno.equals("VACIO")) && restricciones.get(turno)!=null && restricciones.get(turno).contains(i)){
                 nRestricciones ++;

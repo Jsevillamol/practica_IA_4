@@ -39,9 +39,9 @@ public class Turnos {
 		try {
 			Scanner sc = new Scanner(new File(args[0]));
 			readData(sc); //Guarda los datos en las variable globales.
-			System.out.println("Data readed.");
+			System.out.println("Data read");
 			findSolution();
-			if (true) main(args);//Para repetir infinitamente
+			//if (true) main(args);//Para repetir infinitamente
 		} catch (FileNotFoundException e) {
 			System.err.println("Fichero mal especificado.");
 			System.exit(1);
@@ -125,7 +125,6 @@ public class Turnos {
 		System.out.println("min time = " + minTime);
 		System.out.println("mean time = " + meanTime);
 		System.out.println("max time = " + maxTime);
-
 
     }
 	
