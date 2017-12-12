@@ -1,5 +1,10 @@
 package turnos;
 
+import aima.core.search.framework.problem.GoalTest;
+import aima.core.search.local.FitnessFunction;
+import aima.core.search.local.GeneticAlgorithm;
+import aima.core.search.local.Individual;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -9,7 +14,7 @@ import java.util.logging.Logger;
 public class Turnos {
 	
 	private static int nExamenes;
-	private static int nTurnos;
+	private static int nTurnos = 16;
 	private static int nProfesores;
 	
 	private static List<String> profesorado = new ArrayList<>();
@@ -38,7 +43,20 @@ public class Turnos {
 	}
 
 	private static void findSolution() {
-		//TODO Encontrar una asignación
+		FitnessFunction<String> fitnessFunction = new TurnosFitnessFunction(profesorado, restricciones, preferencias, nTurnos);
+		GoalTest goalTest = new TurnosGoalTest((TurnosFitnessFunction) fitnessFunction, restricciones, nExamenes);
+
+		// Generate an initial population
+		Set<Individual<String>> population = new HashSet<>();
+		for (int i = 0; i < TurnosUtil.POBLACION_INICIAL; i++)
+			population.add(TurnosUtil.generateRandomIndividual(profesorado, nExamenes, nTurnos));
+
+		GeneticAlgorithm<String> ga = new GeneticAlgorithm<>(nTurnos, profesorado,0.15);
+
+		Individual<String> bestIndividual = ga.geneticAlgorithm(population,
+				fitnessFunction, goalTest, 1000L);
+
+		TurnosUtil.showInfo(ga, bestIndividual, fitnessFunction, goalTest, nTurnos, nExamenes, nProfesores);
 	}
 	
 	/**
@@ -48,9 +66,9 @@ public class Turnos {
 	 */
 	private static void readData(Scanner sc) {
 		logger.setLevel(Level.ALL);
-		nTurnos = sc.nextInt();
+		nExamenes = sc.nextInt();
 		sc.nextLine();//Hay que ignorar el salto de linea
-		logger.severe("Numero "+nTurnos);
+		logger.severe("Numero "+nExamenes);
 		profesorado = Arrays.asList((sc.nextLine()).split(", "));
 		logger.severe(profesorado.toString());
 		nProfesores = profesorado.size();
