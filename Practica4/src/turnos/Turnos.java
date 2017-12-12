@@ -59,6 +59,24 @@ public class Turnos {
 		Set<Individual<String>> population;
 		Individual<String> bestIndividual;
 		int attempt = 0;
+
+		// Stats
+        double minFitness = Double.MAX_VALUE;
+        double totalFitness = 0;
+        double maxFitness = Double.MIN_VALUE;
+
+		int minIter = Integer.MAX_VALUE;
+		int totalIter = 0;
+		int maxIter = Integer.MIN_VALUE;
+
+        double minTime = Double.MAX_VALUE;
+        double totalTime = 0;
+        double maxTime = Double.MIN_VALUE;
+
+
+
+        boolean goalReached = false;
+
 		do {
 			// Generate an initial population
 			population = new HashSet<>();
@@ -66,12 +84,51 @@ public class Turnos {
 				population.add(TurnosUtil.generateRandomIndividual(profesorado, nExamenes, nTurnos));
 
 			bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, TurnosUtil.MAX_TIME);
-			System.out.println("Attempt: " + attempt);
-			TurnosUtil.showInfo(ga, bestIndividual, fitnessFunction, goalTest, nTurnos, nExamenes, nProfesores);
+			//System.out.println("Attempt: " + attempt);
+			//TurnosUtil.showInfo(ga, bestIndividual, fitnessFunction, goalTest, nTurnos, nExamenes, nProfesores);
 
-		} while (attempt++< RERUNS && !goalTest.isGoalState(bestIndividual));
+			// running stats
+            double fitness = fitnessFunction.apply(bestIndividual);
+            minFitness = Math.min(minFitness, fitness);
+            totalFitness += fitness;
+            maxFitness = Math.max(maxFitness, fitness);
 
-}
+            double time = ga.getTimeInMilliseconds();
+            minTime = Math.min(minTime, time);
+            totalTime += time;
+            maxTime = Math.max(maxTime, time);
+
+			int iter = ga.getIterations();
+			minIter = Math.min(minIter, iter);
+			totalIter += iter;
+			maxIter = Math.max(maxIter, iter);
+
+            goalReached |= goalTest.isGoalState(bestIndividual);
+
+		} while (++attempt< RERUNS);
+
+		// Print running stats
+        double meanFitness = totalFitness / RERUNS;
+        double meanIter = totalIter / RERUNS;
+        double meanTime = totalTime / RERUNS;
+
+        System.out.println("Results after" + RERUNS + "attempts");
+
+        System.out.println("min fitness = " + minFitness);
+		System.out.println("mean fitness = " + meanFitness);
+		System.out.println("max fitness = " + maxFitness);
+
+		System.out.println("min iterations = " + minIter);
+		System.out.println("mean iterations = " + meanIter);
+		System.out.println("max iterations = " + maxIter);
+
+		System.out.println("min time = " + minTime);
+		System.out.println("mean time = " + meanTime);
+		System.out.println("max time = " + maxTime);
+
+
+
+    }
 	
 	/**
 	 * Lee los datos del Scanner y los guarda en las variables globales.

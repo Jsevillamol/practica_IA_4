@@ -8,6 +8,9 @@ import java.util.Map;
 
 public class TurnosFitnessFunction implements FitnessFunction<String> {
 
+    // Hyperparameters to guide search
+    private double restrictionsWeight = 4.0;
+
     static private boolean preferenciasOrdenadas = false;	// si es true, las preferencias con índices más bajos añaden más utilidad
     static private boolean turnosConsecutivos = false;		// si es true, la asignacion de turnos consecutivos da mas fitness
 
@@ -27,7 +30,7 @@ public class TurnosFitnessFunction implements FitnessFunction<String> {
     @Override
     public double apply(Individual<String> individual) {
         double fitness = preferenciasFitness(individual);
-        fitness +=  4*nTurnos - 4*TurnosUtil.restriccionesVioladas(individual, restricciones);
+        fitness +=  restrictionsWeight*(nTurnos - TurnosUtil.restriccionesVioladas(individual, restricciones));
         fitness += TurnosUtil.equilibrioFitness(individual, profesorado);
         if(turnosConsecutivos) fitness += TurnosUtil.turnosConsecutivosAsignados(individual);
         return fitness;
