@@ -2,11 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1a041c74-7263-420a-84e1-25069c639e49" name="Default" comment="Lectura de fichero">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java" afterPath="$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java" />
       <change beforePath="$PROJECT_DIR$/src/turnos/Turnos.java" afterPath="$PROJECT_DIR$/src/turnos/Turnos.java" />
-      <change beforePath="$PROJECT_DIR$/src/turnos/TurnosDemo.java" afterPath="$PROJECT_DIR$/src/turnos/TurnosDemo.java" />
+      <change beforePath="$PROJECT_DIR$/src/turnos/TurnosDemo.java" afterPath="" />
       <change beforePath="$PROJECT_DIR$/src/turnos/TurnosFitnessFunction.java" afterPath="$PROJECT_DIR$/src/turnos/TurnosFitnessFunction.java" />
+      <change beforePath="$PROJECT_DIR$/src/turnos/TurnosGoalTest.java" afterPath="$PROJECT_DIR$/src/turnos/TurnosGoalTest.java" />
+      <change beforePath="$PROJECT_DIR$/src/turnos/TurnosUtil.java" afterPath="$PROJECT_DIR$/src/turnos/TurnosUtil.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,26 +19,28 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Turnos.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Turnos.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/turnos/Turnos.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="51" column="136" lean-forward="false" selection-start-line="51" selection-start-column="136" selection-end-line="51" selection-end-column="136" />
+            <state relative-caret-position="72">
+              <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
               <folding>
+                <element signature="docComment;method#readData#0;class#Turnos#0" expanded="false" />
                 <element signature="method#readData#0;class#Turnos#0" expanded="false" />
+                <element signature="docComment;method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
                 <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TurnosDemo.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/turnos/TurnosDemo.java">
+      <file leaf-file-name="TurnosGoalTest.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/turnos/TurnosGoalTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="38" column="25" lean-forward="false" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
+            <state relative-caret-position="270">
+              <caret line="19" column="25" lean-forward="false" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
               <folding>
-                <element signature="initializer##0;class#TurnosDemo#0" expanded="false" />
+                <element signature="e#721#751#1" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -46,21 +49,26 @@
       <file leaf-file-name="CustomGeneticAlgorithm.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-16">
-              <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="-1494">
+              <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+              <folding>
+                <element signature="method#CustomGeneticAlgorithm#0;class#CustomGeneticAlgorithm#0" expanded="false" />
+                <element signature="method#nextGeneration#0;class#CustomGeneticAlgorithm#0" expanded="false" />
+                <element signature="e#2055#2073#0" expanded="false" />
+                <element signature="method#maybeMutate#0;class#CustomGeneticAlgorithm#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TurnosFitnessFunction.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TurnosFitnessFunction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/turnos/TurnosFitnessFunction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="38" column="29" lean-forward="false" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+            <state relative-caret-position="506">
+              <caret line="39" column="23" lean-forward="true" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
               <folding>
+                <element signature="method#TurnosFitnessFunction#0;class#TurnosFitnessFunction#0" expanded="false" />
                 <element signature="docComment;method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
-                <element signature="method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -69,11 +77,10 @@
       <file leaf-file-name="TurnosUtil.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/turnos/TurnosUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+            <state relative-caret-position="126">
+              <caret line="21" column="37" lean-forward="false" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
               <folding>
                 <element signature="docComment;method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
-                <element signature="method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
                 <element signature="method#contarTurnosNoVacios#0;class#TurnosUtil#0" expanded="false" />
                 <element signature="method#getRandomSelection#0;class#TurnosUtil#0" expanded="false" />
                 <element signature="docComment;method#showInfo#0;class#TurnosUtil#0" expanded="false" />
@@ -103,6 +110,8 @@
       <find>itera</find>
       <find>updateMetrics</find>
       <find>time</find>
+      <find>restrictionsWeight</find>
+      <find>goalReached</find>
     </findStrings>
     <replaceStrings>
       <replace>iter</replace>
@@ -123,22 +132,22 @@
         <option value="$PROJECT_DIR$/archivosConfPrueba/configuracionConvocatoria3.txt" />
         <option value="$PROJECT_DIR$/src/turnos/TurnosGenAlgoUtil.java" />
         <option value="$PROJECT_DIR$/src/turnos/TurnosGoalState.java" />
-        <option value="$PROJECT_DIR$/src/turnos/TurnosGoalTest.java" />
         <option value="$PROJECT_DIR$/archivosConfPrueba/configuracionConvocatoria1.txt" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/turnos/TurnosUtil.java" />
-        <option value="$PROJECT_DIR$/src/turnos/Turnos.java" />
         <option value="$PROJECT_DIR$/src/turnos/TurnosDemo.java" />
-        <option value="$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/turnos/TurnosFitnessFunction.java" />
+        <option value="$PROJECT_DIR$/src/turnos/TurnosUtil.java" />
+        <option value="$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java" />
+        <option value="$PROJECT_DIR$/src/turnos/TurnosGoalTest.java" />
+        <option value="$PROJECT_DIR$/src/turnos/Turnos.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-77" />
-    <option name="y" value="-4" />
-    <option name="width" value="1299" />
-    <option name="height" value="764" />
+    <option name="x" value="64" />
+    <option name="y" value="-11" />
+    <option name="width" value="1303" />
+    <option name="height" value="780" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -370,7 +379,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26682000" />
+    <option name="totallyTimeSpent" value="36785000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1303" height="780" extended-state="6" />
@@ -382,9 +391,9 @@
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44894895" sideWeight="0.50269026" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.496997" sideWeight="0.50730205" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7732733" sideWeight="0.49423522" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.7672673" sideWeight="0.49269792" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6651652" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32882884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -474,7 +483,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="9" />
+      <option name="time" value="11" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -484,7 +493,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="docComment;method#readData#0;class#Turnos#0" expanded="false" />
             <element signature="method#readData#0;class#Turnos#0" expanded="false" />
+            <element signature="docComment;method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
             <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
           </folding>
         </state>
@@ -494,9 +505,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-          <folding>
-            <element signature="initializer##0;class#TurnosDemo#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -505,7 +514,7 @@
         <state relative-caret-position="396">
           <caret line="26" column="65" lean-forward="false" selection-start-line="26" selection-start-column="65" selection-end-line="26" selection-end-column="65" />
           <folding>
-            <element signature="imports" expanded="false" />
+            <element signature="e#721#751#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -516,7 +525,6 @@
           <caret line="13" column="11" lean-forward="false" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
           <folding>
             <element signature="docComment;method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
-            <element signature="method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#contarTurnosNoVacios#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#getRandomSelection#0;class#TurnosUtil#0" expanded="false" />
             <element signature="docComment;method#showInfo#0;class#TurnosUtil#0" expanded="false" />
@@ -531,8 +539,8 @@
         <state relative-caret-position="882">
           <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
           <folding>
+            <element signature="method#TurnosFitnessFunction#0;class#TurnosFitnessFunction#0" expanded="false" />
             <element signature="docComment;method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
-            <element signature="method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -579,7 +587,7 @@
         <state relative-caret-position="402">
           <caret line="26" column="65" lean-forward="false" selection-start-line="26" selection-start-column="65" selection-end-line="26" selection-end-column="65" />
           <folding>
-            <element signature="imports" expanded="false" />
+            <element signature="e#721#751#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -588,9 +596,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="956">
           <caret line="64" column="48" lean-forward="false" selection-start-line="64" selection-start-column="48" selection-end-line="64" selection-end-column="48" />
-          <folding>
-            <element signature="initializer##0;class#TurnosDemo#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -629,7 +635,6 @@
           <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
           <folding>
             <element signature="docComment;method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
-            <element signature="method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#contarTurnosNoVacios#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#getRandomSelection#0;class#TurnosUtil#0" expanded="false" />
             <element signature="docComment;method#showInfo#0;class#TurnosUtil#0" expanded="false" />
@@ -643,7 +648,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="17" column="48" lean-forward="false" selection-start-line="17" selection-start-column="44" selection-end-line="17" selection-end-column="48" />
-          <folding />
+          <folding>
+            <element signature="method#CustomGeneticAlgorithm#0;class#CustomGeneticAlgorithm#0" expanded="false" />
+            <element signature="method#nextGeneration#0;class#CustomGeneticAlgorithm#0" expanded="false" />
+            <element signature="e#2055#2073#0" expanded="false" />
+            <element signature="method#maybeMutate#0;class#CustomGeneticAlgorithm#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -652,7 +662,9 @@
         <state relative-caret-position="132">
           <caret line="86" column="12" lean-forward="false" selection-start-line="86" selection-start-column="12" selection-end-line="86" selection-end-column="12" />
           <folding>
+            <element signature="docComment;method#readData#0;class#Turnos#0" expanded="false" />
             <element signature="method#readData#0;class#Turnos#0" expanded="false" />
+            <element signature="docComment;method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
             <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
           </folding>
         </state>
@@ -671,8 +683,8 @@
         <state relative-caret-position="216">
           <caret line="16" column="24" lean-forward="true" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
           <folding>
+            <element signature="method#TurnosFitnessFunction#0;class#TurnosFitnessFunction#0" expanded="false" />
             <element signature="docComment;method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
-            <element signature="method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -682,7 +694,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="docComment;method#readData#0;class#Turnos#0" expanded="false" />
             <element signature="method#readData#0;class#Turnos#0" expanded="false" />
+            <element signature="docComment;method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
             <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
           </folding>
         </state>
@@ -693,8 +707,8 @@
         <state relative-caret-position="774">
           <caret line="47" column="82" lean-forward="false" selection-start-line="47" selection-start-column="82" selection-end-line="47" selection-end-column="82" />
           <folding>
+            <element signature="method#TurnosFitnessFunction#0;class#TurnosFitnessFunction#0" expanded="false" />
             <element signature="docComment;method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
-            <element signature="method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -705,7 +719,6 @@
           <caret line="109" column="77" lean-forward="false" selection-start-line="109" selection-start-column="77" selection-end-line="109" selection-end-column="77" />
           <folding>
             <element signature="docComment;method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
-            <element signature="method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#contarTurnosNoVacios#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#getRandomSelection#0;class#TurnosUtil#0" expanded="false" />
             <element signature="docComment;method#showInfo#0;class#TurnosUtil#0" expanded="false" />
@@ -728,7 +741,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="docComment;method#readData#0;class#Turnos#0" expanded="false" />
             <element signature="method#readData#0;class#Turnos#0" expanded="false" />
+            <element signature="docComment;method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
             <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
           </folding>
         </state>
@@ -739,7 +754,9 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
+            <element signature="docComment;method#readData#0;class#Turnos#0" expanded="false" />
             <element signature="method#readData#0;class#Turnos#0" expanded="false" />
+            <element signature="docComment;method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
             <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
           </folding>
         </state>
@@ -749,9 +766,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-          <folding>
-            <element signature="initializer##0;class#TurnosDemo#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -760,7 +775,7 @@
         <state relative-caret-position="396">
           <caret line="26" column="65" lean-forward="false" selection-start-line="26" selection-start-column="65" selection-end-line="26" selection-end-column="65" />
           <folding>
-            <element signature="imports" expanded="false" />
+            <element signature="e#721#751#1" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -771,7 +786,6 @@
           <caret line="13" column="11" lean-forward="false" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
           <folding>
             <element signature="docComment;method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
-            <element signature="method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#contarTurnosNoVacios#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#getRandomSelection#0;class#TurnosUtil#0" expanded="false" />
             <element signature="docComment;method#showInfo#0;class#TurnosUtil#0" expanded="false" />
@@ -786,8 +800,8 @@
         <state relative-caret-position="882">
           <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
           <folding>
+            <element signature="method#TurnosFitnessFunction#0;class#TurnosFitnessFunction#0" expanded="false" />
             <element signature="docComment;method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
-            <element signature="method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -829,16 +843,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/turnos/TurnosGoalTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="26" column="65" lean-forward="false" selection-start-line="26" selection-start-column="65" selection-end-line="26" selection-end-column="65" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/archivosConfPrueba/configuracionConvocatoria3.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
@@ -876,13 +880,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/turnos/TurnosFitnessFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="39" column="23" lean-forward="true" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+          <folding>
+            <element signature="method#TurnosFitnessFunction#0;class#TurnosFitnessFunction#0" expanded="false" />
+            <element signature="docComment;method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/turnos/TurnosDemo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="7" column="19" lean-forward="false" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/turnos/TurnosGoalTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="19" column="25" lean-forward="false" selection-start-line="19" selection-start-column="25" selection-end-line="19" selection-end-column="25" />
+          <folding>
+            <element signature="e#721#751#1" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/turnos/TurnosUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        <state relative-caret-position="126">
+          <caret line="21" column="37" lean-forward="false" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
           <folding>
             <element signature="docComment;method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
-            <element signature="method#generateRandomIndividual#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#contarTurnosNoVacios#0;class#TurnosUtil#0" expanded="false" />
             <element signature="method#getRandomSelection#0;class#TurnosUtil#0" expanded="false" />
             <element signature="docComment;method#showInfo#0;class#TurnosUtil#0" expanded="false" />
@@ -892,42 +924,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/turnos/Turnos.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="51" column="136" lean-forward="false" selection-start-line="51" selection-start-column="136" selection-end-line="51" selection-end-column="136" />
-          <folding>
-            <element signature="method#readData#0;class#Turnos#0" expanded="false" />
-            <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/turnos/TurnosDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="38" column="25" lean-forward="false" selection-start-line="38" selection-start-column="25" selection-end-line="38" selection-end-column="25" />
-          <folding>
-            <element signature="initializer##0;class#TurnosDemo#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/modificacionGenetico/CustomGeneticAlgorithm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16">
-          <caret line="41" column="0" lean-forward="true" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="-1494">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+          <folding>
+            <element signature="method#CustomGeneticAlgorithm#0;class#CustomGeneticAlgorithm#0" expanded="false" />
+            <element signature="method#nextGeneration#0;class#CustomGeneticAlgorithm#0" expanded="false" />
+            <element signature="e#2055#2073#0" expanded="false" />
+            <element signature="method#maybeMutate#0;class#CustomGeneticAlgorithm#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/turnos/TurnosFitnessFunction.java">
+    <entry file="file://$PROJECT_DIR$/src/turnos/Turnos.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="38" column="29" lean-forward="false" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+        <state relative-caret-position="72">
+          <caret line="14" column="21" lean-forward="true" selection-start-line="14" selection-start-column="21" selection-end-line="14" selection-end-column="21" />
           <folding>
-            <element signature="docComment;method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
-            <element signature="method#preferenciasFitness#0;class#TurnosFitnessFunction#0" expanded="false" />
+            <element signature="docComment;method#readData#0;class#Turnos#0" expanded="false" />
+            <element signature="method#readData#0;class#Turnos#0" expanded="false" />
+            <element signature="docComment;method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
+            <element signature="method#readProfessorsInfo#0;class#Turnos#0" expanded="false" />
           </folding>
         </state>
       </provider>

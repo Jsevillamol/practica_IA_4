@@ -15,11 +15,11 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
     /**Create two children per cross*/
     protected boolean siblingsStrategy = false;
     /**Allways use the children (as oposed to use the best between parents and children in each cross)*/
-    protected boolean destructiveStrategy = true;
+    protected boolean destructiveStrategy = false;
 
     // Parte opcional
     /**In a cross, cut the genome in two points to cross it*/
-    protected boolean twoPointCross = false;
+    protected boolean twoPointCross = true;
 
     /**Mutation mechanisms are allele substitution and allele exchange*/
     enum MutationMechanism {SUBSTITUTION, EXCHANGE}
@@ -28,7 +28,7 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
     enum SelectionMechanism {MONTECARLO, TOURNAMENT}
     protected SelectionMechanism selectionMechanism = SelectionMechanism.MONTECARLO;
     /**If performing tournament selection, this is the probability of the worst individual winning the torunament */
-    protected double underdogProbability = 0.0;
+    protected double underdogProbability = 0;
 
     public CustomGeneticAlgorithm(int individualLength, Collection<String> finiteAlphabet, double mutationProbability) {
         super(individualLength, finiteAlphabet, mutationProbability, new Random());
@@ -38,30 +38,30 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
     /**Primitive operation which is responsible for creating the next generation.*/
     protected List<Individual<String>> nextGeneration(List<Individual<String>> population, FitnessFunction<String> fitnessFn) {
         // new_population <- empty set
-        List<Individual<String>> newPopulation = new ArrayList<Individual<String>>(population.size());
+        List<Individual<String>> newPopulation = new ArrayList<>(population.size());
 
         // Generate children
         while (newPopulation.size() < population.size()){
 
             if(random.nextDouble() <= crossProbability){// Perform a cross
-                // x <- RANDOM-SELECTION(population, FITNESS-FN)
-                Individual<String> x = randomSelection(population, fitnessFn);
+                // mam <- RANDOM-SELECTION(population, FITNESS-FN)
+                Individual<String> mam = randomSelection(population, fitnessFn);
 
-                // y <- RANDOM-SELECTION(population, FITNESS-FN)
-                Individual<String> y = randomSelection(population, fitnessFn);
+                // dad <- RANDOM-SELECTION(population, FITNESS-FN)
+                Individual<String> dad = randomSelection(population, fitnessFn);
 
-                // children <- REPRODUCE_MANY(x, y)
-                List<Individual<String>> children = reproduceMany(x, y);
+                // children <- REPRODUCE_MANY(mam, dad)
+                List<Individual<String>> children = reproduceMany(mam, dad);
 
                 if(!destructiveStrategy){
                     // Between children and parents, selects the one with greatest fitness
-                    children.add(x);
-                    children.add(y);
+                    children.add(mam);
+                    children.add(dad);
 
                     children.sort(Comparator.comparingDouble(fitnessFn::apply));
 
-                    children.remove(children.size()-1);
-                    children.remove(children.size()-1);
+                    children.remove(0);
+                    children.remove(0);
                 }
 
                 for(Individual<String> child : children)
@@ -87,32 +87,33 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
     }
 
     // RANDOM-SELECTION(population, FITNESS-FN)
+    /**Select randomly one Individual from the population.*/
     @Override
     protected Individual<String> randomSelection(List<Individual<String>> population, FitnessFunction<String> fitnessFn) {
         // Default result is last individual
         // (just to avoid problems with rounding errors)
         Individual<String> selected = population.get(population.size() - 1);
 
-
         switch(selectionMechanism){
             case MONTECARLO:
-
                 // Determine all of the fitness values
                 double[] fValues = new double[population.size()];
-                for (int i = 0; i < population.size(); i++) {
-                    fValues[i] = fitnessFn.apply(population.get(i));
-                }
+                int i=0;
+                for (Individual<String> individual : population)
+                    fValues[i++] = fitnessFn.apply(individual);
+
                 // Normalize the fitness values
                 fValues = Util.normalize(fValues);
 
                 double probability = random.nextDouble();
                 double totalSoFar = 0.0;
-                for (int i = 0; i < fValues.length; i++) {
+                i=0;
+                for (Individual<String> individual : population) {
                     // Are at last element so assign by default
                     // in case there are rounding issues with the normalized values
-                    totalSoFar += fValues[i];
+                    totalSoFar += fValues[i++];
                     if (probability <= totalSoFar) {
-                        selected = population.get(i);
+                        selected = individual;
                         break;
                     }
                 }
@@ -123,13 +124,13 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
                 Individual<String> contestant1 = population.get( random.nextInt(population.size()) );
                 Individual<String> contestant2 = population.get( random.nextInt(population.size()) );
                 double prob = random.nextDouble();
-                if (prob < underdogProbability){
+                if (random.nextDouble() < underdogProbability
+                        && fitnessFn.apply(contestant1) < fitnessFn.apply(contestant2))
                     // the underdog wins
-                    selected = (fitnessFn.apply(contestant1) < fitnessFn.apply(contestant2)) ? contestant1 : contestant2;
-                } else {
+                    selected = contestant1;
+                else
                     // the best individual wins
-                    selected = (fitnessFn.apply(contestant1) < fitnessFn.apply(contestant2)) ? contestant2 : contestant1;
-                }
+                    selected = contestant2;
 
                 break;
 
@@ -150,16 +151,15 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
 
         List<Individual<String>> children = new ArrayList<>();
 
-        // n <- LENGTH(x);
+        // n <- LENGTH(mam);
         // Note: this is = this.individualLength
         // point1 <- random number from 1 to n
         int point1 = randomOffset(individualLength);
         int point2 = point1;
-        if(twoPointCross){
+        if(twoPointCross)
             point2 += randomOffset(individualLength - point1);
-        }
 
-        // return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c+1, n))
+        // return APPEND(SUBSTRING(mam, 1, point1), SUBSTRING(dad, point1+1, n))
         children.add(cross(mam, dad, point1, point2));
 
         if(siblingsStrategy)
@@ -177,7 +177,7 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
         childRepresentation.addAll(dad.getRepresentation().subList(point1, point2));
         childRepresentation.addAll(mam.getRepresentation().subList(point2, individualLength));
 
-        return new Individual<String>(childRepresentation);
+        return new Individual<>(childRepresentation);
     }
 
     @Override
@@ -204,13 +204,11 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
                 mutatedRepresentation.set(alleleIndex2, allele1);
                 break;
             default:
-                System.out.println("ERROR. MUTATION MECHANISM NOT IMPLEMENTED");
+                System.err.println("ERROR. MUTATION MECHANISM NOT IMPLEMENTED");
                 break;
         }
 
-        Individual<String> mutatedChild = new Individual<String>(mutatedRepresentation);
-
-        return mutatedChild;
+        return new Individual<>(mutatedRepresentation);
     }
 
 }

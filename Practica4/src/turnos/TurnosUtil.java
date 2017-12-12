@@ -51,10 +51,9 @@ public class TurnosUtil {
      * Tomado de https://stackoverflow.com/a/29868630/4841832 */
     private static int[] getRandomSelection(int k, int n) {
         if (k > n) throw new IllegalArgumentException(
-                "Cannot choose " + k + " elements out of " + n + "."
-        );
+                "Cannot choose " + k + " elements out of " + n + ".");
 
-        HashMap<Integer, Integer> hash = new HashMap<Integer, Integer>(2 * k);
+        HashMap<Integer, Integer> hash = new HashMap<>(2 * k);
         int[] output = new int[k];
 
         for (int i = 0; i < k; i++) {

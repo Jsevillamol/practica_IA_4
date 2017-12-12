@@ -17,7 +17,7 @@ public class TurnosGoalTest implements GoalTest {
                           int nExamenes){
         this.restricciones = restricciones;
         this.fitnessFunction = fitnessFunction;
-        this.nExamenes =nExamenes;
+        this.nExamenes = nExamenes;
     }
 
     @Override

@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class TurnosFitnessFunction implements FitnessFunction<String> {
 
-    // Hyperparameters to guide search
     private double restrictionsWeight = 4.0;
 
     static private boolean preferenciasOrdenadas = false;	// si es true, las preferencias con índices más bajos añaden más utilidad

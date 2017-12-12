@@ -15,8 +15,9 @@ import java.util.logging.Logger;
 public class Turnos {
 
 	public static final boolean customGeneticAlgorithm = true;
-	/**Repite el algoritmo RERUNS veces o hasta que encuentra una solucion*/
-	private static final int RERUNS = 10;
+	/**Repite el algoritmo RERUNS veces*/
+	private static final int RERUNS = 100;
+	private static final double mutationProbability = 0.15;
 
 	private static int nExamenes;
 	private static int nTurnos = 16;
@@ -25,9 +26,6 @@ public class Turnos {
 	private static List<String> profesorado = new ArrayList<>();
 	private static Map<String, List<Integer>> restricciones = new HashMap<>();
 	private static Map<String, List<Integer>> preferencias = new HashMap<>();
-	
-	//For debuging
-	private static final Logger logger = Logger.getLogger("Log");
 
 	public static void main(String[] args) {
 		if (args==null || args.length==0) {
@@ -39,9 +37,8 @@ public class Turnos {
 		try {
 			Scanner sc = new Scanner(new File(args[0]));
 			readData(sc); //Guarda los datos en las variable globales.
-			System.out.println("Data read");
+			System.out.println("Datos leidos.");
 			findSolution();
-			//if (true) main(args);//Para repetir infinitamente
 		} catch (FileNotFoundException e) {
 			System.err.println("Fichero mal especificado.");
 			System.exit(1);
@@ -53,9 +50,9 @@ public class Turnos {
 		GoalTest goalTest = new TurnosGoalTest((TurnosFitnessFunction) fitnessFunction, restricciones, nExamenes);
 		GeneticAlgorithm<String> ga;
 		if (customGeneticAlgorithm)
-			ga = new CustomGeneticAlgorithm(nTurnos, profesorado, 0.15);
+			ga = new CustomGeneticAlgorithm(nTurnos, profesorado, mutationProbability);
 		else
-			ga = new GeneticAlgorithm<>(nTurnos, profesorado, 0.15);
+			ga = new GeneticAlgorithm<>(nTurnos, profesorado, mutationProbability);
 		Set<Individual<String>> population;
 		Individual<String> bestIndividual;
 		int attempt = 0;
@@ -74,45 +71,42 @@ public class Turnos {
         double maxTime = Double.MIN_VALUE;
 
 
-
-        boolean goalReached = false;
-
 		do {
 			// Generate an initial population
 			population = new HashSet<>();
 			for (int i = 0; i < TurnosUtil.POBLACION_INICIAL; i++)
 				population.add(TurnosUtil.generateRandomIndividual(profesorado, nExamenes, nTurnos));
 
+			//Find solution
 			bestIndividual = ga.geneticAlgorithm(population, fitnessFunction, goalTest, TurnosUtil.MAX_TIME);
-			//System.out.println("Attempt: " + attempt);
-			//TurnosUtil.showInfo(ga, bestIndividual, fitnessFunction, goalTest, nTurnos, nExamenes, nProfesores);
+			//Print solution
+			System.out.println("Attempt: " + attempt);
+			TurnosUtil.showInfo(ga, bestIndividual, fitnessFunction, goalTest, nTurnos, nExamenes, nProfesores);
 
-			// running stats
+			//Get stats
+			double time = ga.getTimeInMilliseconds();
+			minTime = Math.min(minTime, time);
+			totalTime += time;
+			maxTime = Math.max(maxTime, time);
+
             double fitness = fitnessFunction.apply(bestIndividual);
             minFitness = Math.min(minFitness, fitness);
             totalFitness += fitness;
             maxFitness = Math.max(maxFitness, fitness);
-
-            double time = ga.getTimeInMilliseconds();
-            minTime = Math.min(minTime, time);
-            totalTime += time;
-            maxTime = Math.max(maxTime, time);
 
 			int iter = ga.getIterations();
 			minIter = Math.min(minIter, iter);
 			totalIter += iter;
 			maxIter = Math.max(maxIter, iter);
 
-            goalReached |= goalTest.isGoalState(bestIndividual);
+		} while (attempt++< RERUNS);
 
-		} while (++attempt< RERUNS);
-
-		// Print running stats
+		// Print stats
         double meanFitness = totalFitness / RERUNS;
         double meanIter = totalIter / RERUNS;
         double meanTime = totalTime / RERUNS;
 
-        System.out.println("Results after" + RERUNS + "attempts");
+        System.out.println("Results after " + RERUNS + " attempts");
 
         System.out.println("min fitness = " + minFitness);
 		System.out.println("mean fitness = " + meanFitness);
@@ -134,32 +128,28 @@ public class Turnos {
 	 * @param sc Scanner de donde se leen los datos
 	 */
 	private static void readData(Scanner sc) {
-		logger.setLevel(Level.OFF);
 		nExamenes = sc.nextInt();
 		sc.nextLine();//Hay que ignorar el salto de linea
-		logger.severe("Numero "+nExamenes);
 		profesorado = Arrays.asList((sc.nextLine()).split(", "));
-		logger.severe(profesorado.toString());
 		nProfesores = profesorado.size();
 
 		//Restricciones
 		readProfessorsInfo(sc, restricciones);
 
 		//Preferencias
-		logger.severe("Preferencias");
 		readProfessorsInfo(sc, preferencias);
 	}
 
+	/**Para cada profesor le guarda una lista de turnos.*/
 	private static void readProfessorsInfo(Scanner sc, Map<String, List<Integer>> info) {
 		String[] datosProfesor;
 		for (int i = 0; i<nProfesores; i++) {
-			datosProfesor = (sc.nextLine()).split(": ");
-			if (datosProfesor.length==2) {
-				List<Integer> lista = new ArrayList<>();
+			datosProfesor = (sc.nextLine()).split(": ");//Separa el nombre de los turnos
+			if (datosProfesor.length==2) {//El profesor tiene turnos
+				List<Integer> listaTurnos = new ArrayList<>();
 				for(String str2 : datosProfesor[1].trim().split(","))
-					lista.add(Integer.parseInt(str2));
-				info.put(datosProfesor[0], lista);
-				logger.severe(datosProfesor[0] +" "+ lista.toString());
+					listaTurnos.add(Integer.parseInt(str2));
+				info.put(datosProfesor[0], listaTurnos);
 			}
 		}
 	}
