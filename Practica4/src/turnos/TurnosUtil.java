@@ -11,7 +11,7 @@ import aima.core.search.local.Individual;
 public class TurnosUtil {
 
     public static final int POBLACION_INICIAL = 50;
-    public static long MAX_TIME = 0000L;
+    public static long MAX_TIME = 10000L;
     private static final Random RANDOM = new Random();
 
     /****************************
@@ -70,7 +70,8 @@ public class TurnosUtil {
     public static void showInfo(GeneticAlgorithm<String> ga, Individual<String> bestIndividual,
                                 FitnessFunction fitnessFunction, GoalTest goalTest,
                                 int nTurnos, int nExamenes, int nProfesores){
-        System.out.println("Max Time:" +MAX_TIME+"ms.");
+        System.out.println("Custom Genetic Algorithm: " + Turnos.customGeneticAlgorithm);
+        System.out.println("Max Time: " +MAX_TIME+"ms.");
         System.out.println("Best Individual=\n" + bestIndividual);
         System.out.println("nTurnos        = " + nTurnos);
         System.out.println("nExamenes      = " + nExamenes);

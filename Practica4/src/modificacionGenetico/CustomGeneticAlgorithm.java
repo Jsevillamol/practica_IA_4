@@ -50,7 +50,7 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
                 // y <- RANDOM-SELECTION(population, FITNESS-FN)
                 Individual<String> y = randomSelection(population, fitnessFn);
 
-                // children <- REPRODUCE(x, y)
+                // children <- REPRODUCE_MANY(x, y)
                 children = reproduceMany(x, y);
 
                 if(!destructiveStrategy){
@@ -163,10 +163,10 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
         }
 
         // return APPEND(SUBSTRING(x, 1, c), SUBSTRING(y, c+1, n))
-        children.add(cross(mam, dad, point1, point2, new ArrayList<>()));
+        children.add(cross(mam, dad, point1, point2));
 
         if(siblingsStrategy)
-            children.add(cross(dad, mam, point1, point2, new ArrayList<>()));
+            children.add(cross(dad, mam, point1, point2));
 
         return children;
     }
@@ -174,7 +174,8 @@ public class CustomGeneticAlgorithm extends GeneticAlgorithm<String> {
     /**Cruza los dos padres por dos puntos.
      * Si los dos puntos son iguales se hace un solo cruce*/
     private Individual<String> cross(Individual<String> mam, Individual<String> dad,
-                                     int point1, int point2, List<String> childRepresentation) {
+                                     int point1, int point2) {
+        List<String> childRepresentation = new ArrayList<>();
         childRepresentation.addAll(mam.getRepresentation().subList(0,      point1));
         childRepresentation.addAll(dad.getRepresentation().subList(point1, point2));
         childRepresentation.addAll(mam.getRepresentation().subList(point2, individualLength));
