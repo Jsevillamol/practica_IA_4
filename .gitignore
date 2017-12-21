@@ -5,3 +5,4 @@ aima/*
 genetico/AimaLib-1.9.1/bin/
 Practica4/.project
 Practica4/.idea/dictionaries/
+*.xml
