@@ -88,6 +88,7 @@
        (estado ?estado)
        (extras $?extras)
       )
+    
    (cliente 
        (nombre ?cliente)
        (zona-deseada ?zona-deseada)
@@ -101,15 +102,23 @@
        (estados-admitidos $?estados-admitidos)
        (extras-deseados $?extras-deseados)
       )
+
    ; Aplicacion de filtros
    (test (eq ?zona ?zona-deseada))
    (test (eq ?tipo-transaccion ?tipo-transaccion-deseada))
+
+   ; Comprobaciones numericas
    (test (>= ?precio ?precio-minimo))
    (test (<= ?precio ?precio-maximo))
    (test (>= ?metros-cuadrados ?metros-cuadrados-minimos))
    (test (>= ?n-habitaciones ?n-habitaciones-minimo))
    (test (>= ?n-aseos ?n-aseos-minimo))
-   ; TODO add multislot checks
+
+   ; Restricciones cualitativas
+   (test (member$ ?tipo ?tipos-admitidos))
+   (test (member$ ?estado ?estados-admitidos))
+   (test (subsetp ?extras-deseados ?extras))
+
    =>
    (assert (recomendacion ?piso ?cliente))
   )
