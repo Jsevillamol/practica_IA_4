@@ -24,16 +24,9 @@
         (type INTEGER)) 
    (slot n-aseos
         (type INTEGER))
-   (slot tipo
-        (type SYMBOL)
-        (allowed-symbols piso apartamento duplex chalet adosado atico planta-baja estudio loft finca-rustica))
-   (slot estado
-        (type SYMBOL)
-        (allowed-symbols nuevo segunda-mano reformado a-reformar))
-   (slot garaje (type SYMBOL) (allowed-symbols no si))
    (multislot extras
         (type SYMBOL)
-        (allowed-symbols trastero terraza jardin piscina parque-infantil portero pistas-deportivas)))
+        (allowed-symbols garaje parque-infantil)))
 
 (deftemplate MAIN::cliente "Datos del cliente"
     (slot nombre (type STRING))
