@@ -129,8 +129,8 @@
     
    (preferencias 
        (nombre ?cliente)
-       (zona-deseada ?zona)
-       (tipo-transaccion-deseada ?tipo-transaccion)
+       (zona-deseada ?zona-deseada)
+       (tipo-transaccion-deseada ?tipo-transaccion-deseada)
        (precio-minimo ?precio-minimo)
        (precio-maximo ?precio-maximo)
        (metros-cuadrados-minimos ?metros-cuadrados-minimos)
@@ -139,7 +139,7 @@
        (extras-deseados $?extras-deseados)
     )
 
-   ; Comprobaciones numericas
+   ; Restricciones numericas
    (test (>= ?precio ?precio-minimo))
    (test (<= ?precio ?precio-maximo))
    (test (>= ?metros-cuadrados ?metros-cuadrados-minimos))
@@ -147,14 +147,21 @@
    (test (>= ?n-aseos ?n-aseos-minimo))
 
    ; Restricciones cualitativas
+   (test (eq ?tipo-transaccion ?tipo-transaccion-deseada))
+   (test (eq ?zona ?zona-deseada))
    (test (subsetp ?extras-deseados ?extras))
 
    =>
    (assert (recomendacion ?piso ?cliente))
-  )
+)
   
 ;; DATABASE
 
-  (assert (inmueble (direccion "C/Colón") (zona "centro") (precio 100.0) (n-habitaciones 3) (tipo piso)))
 
-  (assert (cliente (nombre "Jose") (ingresos-anuales 12000) (n-residentes 3) (tipo-residentes familia) (zona-trabajo "centro") (coche si)))
+(deffacts MAIN::inmuebles-database 
+  (inmueble (direccion "C/Colón") (zona "centro") (precio 100.0) (n-habitaciones 3) (tipo piso))
+)
+
+(deffacts MAIN::clientes-database
+  (cliente (nombre "Jose") (ingresos-anuales 12000) (n-residentes 3) (tipo-residentes familia) (zona-trabajo "centro") (coche si))
+)
