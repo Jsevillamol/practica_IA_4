@@ -33,7 +33,7 @@
    (slot garaje (type SYMBOL) (allowed-symbols no si))
    (multislot extras
         (type SYMBOL)
-        (allowed-symbols trastero terraza jardin piscina parque-infantil portero pistas-deportivas amueblado calefaccion aire-acondicionado)))
+        (allowed-symbols trastero terraza jardin piscina parque-infantil portero pistas-deportivas)))
 
 (deftemplate MAIN::cliente "Datos del cliente"
     (slot nombre (type STRING))
@@ -46,7 +46,7 @@
     (slot tipo-residentes
         (type SYMBOL)
         (allowed-symbols familia pareja amigos))
-    (slot zona-trabajo ;Esto podría cambiarse a multislot zonas-trabajo para más residentes pero habría que hacer reglñas de cercania de zonas
+    (slot zona-trabajo ;Esto podría cambiarse a multislot zonas-trabajo para más residentes pero habría que hacer reglas de cercania de zonas
         (type STRING))
     (slot coche (type SYMBOL) (allowed-symbols no si))
     (slot mascota (type SYMBOL) (allowed-symbols no si))
@@ -72,18 +72,12 @@
        (type INTEGER))
    (slot n-aseos-minimo
        (type INTEGER))
-   (multislot tipos-admitidos
-       (type SYMBOL)
-       (allowed-symbols piso apartamento duplex chalet adosado atico planta-baja estudio loft finca-rustica))
-   (multislot estados-admitidos
-       (type SYMBOL)
-       (allowed-symbols nuevo segunda-mano reformado a-reformar))
-   (slot garaje (type SYMBOL) (allowed-symbols no si))
    (multislot extras-deseados
        (type SYMBOL)
-       (allowed-symbols terraza jardin piscina parque-infantil portero pistas-deportivas amueblado calefaccion aire-acondicionado)))
+       (allowed-symbols garaje parque-infantil NULL)) ; el valor NULL se usa para no añadir un extra cuando una condicion es falsa
+  )
 
-(defmodule DEDUCCION (import ?ALL))
+(defmodule DEDUCCION (import MAIN ?ALL))
        
 (defrule DEDUCCION::deducir-preferencias
     (cliente
@@ -94,24 +88,30 @@
         (zona-trabajo ?zona-trabajo)
         (coche ?coche)
         (mascota ?mascota)
-        (tipo-transaccion-deseada ?tipo-transaccion))
+        (tipo-transaccion-deseada ?tipo-transaccion)
+      )
   =>
     (assert (preferencias 
        (nombre ?cliente)
        (zona-deseada ?zona-trabajo)
        (tipo-transaccion-deseada ?tipo-transaccion)
-       (precio-minimo ?ingresos*0.2)
-       (precio-maximo ?precio-maximo*0.4)
-       (metros-cuadrados-minimos ?metros-cuadrados-minimos)
-       (n-habitaciones-minimo ?n-habitaciones-minimo)
-       (n-aseos-minimo ?n-aseos-minimo)
-       (tipos-admitidos $?tipos-admitidos)
-       (estados-admitidos $?estados-admitidos)
-       (extras-deseados $?extras-deseados))))
+       (precio-minimo (* ?ingresos 10))
+       (precio-maximo (* ?ingresos 40))
+       (metros-cuadrados-minimos (* ?n-residentes 20))
+       (n-habitaciones-minimo (+ ?n-residentes 2))
+       (n-aseos-minimo (if (>= ?n-residentes 4) then 2 else 1))
+
+       (extras-deseados 
+          (if (eq ?coche si) then garaje else NULL)
+          (if (eq ?tipo-residentes familia) then parque-infantil else NULL)
+       )
+
+    ))
+  )
 
     
        
-(defmodule ENCONTRAR-PISO (import ?ALL))
+(defmodule ENCONTRAR-PISO (import MAIN ?ALL))
        
 (defrule ENCONTRAR-PISO::recomendar
    (inmueble 
@@ -124,7 +124,8 @@
        (n-aseos ?n-aseos)
        (tipo ?tipo)
        (estado ?estado)
-       (extras $?extras))
+       (extras $?extras)
+    )
     
    (preferencias 
        (nombre ?cliente)
@@ -135,9 +136,8 @@
        (metros-cuadrados-minimos ?metros-cuadrados-minimos)
        (n-habitaciones-minimo ?n-habitaciones-minimo)
        (n-aseos-minimo ?n-aseos-minimo)
-       (tipos-admitidos $?tipos-admitidos)
-       (estados-admitidos $?estados-admitidos)
-       (extras-deseados $?extras-deseados))
+       (extras-deseados $?extras-deseados)
+    )
 
    ; Comprobaciones numericas
    (test (>= ?precio ?precio-minimo))
@@ -147,14 +147,14 @@
    (test (>= ?n-aseos ?n-aseos-minimo))
 
    ; Restricciones cualitativas
-   (test (member$ ?tipo ?tipos-admitidos))
-   (test (member$ ?estado ?estados-admitidos))
    (test (subsetp ?extras-deseados ?extras))
 
    =>
    (assert (recomendacion ?piso ?cliente))
   )
   
-  
+;; DATABASE
+
   (assert (inmueble (direccion "C/Colón") (zona "centro") (precio 100.0) (n-habitaciones 3) (tipo piso)))
+
   (assert (cliente (nombre "Jose") (ingresos-anuales 12000) (n-residentes 3) (tipo-residentes familia) (zona-trabajo "centro") (coche si)))
