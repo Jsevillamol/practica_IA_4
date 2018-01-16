@@ -6,74 +6,135 @@
 ;
 ; Mirar Diapositivas Control Ejecucion
 
-(defmodule MAIN (export ?ALL))
+(defmodule PISOS (export ?ALL))
 
-(deftemplate MAIN::inmueble "Caracteristicas de un piso"
+(deftemplate PISOS::inmueble "Caracteristicas de un piso"
    (slot direccion
-       (type STRING)) 
+       (type STRING)
+   ) 
    (slot zona
-       (type STRING))  ; Incluso podrían ser simbolos predefinidos (como idealista.com)
+       (type STRING)
+   )
    (slot tipo-transaccion
        (type SYMBOL)
-       (allowed-symbols compra alquiler)) 
+       (allowed-symbols compra alquiler)
+   ) 
    (slot precio
-       (type FLOAT))  
+       (type FLOAT)
+   )  
    (slot metros-cuadrados
-       (type INTEGER))
+       (type INTEGER)
+   )
    (slot n-habitaciones 
-        (type INTEGER)) 
+        (type INTEGER)
+   ) 
    (slot n-aseos
-        (type INTEGER))
+        (type INTEGER)
+   )
    (multislot extras
         (type SYMBOL)
-        (allowed-symbols garaje parque-infantil)))
+        (allowed-symbols garaje parque-infantil)
+   )
+)
 
-(deftemplate MAIN::cliente "Datos del cliente"
+(defrule PISOS::inmuebleCaro
+	(inmueble 
+       (direccion ?piso) 
+       (zona ?zona)
+       (tipo-transaccion ?tipo-transaccion)
+       (precio ?precio)
+       (metros-cuadrados ?metros-cuadrados)
+       (n-habitaciones ?n-habitaciones)
+       (n-aseos ?n-aseos)
+       (extras $?extras)
+    )
+    (or 
+    	(and (>= precio 1000000) (eq ?tipo-transaccion compra))
+    	(and (>= precio 5000) (eq ?tipo-transaccion alquiler))
+    )
+    =>
+    assert((caro ?piso))
+)
+
+(defrule PISOS::inmuebleBarato
+	(inmueble 
+       (direccion ?piso) 
+       (zona ?zona)
+       (tipo-transaccion ?tipo-transaccion)
+       (precio ?precio)
+       (metros-cuadrados ?metros-cuadrados)
+       (n-habitaciones ?n-habitaciones)
+       (n-aseos ?n-aseos)
+       (extras $?extras)
+    )
+    (or 
+    	(and (<= precio 50000) (eq ?tipo-transaccion compra))
+    	(and (<= precio 400) (eq ?tipo-transaccion alquiler))
+    )
+    =>
+    assert((barato ?piso))
+)
+
+(defrule PISOS::asquible
+	(not (caro ?piso))
+	(not (caro ?piso))
+	=>
+	assert((asequible ?piso))
+)
+
+(defrule PISOS::tamannoGrande
+	(inmueble 
+       (direccion ?piso) 
+       (zona ?zona)
+       (tipo-transaccion ?tipo-transaccion)
+       (precio ?precio)
+       (metros-cuadrados ?metros-cuadrados)
+       (n-habitaciones ?n-habitaciones)
+       (n-aseos ?n-aseos)
+       (extras $?extras)
+    )
+    (>= metros-cuadrados 100)
+    (>= n-habitaciones 6)
+    (>= n-aseos 2)
+    =>
+    assert((espacioso ?piso))
+)
+
+(defrule PISOS::acogedor
+	(not (espacioso ?piso))
+	=>
+	assert((acogedor ?piso))
+)
+
+(defmodule CLIENTES (export ?ALL))
+
+(deftemplate CLIENTES::cliente "Datos del cliente"
     (slot nombre (type STRING))
     (slot ingresos-anuales
         (type INTEGER)
-        (range 0 ?VARIABLE))
+        (range 0 ?VARIABLE)
+    )
     (slot n-residentes
         (type INTEGER)
-        (range 0 ?VARIABLE))
+        (range 0 ?VARIABLE)
+    )
     (slot tipo-residentes
         (type SYMBOL)
-        (allowed-symbols familia pareja amigos))
-    (slot zona-trabajo ;Esto podría cambiarse a multislot zonas-trabajo para más residentes pero habría que hacer reglas de cercania de zonas
-        (type STRING))
+        (allowed-symbols familia pareja amigos)
+    )
+    (slot zona-trabajo 
+        (type STRING)
+    )
     (slot coche (type SYMBOL) (allowed-symbols no si))
     (slot mascota (type SYMBOL) (allowed-symbols no si))
     (slot tipo-transaccion-deseada
        (type SYMBOL)
-       (allowed-symbols compra alquiler)))
+       (allowed-symbols compra alquiler)
+    )
+)
 
-(deftemplate MAIN::preferencias "Preferencias del cliente"
-   (slot nombre
-       (type STRING))
-   (slot zona-deseada
-       (type STRING))
-   (slot tipo-transaccion-deseada
-       (type SYMBOL)
-       (allowed-symbols compra alquiler))
-   (slot precio-minimo
-       (type FLOAT))
-   (slot precio-maximo
-       (type FLOAT))
-   (slot metros-cuadrados-minimos
-       (type INTEGER))
-   (slot n-habitaciones-minimo
-       (type INTEGER))
-   (slot n-aseos-minimo
-       (type INTEGER))
-   (multislot extras-deseados
-       (type SYMBOL)
-       (allowed-symbols garaje parque-infantil NULL)) ; el valor NULL se usa para no añadir un extra cuando una condicion es falsa
-  )
-
-(defmodule DEDUCCION (import MAIN ?ALL))
-       
-(defrule DEDUCCION::deducir-preferencias
-    (cliente
+(defrule CLIENTES::numero_bajo
+	(cliente
         (nombre ?cliente)
         (ingresos-anuales ?ingresos)
         (n-residentes ?n-residentes)
@@ -82,26 +143,55 @@
         (coche ?coche)
         (mascota ?mascota)
         (tipo-transaccion-deseada ?tipo-transaccion)
-      )
-  =>
-    (assert (preferencias 
-       (nombre ?cliente)
-       (zona-deseada ?zona-trabajo)
-       (tipo-transaccion-deseada ?tipo-transaccion)
-       (precio-minimo (* ?ingresos 10))
-       (precio-maximo (* ?ingresos 40))
-       (metros-cuadrados-minimos (* ?n-residentes 20))
-       (n-habitaciones-minimo (+ ?n-residentes 2))
-       (n-aseos-minimo (if (>= ?n-residentes 4) then 2 else 1))
+    )
+    (< ?n-residentes 4)
+    =>
+    assert((pocos ?cliente))
+)
 
-       (extras-deseados 
-          (if (eq ?coche si) then garaje else NULL)
-          (if (eq ?tipo-residentes familia) then parque-infantil else NULL)
-       )
+(defrule CLIENTES::numero_alto
+	(not (pocos ?cliente))
+    =>
+    assert((numerosos ?cliente))
+)
 
-    ))
-  )
+(defrule CLIENTES::poder_adquisitivo_alto
+	(cliente
+        (nombre ?cliente)
+        (ingresos-anuales ?ingresos)
+        (n-residentes ?n-residentes)
+        (tipo-residentes ?tipo-residentes)
+        (zona-trabajo ?zona-trabajo)
+        (coche ?coche)
+        (mascota ?mascota)
+        (tipo-transaccion-deseada ?tipo-transaccion)
+    )
+    (>= ?ingresos 30000)
+    =>
+    assert((clase-alta ?cliente))
+)
 
+(defrule CLIENTES::poder_adquisitivo_bajo
+	(cliente
+        (nombre ?cliente)
+        (ingresos-anuales ?ingresos)
+        (n-residentes ?n-residentes)
+        (tipo-residentes ?tipo-residentes)
+        (zona-trabajo ?zona-trabajo)
+        (coche ?coche)
+        (tipo-transaccion-deseada ?tipo-transaccion)
+    )
+    (<= ?ingresos 1000)
+    =>
+    (clase-baja ?cliente)
+)
+
+(defrule CLIENTES::poder_adquisitivo_medio
+	(not (clase-alta ?cliente))
+	(not (clase-baja ?cliente))
+	=>
+	(clase-media ?cliente)
+)
     
        
 (defmodule ENCONTRAR-PISO (import MAIN ?ALL))
@@ -115,34 +205,36 @@
        (metros-cuadrados ?metros-cuadrados)
        (n-habitaciones ?n-habitaciones)
        (n-aseos ?n-aseos)
-       (tipo ?tipo)
-       (estado ?estado)
        (extras $?extras)
     )
     
-   (preferencias 
-       (nombre ?cliente)
-       (zona-deseada ?zona-deseada)
-       (tipo-transaccion-deseada ?tipo-transaccion-deseada)
-       (precio-minimo ?precio-minimo)
-       (precio-maximo ?precio-maximo)
-       (metros-cuadrados-minimos ?metros-cuadrados-minimos)
-       (n-habitaciones-minimo ?n-habitaciones-minimo)
-       (n-aseos-minimo ?n-aseos-minimo)
-       (extras-deseados $?extras-deseados)
+   (cliente
+        (nombre ?cliente)
+        (ingresos-anuales ?ingresos)
+        (n-residentes ?n-residentes)
+        (tipo-residentes ?tipo-residentes)
+        (zona-trabajo ?zona-trabajo)
+        (coche ?coche)
+        (tipo-transaccion-deseada ?tipo-transaccion)
     )
 
-   ; Restricciones numericas
-   (test (>= ?precio ?precio-minimo))
-   (test (<= ?precio ?precio-maximo))
-   (test (>= ?metros-cuadrados ?metros-cuadrados-minimos))
-   (test (>= ?n-habitaciones ?n-habitaciones-minimo))
-   (test (>= ?n-aseos ?n-aseos-minimo))
+    ; Restricciones usando las inferencias anteriores
+    (or 
+   		(and (clase-baja ?cliente) (barato ?piso))
+   		(and (clase-alta ?cliente) (caro ?piso))
+   		(and (clase-media) (asequible ?piso))
+   	)
+   	(or 
+   		(and (pocos ?cliente) (acogedor ?piso))
+   		(and (numerosos ?cliente) (espacioso ?piso))
+   	)
+   
 
    ; Restricciones cualitativas
    (test (eq ?tipo-transaccion ?tipo-transaccion-deseada))
-   (test (eq ?zona ?zona-deseada))
-   (test (subsetp ?extras-deseados ?extras))
+   (test (eq ?zona ?zona-trabajo))
+   (test (or (neq ?coche si) (member garaje $?extras))
+   (test (or (neq ?tipo-residentes familia) (member parque-infantil $?extras))
 
    =>
    (assert (recomendacion ?piso ?cliente))
