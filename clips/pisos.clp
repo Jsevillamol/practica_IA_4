@@ -1,4 +1,5 @@
 ;Dividir el programa en modulos:
+;   Se introduce la información sobre los pisos
 ;   El cliente nos da su información
 ;   Deducimos que tipo de inmueble busca
 ;   Buscamos entre nuestros inmuebles los que se ajustan
@@ -8,7 +9,7 @@
 
 (defmodule PISOS (export ?ALL))
 
-;;; EL garaje mejor en un slot
+;;; El garaje mejor en un slot
 (deftemplate PISOS::inmueble "Caracteristicas de un piso"
     (slot direccion         (type STRING))
     (slot zona              (type STRING))
@@ -16,157 +17,149 @@
     (slot metros-cuadrados  (type INTEGER))
     (slot n-habitaciones    (type INTEGER))
     (slot n-aseos           (type INTEGER))
+    (slot accesible         (type SYMBOL)   (allowed-symbols no si))
     (slot transaccion       (type SYMBOL)   (allowed-symbols compra alquiler))
     (multislot extras       (type SYMBOL)   (allowed-symbols garaje parque-infantil)))
 
-
-(defrule PISOS::compraCaro
-    (inmueble
-        (direccion ?piso)
-        (transaccion compra)
-        (precio ?precio))
-
-    (>= precio 1000000)
-    =>
-    (assert (caro ?piso)))
-
-(defrule PISOS::alquilerCaro
-    (inmueble 
-        (direccion ?piso)
-        (transaccion alquiler)
-        (precio ?precio))
-
-    (>= precio 5000)
-    =>
-    (assert (caro ?piso)))
-
-(defrule PISOS::compraBarato
-	(inmueble 
-       (direccion ?piso)
-       (transaccion compra)
-       (precio ?precio))
-    (<= precio 50000)
-    =>
-    (assert (barato ?piso)))
-
-(defrule PISOS::alquilerBarato
-    (inmueble 
-       (direccion ?piso)
-       (transaccion alquiler)
-       (precio ?precio))
-    (<= precio 400)
-    =>
-    (assert (barato ?piso)))
-
-;;;Diria que esto es redundate
-(defrule PISOS::asquible
-    (not (caro ?piso))
-    =>
-    assert((asequible ?piso)))
-
-(defrule PISOS::tamannoGrande
-    (inmueble 
-       (direccion ?piso)
-       (metros-cuadrados ?metros-cuadrados)
-       (n-habitaciones ?n-habitaciones)
-       (n-aseos ?n-aseos))
-    (>= metros-cuadrados 100)
-    (>= n-habitaciones 6)
-    (>= n-aseos 2)
-    =>
-    assert((espacioso ?piso)))
-
-(defrule PISOS::acogedor
-    (not (espacioso ?piso))
-    =>
-    assert((acogedor ?piso)))
+;IO para leer información de pisos aquí
 
 (defmodule CLIENTES (export ?ALL))
 
 (deftemplate CLIENTES::cliente "Datos del cliente"
-    (slot nombre                (type STRING))
-    (slot zona-trabajo          (type STRING))
-    (slot coche                 (type SYMBOL)   (allowed-symbols no si))
-    (slot mascota               (type SYMBOL)   (allowed-symbols no si))
-    (slot tipo-residentes       (type SYMBOL)   (allowed-symbols familia pareja amigos))
-    (slot transaccion-deseada   (type SYMBOL)   (allowed-symbols compra alquiler))
-    (slot ingresos-anuales      (type INTEGER)  (range 0 ?VARIABLE))
-    (slot n-residentes          (type INTEGER)  (range 0 ?VARIABLE)))
+    (slot nombre            (type STRING))
+    (slot zona-trabajo      (type STRING))
+    (slot discapacidad      (type SYMBOL)   (allowed-symbols no si))
+    (slot coche             (type SYMBOL)   (allowed-symbols no si))
+    (slot mascota           (type SYMBOL)   (allowed-symbols no si))
+    (slot tipo-residentes   (type SYMBOL)   (allowed-symbols familia pareja amigos))
+    (slot transaccion       (type SYMBOL)   (allowed-symbols compra alquiler))
+    (slot ingresos-anuales  (type INTEGER)  (range 0 ?VARIABLE))
+    (slot n-residentes      (type INTEGER)  (range 0 ?VARIABLE)))
 
-(defrule CLIENTES::numero_bajo
+;IO para leer información de clientes aquí
+
+(defmodule PREFERENCIAS (import CLIENTES))
+
+(deftemplate PREFERENCIAS::preferencias-precio "Información con las preferencias económicas de un cliente"
+    (slot cliente       (type STRING))
+    (slot precio-max    (type INTEGER)))
+
+;La idea es puntuar mejor a las casas con el nº de habitciones en el rango
+(deftemplate PREFERENCIAS::preferencias-tamaño "Información con las preferencias de espacio de un cliente"
+    (slot cliente           (type STRING))
+    (slot habitaciones-min  (type INTEGER))
+    (slot habitaciones-max  (type INTEGER))
+    (slot espacioso         (type SYMBOL)   (allowed-symbols no si)))
+
+(deftemplate PREFERENCIAS::preferencias-zona
+    (slot cliente    (type STRING))
+    (slot zona       (type STRING)))
+
+(deftemplate PREFERENCIAS::preferencias-extras
+    (slot cliente   (type STRING))
+    (slot accesible (type SYMBOL) (allowed-symbols no si))
+    (slot garaje    (type SYMBOL) (allowed-symbols no si)))
+
+
+(defrule PREFERENCIAS::deducir-preferencias-economicas-alquiler "Deduce, a partir de los datos del cliente, que tipo de piso prefiere"
+    (clientes
+        (nombre             ?nombre)
+        (ingresos-anuales   ?ingresos)
+        (transaccion        alquiler))
+    =>
+    (assert (preferencias-precio
+        (cliente        ?nombre)
+        (precio-max     (integer (* (/ ?ingresos 12) 0.4)))))) ;EL gasto en alquiler no debe superar el 40% del sueldo
+
+(defrule PREFERENCIAS::deducir-preferencias-economicas-compra
+    (clientes
+        (nombre             ?nombre)
+        (ingresos-anuales   ?ingresos)
+        (transaccion        compra))
+    =>
+    (assert (preferencias-precio
+        (cliente        ?nombre)
+        (precio-max     (* ?ingresos 9))))) ;El precio de la casa no debe superar el salario de 9 años
+
+(defrule PREFERENCIAS::deducir-preferencias-tamaño-familia
+    (clientes
+        (nombre             ?nombre)
+        (mascota            ?mascota)
+        (tipo-residentes    familia)
+        (n-residentes       ?n-residentes))
+    =>
+    (assert (preferencias-tamaño
+        (cliente            ?nombre)
+        (habitaciones-max   (- ?n-residentes 1))            ;Normalmente en las familias los padres o hermanos comparten habitación
+        (habitaciones-min   (div (+ 1 ?n-residentes) 2))))  ;Como mucho compartir habitaciones de 2 en dos
+        (espaciosa          ?mascota))))                    ;Si tienen mascota van a necesitar más espacio (los metros^2 puntuarán más)
+
+(defrule PREFERENCIAS::deducir-preferencias-tamaño-amigos
+    (clientes
+        (nombre             ?nombre)
+        (mascota            ?mascota)
+        (tipo-residentes    amigos)
+        (n-residentes       ?n-residentes))
+    =>
+    (assert (preferencias-tamaño
+        (cliente            ?nombre)
+        (habitaciones-max   ?n-residentes)  ;No hacen falta más habitaciones de los amigos que hay
+        (habitaciones-min   ?n-residentes)  ;Los amigos no suelen compartir habitación
+        (espaciosa          ?mascota))))    ;Si tienen mascota van a necesitar más espacio (los metros^2 puntuarán más)
+
+
+;Con una base de datos de las zonas y su disposición se podria crear preferencias de las zonas cercanas al trabajo.
+(defrule PREFERENCIAS::deducir-preferencias-zona
     (cliente
-        (nombre ?cliente)
-        (n-residentes ?n-residentes))
-
-    (< ?n-residentes 4)
+        (nombre         ?nombre)
+        (zona-trabajo   ?zona))
     =>
-    assert((pocos ?cliente)))
+    (assert (preferencias-zona
+        (cliente    ?nombre)
+        (zona       ?zona))))
 
-(defrule CLIENTES::numero_alto
-    (not (pocos ?cliente))
+
+(defrule PREFERENCIAS::deducir-preferencias-extras
+    (cliete
+        (nombre         ?nombre)
+        (discapacidad   ?discapacidad)
+        (coche          ?coche))
     =>
-    assert((numerosos ?cliente)))
+    (assert (preferencias-extras
+        (cliente    ?nombre)
+        (accesible  ?discapacidad)
+        (garaje     ?coche))))
 
-(defrule CLIENTES::poder_adquisitivo_alto
-    (cliente
-        (nombre ?cliente)
-        (ingresos-anuales ?ingresos))
+(defmodule MATCH (import ?ALL))
 
-    (>= ?ingresos 30000)
+(deftemplate MATCH::compatible
+    (cliente    (type STRING))
+    (piso       (type STRING))
+    (puntuacion (type FLOAT)))
+
+(defrule MATCH::match-precio
+    (preferencias-precio
+        (cliente            ?nombre)
+        (precio-max         ?precio-max))
+    (piso
+        (direccion  ?dir)
+        (precio     ?precio))
+    (=< ?precio ?precio-max)
     =>
-    assert((clase-alta ?cliente)))
+    (assert (compatible
+        (cliente    ?nombre)
+        (piso       ?dir)
+        (puntuacion (/ (- ?precio-max ?precio) 10)))))
 
-(defrule CLIENTES::poder_adquisitivo_bajo
-	(cliente
-        (nombre ?cliente)
-        (ingresos-anuales ?ingresos))
+; La idea es hacer mas reglas como match-precio que actualicen la puntuacion de la compatibilidad (revertiendola y assertandola de nuevo)
+; para hacer esto a lo mejor hace falta añadir algún slot más a compatible para saber que comprobaciones se han hecho ya
 
-    (<= ?ingresos 1000)
-    =>
-    (clase-baja ?cliente))
+(defmodule RESULTADOS (import ?ALL))
 
-(defrule CLIENTES::poder_adquisitivo_medio
-    (not (clase-alta ?cliente))
-    (not (clase-baja ?cliente))
-    =>
-    (clase-media ?cliente))
- 
-
-(defmodule ENCONTRAR-PISO (import MAIN ?ALL))
-
-(defrule ENCONTRAR-PISO::recomendar
-   (inmueble 
-       (direccion ?piso) 
-       (zona ?zona)
-       (transaccion ?transaccion)
-       (extras $?extras))
-    
-   (cliente
-        (nombre ?cliente)
-        (tipo-residentes ?tipo-residentes)
-        (zona-trabajo ?zona)
-        (transaccion-deseada ?transaccion))
-;;; Los ors y ands hay que evitarlos: or -> 2 reglas, and -> una condición detras de otra
-    ; Restricciones usando las inferencias anteriores
-    (or
-        (and (clase-baja ?cliente) (barato ?piso))
-        (and (clase-alta ?cliente) (caro ?piso))
-        (and (clase-media) (asequible ?piso)))
-    (or
-        (and (pocos ?cliente) (acogedor ?piso))
-        (and (numerosos ?cliente) (espacioso ?piso)))
-
-   ; Restricciones cualitativas
-   (test (or (neq ?coche si) (member garaje $?extras)))
-   (test (or (neq ?tipo-residentes familia) (member parque-infantil $?extras)))
-
-   =>
-   (assert (recomendacion ?piso ?cliente)))
+; IO para mostrar resultados
 
 
-;; DATABASE
-
-
+;; DATABASE:
 (deffacts MAIN::inmuebles-database 
     (inmueble (direccion "C/Colón") (zona "centro") (precio 100.0) (n-habitaciones 3) (tipo piso)))
 
