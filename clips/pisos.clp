@@ -227,7 +227,37 @@
 (defmodule RESULTADOS (import ?ALL))
 
 ; IO para mostrar resultados
+;; Crear una lista con todos los matchs
+(defrule inicializar-lista-recomendaciones ;;TODO: modificar prioridad para que esto sea lo primero del modulo que se ejecute
+	cliente((nombre ?nombre))
+	=>
+	(assert (recomendaciones ?nombre []))
+)
 
+(defrule lista-recomendaciones
+	(compatible
+        (cliente    ?nombre)
+        (piso       ?dir)
+        (puntuacion ?punt)
+    )
+    (recomendaciones ?nombre ?lista)
+    =>
+    (retract (recomendaciones ?nombre ?$lista))
+    (assert (insertar-ordenado ?dir ?punt ?$lista))
+)
+
+(deffunction insertar-ordenado (?dir ?punt ?$lista)
+	(if (eq (lenght$ lista) 0 ) then ((insert$ ?$lista 1 (create$ ?punt ?dir))) ;Si la lista esta vacia, insertamos la primera entrada
+	else (if (>= punt (first$ lista)) then (insert$ ?$lista 1 (create$ ?punt ?dir)) ; Si la puntuacion es mejor que el primer el de la lista, insertamos una nueva entrada al principio
+	else ( bind ?$lista ($insert (insertar-ordenado ?dir ?punt (rest$ ?$lista)) 1 (first$ ?$lista))) ; En otro caso, devolvemos la lista formada por el primer elemento mas el resultado de insertar la entrada en la tail de la lista
+	(while (> (lenght$ ?$lista 10)) delete-member$ $lista (lenght$ ?$lista)) ; Si la lista es muy larga, quitamos las entradas con menor puntuacion
+	?lista
+)
+
+(defrule mostrar-recomendaciones ;;TODO modificar prioridad para que esto se ejecute lo ultimo
+	=>
+	()
+)
 
 ;; DATABASE:
 (deffacts MAIN::inmuebles-database 
