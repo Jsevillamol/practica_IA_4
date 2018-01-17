@@ -38,6 +38,76 @@
 
 ;IO para leer información de clientes aquí
 
+(defrule CLIENTES::preguntas
+	=>
+	(printout t "Escribe tu nombre y pulsa Enter> ")
+	(bind ?name (read))
+	(printout t crlf "**********************************" crlf)
+	(printout t " Hello, " ?name "." crlf)
+	(printout t " Welcome to the house recommender" crlf)
+	(printout t " Please answer the questions and" crlf)
+	(printout t " I will tell you what houses are" crlf)
+	(printout t " good matches for you." crlf)
+	(printout t "**********************************" crlf crlf)
+
+	(bind ?trabajo (ask-user "¿Donde trabajas?" string))
+
+	(bind ?discapacidad (ask-user "¿Vas a vivir con alguien con discapacidades físicas?" yes-no))
+
+	(bind ?coche (ask-user "¿Tienes coche?" yes-no))
+
+	(bind ?mascota (ask-user "¿Tienes mascota?" yes-no))
+
+	(bind ?tipo (ask-user "Elige tipo de residentes (familia / pareja / amigos)" t-residentes))
+
+	(bind ?transaccion (ask-user "¿Quieres comprar o alquilar?" t-transaccion))
+
+	(bind ?salario (ask-user "Introduce tu salario anual en euros: " number))
+
+	(bind ?n-residentes (ask-user "Introduce el numero de personas con las que vas a convivir: " number))
+
+	(assert(cliente(
+		(nombre ?name)
+		(trabajo ?trabajo)
+		(discapacidad ?discapacidad)
+		(mascota ?mascota)
+		(coche ?coche)
+		(tipo-residentes ?tipo)
+		(transaccion ?transaccion)
+		(ingresos-anuales ?salario)
+		(n-residentes ?n-residentes)))))
+
+  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Module ask
+
+;(defmodule ask)
+(defmodule QUESTIONS (import MAIN ?ALL))
+
+(deffunction QUESTIONS::is-of-type (?answer ?type)
+  "Check that the answer has the right form"
+  (if (eq ?type yes-no) then
+         (or (eq ?answer yes) (eq ?answer no))
+   else	(if (eq ?type number) then (numberp ?answer)
+   else (if (eq ?type t-residentes) then (or (eq ?answer familia) (eq ?answer pareja) (eq ?answer amigos))
+   else (if (eq ?type t-transaccion) then (or (eq ?answer compra) (eq ?answer alquiler))
+   else (> (str-length ?answer) 0))))))
+
+
+(deffunction QUESTIONS::ask-user (?question ?type)
+  "Ask a question, and return the answer"
+  (printout t ?question " ")
+  (if (eq ?type yes-no) then
+           (printout t "(si / no) "))
+  (bind ?answer (read))
+  (while (not (is-of-type ?answer ?type)) do
+         (printout t ?question " ")
+         (if (eq ?type yes-no) then
+           (printout t "(si / no) "))
+         (bind ?answer (read)))
+  ?answer)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (defmodule PREFERENCIAS (import CLIENTES))
 
 (deftemplate PREFERENCIAS::preferencias-precio "Información con las preferencias económicas de un cliente"
