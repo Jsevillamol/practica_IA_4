@@ -232,7 +232,7 @@
 	cliente((nombre ?nombre))
 	=>
 	(assert (recomendaciones ?nombre []))
-)
+) declare salience X
 
 (defrule lista-recomendaciones
 	(compatible
@@ -240,7 +240,7 @@
         (piso       ?dir)
         (puntuacion ?punt)
     )
-    (recomendaciones ?nombre ?lista)
+    (recomendaciones ?nombre ?$lista)
     =>
     (retract (recomendaciones ?nombre ?$lista))
     (assert (insertar-ordenado ?dir ?punt ?$lista))
@@ -255,8 +255,17 @@
 )
 
 (defrule mostrar-recomendaciones ;;TODO modificar prioridad para que esto se ejecute lo ultimo
+	(recomendaciones ?nombre ?$lista)
 	=>
-	()
+	(mostrar-recomendaciones-fn ?$lista)
+) declare salience X
+
+(deffunction mostrar-recomendaciones-fn ?$lista
+	(bind ?entrada (first$ ?$lista))
+	(bind ?punt (first$ ?$entrada))
+	(bind ?dir (nth ?$entrada 2))
+	(printout t "Recomendamos el piso " ?dir ". Puntuacion asociada " ?punt  clrf)
+	(mostrar-recomendaciones-fn (rest$ ?$lista))
 )
 
 ;; DATABASE:
