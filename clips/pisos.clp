@@ -36,46 +36,7 @@
     (slot ingresos-anuales  (type INTEGER)  (range 0 ?VARIABLE))
     (slot n-residentes      (type INTEGER)  (range 0 ?VARIABLE)))
 
-;IO para leer información de clientes aquí
 
-(defrule CLIENTES::preguntas
-	=>
-	(printout t "Escribe tu nombre y pulsa Enter> ")
-	(bind ?name (read))
-	(printout t crlf "**********************************" crlf)
-	(printout t " Hello, " ?name "." crlf)
-	(printout t " Welcome to the house recommender" crlf)
-	(printout t " Please answer the questions and" crlf)
-	(printout t " I will tell you what houses are" crlf)
-	(printout t " good matches for you." crlf)
-	(printout t "**********************************" crlf crlf)
-
-	(bind ?trabajo (ask-user "¿Donde trabajas?" string))
-
-	(bind ?discapacidad (ask-user "¿Vas a vivir con alguien con discapacidades físicas?" yes-no))
-
-	(bind ?coche (ask-user "¿Tienes coche?" yes-no))
-
-	(bind ?mascota (ask-user "¿Tienes mascota?" yes-no))
-
-	(bind ?tipo (ask-user "Elige tipo de residentes (familia / pareja / amigos)" t-residentes))
-
-	(bind ?transaccion (ask-user "¿Quieres comprar o alquilar?" t-transaccion))
-
-	(bind ?salario (ask-user "Introduce tu salario anual en euros: " number))
-
-	(bind ?n-residentes (ask-user "Introduce el numero de personas con las que vas a convivir: " number))
-
-	(assert(cliente(
-		(nombre ?name)
-		(trabajo ?trabajo)
-		(discapacidad ?discapacidad)
-		(mascota ?mascota)
-		(coche ?coche)
-		(tipo-residentes ?tipo)
-		(transaccion ?transaccion)
-		(ingresos-anuales ?salario)
-		(n-residentes ?n-residentes)))))
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Module ask
@@ -105,6 +66,46 @@
            (printout t "(si / no) "))
          (bind ?answer (read)))
   ?answer)
+
+  ;IO para leer información de clientes aquí
+
+(defrule QUESTIONS::preguntas
+	=>
+	(printout t "Escribe tu nombre y pulsa Enter> ")
+	(bind ?name (read))
+	(printout t crlf "**********************************" crlf)
+	(printout t " Hola, " ?name "." crlf)
+	(printout t " Bienvenido al recomendador de casas" crlf)
+	(printout t " Por favor responde las siguientes preguntas" crlf)
+	(printout t " Y te recomendaré las mejores casas para ti" crlf)
+	(printout t "**********************************" crlf crlf)
+
+	(bind ?trabajo (ask-user "¿Donde trabajas?" string))
+
+	(bind ?discapacidad (ask-user "¿Vas a vivir con alguien con discapacidades físicas?" yes-no))
+
+	(bind ?coche (ask-user "¿Tienes coche?" yes-no))
+
+	(bind ?mascota (ask-user "¿Tienes mascota?" yes-no))
+
+	(bind ?tipo (ask-user "Elige tipo de residentes (familia / pareja / amigos)" t-residentes))
+
+	(bind ?transaccion (ask-user "¿Quieres comprar o alquilar?" t-transaccion))
+
+	(bind ?salario (ask-user "Introduce tu salario anual en euros: " number))
+
+	(bind ?n-residentes (ask-user "Introduce el numero de personas con las que vas a convivir: " number))
+
+	(assert(cliente(
+		(nombre ?name)
+		(trabajo ?trabajo)
+		(discapacidad ?discapacidad)
+		(mascota ?mascota)
+		(coche ?coche)
+		(tipo-residentes ?tipo)
+		(transaccion ?transaccion)
+		(ingresos-anuales ?salario)
+		(n-residentes ?n-residentes)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -243,15 +244,14 @@
     (recomendaciones ?nombre ?$lista)
     =>
     (retract (recomendaciones ?nombre ?$lista))
-    (assert (insertar-ordenado ?dir ?punt ?$lista))
-)
+    (assert (recomendaciones ?nombre (insertar-ordenado ?dir ?punt ?$lista))))
 
-(deffunction insertar-ordenado (?dir ?punt ?$lista)
-	(if (eq (lenght$ lista) 0 ) then ((insert$ ?$lista 1 (create$ ?punt ?dir))) ;Si la lista esta vacia, insertamos la primera entrada
-	else (if (>= punt (first$ lista)) then (insert$ ?$lista 1 (create$ ?punt ?dir)) ; Si la puntuacion es mejor que el primer el de la lista, insertamos una nueva entrada al principio
-	else ( bind ?$lista ($insert (insertar-ordenado ?dir ?punt (rest$ ?$lista)) 1 (first$ ?$lista))) ; En otro caso, devolvemos la lista formada por el primer elemento mas el resultado de insertar la entrada en la tail de la lista
-	(while (> (lenght$ ?$lista 10)) delete-member$ $lista (lenght$ ?$lista)) ; Si la lista es muy larga, quitamos las entradas con menor puntuacion
-	?lista
+(deffunction insertar-ordenado (?dir ?punt $?lista)
+	  (if (eq (length$ $?lista) 0 ) then (insert$ $?lista 1 (create$ ?punt ?dir)) ;Si la lista esta vacia, insertamos la primera entrada
+	  else (if (>= ?punt (first$ $?lista)) then (insert$ $?lista 1 (create$ ?punt ?dir)) ; Si la puntuacion es mejor que el primer el de la lista, insertamos una nueva entrada al principio
+	  else ( bind $?lista ($insert (insertar-ordenado ?dir ?punt (rest$(rest$ $?lista))) 1 (first$ $?lista))) ; En otro caso, devolvemos la lista formada por el primer elemento mas el resultado de insertar la entrada en la tail de la lista
+	  (while (> (length$ $?lista 20)) delete-member$ $?lista (length$ $?lista)) ; Si la lista es muy larga, quitamos las entradas con menor puntuacion. El numero de entradas maximo es 20/2 = 10
+	  ?$lista
 )
 
 (defrule mostrar-recomendaciones ;;TODO modificar prioridad para que esto se ejecute lo ultimo
@@ -260,13 +260,12 @@
 	(mostrar-recomendaciones-fn ?$lista)
 ) declare salience X
 
-(deffunction mostrar-recomendaciones-fn ?$lista
-	(bind ?entrada (first$ ?$lista))
-	(bind ?punt (first$ ?$entrada))
-	(bind ?dir (nth ?$entrada 2))
-	(printout t "Recomendamos el piso " ?dir ". Puntuacion asociada " ?punt  clrf)
-	(mostrar-recomendaciones-fn (rest$ ?$lista))
-)
+(deffunction mostrar-recomendaciones-fn ($?lista)
+(if (> (length$ $?lista) 0) then
+  (bind ?punt (first$ $?lista))
+  (bind ?dir (nth 2 $?lista))
+  (printout t "Recomendamos el piso " ?dir ". Puntuacion asociada " ?punt  crlf)
+  (mostrar-recomendaciones-fn (rest$ (rest$ $?lista)))))
 
 ;; DATABASE:
 (deffacts MAIN::inmuebles-database 
