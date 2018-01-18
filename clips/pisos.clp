@@ -7,6 +7,7 @@
 ;
 ; Mirar Diapositivas Control Ejecucion
 
+
 (defmodule PISOS (export ?ALL))
 
 ;;; El garaje mejor en un slot
@@ -16,12 +17,11 @@
     (slot precio            (type FLOAT))
     (slot metros-cuadrados  (type INTEGER))
     (slot n-habitaciones    (type INTEGER))
-    (slot n-aseos           (type INTEGER))
     (slot accesible         (type SYMBOL)   (allowed-symbols no si))
     (slot transaccion       (type SYMBOL)   (allowed-symbols compra alquiler))
     (multislot extras       (type SYMBOL)   (allowed-symbols garaje parque-infantil)))
 
-;IO para leer información de pisos aquí
+;TODO: IO para leer información de pisos aquí
 
 (defmodule CLIENTES (export ?ALL))
 
@@ -36,7 +36,47 @@
     (slot ingresos-anuales  (type INTEGER)  (range 0 ?VARIABLE))
     (slot n-residentes      (type INTEGER)  (range 0 ?VARIABLE)))
 
+;IO para leer información de clientes:
 
+(defrule CLIENTES::preguntas
+    ;Seguramente esta regla ser ejecute constantemente.
+	=>
+	(printout t "Escribe tu nombre y pulsa Enter> ")
+	(bind ?name (read))
+	(printout t crlf "**********************************" crlf)
+	(printout t " Hola, " ?name "." crlf)
+	(printout t " Bienvenido al sistema de recomendación de casas" crlf)
+	(printout t " Por favor, responda a las preguntas y le diremos que casas son más adecuadas para usted." crlf)
+	(printout t "**********************************" crlf crlf)
+
+	(bind ?trabajo      (ask-user "¿Donde trabajas?" string))
+
+	(bind ?discapacidad (ask-user "¿Vas a vivir con alguien con discapacidades físicas?" yes-no))
+
+	(bind ?coche        (ask-user "¿Tienes coche?" yes-no))
+
+	(bind ?mascota      (ask-user "¿Tienes mascota?" yes-no))
+
+	(bind ?tipo         (ask-user "Elige tipo de residentes (familia / pareja / amigos)" t-residentes))
+
+	(bind ?transaccion  (ask-user "¿Quieres comprar o alquilar?" t-transaccion))
+
+	(bind ?salario      (ask-user "Introduce tu salario anual en euros: " number))
+
+	(bind ?n-residentes (ask-user "Introduce el numero de personas con las que vas a convivir: " number))
+
+	(assert(cliente
+		(nombre ?name)
+		(trabajo ?trabajo)
+		(discapacidad ?discapacidad)
+		(mascota ?mascota)
+		(coche ?coche)
+		(tipo-residentes ?tipo)
+		(transaccion ?transaccion)
+		(ingresos-anuales ?salario)
+		(n-residentes ?n-residentes)))
+        ;cambiar modulo
+        )
 
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Module ask
@@ -49,8 +89,8 @@
   (if (eq ?type yes-no) then
          (or (eq ?answer yes) (eq ?answer no))
    else	(if (eq ?type number) then (numberp ?answer)
-   else (if (eq ?type t-residentes) then (or (eq ?answer familia) (eq ?answer pareja) (eq ?answer amigos))
-   else (if (eq ?type t-transaccion) then (or (eq ?answer compra) (eq ?answer alquiler))
+   else (if (eq ?type t-residentes)  then (or (eq ?answer familia) (eq ?answer pareja) (eq ?answer amigos))
+   else (if (eq ?type t-transaccion) then (or (eq ?answer compra)  (eq ?answer alquiler))
    else (> (str-length ?answer) 0))))))
 
 
@@ -67,53 +107,14 @@
          (bind ?answer (read)))
   ?answer)
 
-  ;IO para leer información de clientes aquí
-
-(defrule QUESTIONS::preguntas
-	=>
-	(printout t "Escribe tu nombre y pulsa Enter> ")
-	(bind ?name (read))
-	(printout t crlf "**********************************" crlf)
-	(printout t " Hola, " ?name "." crlf)
-	(printout t " Bienvenido al recomendador de casas" crlf)
-	(printout t " Por favor responde las siguientes preguntas" crlf)
-	(printout t " Y te recomendaré las mejores casas para ti" crlf)
-	(printout t "**********************************" crlf crlf)
-
-	(bind ?trabajo (ask-user "¿Donde trabajas?" string))
-
-	(bind ?discapacidad (ask-user "¿Vas a vivir con alguien con discapacidades físicas?" yes-no))
-
-	(bind ?coche (ask-user "¿Tienes coche?" yes-no))
-
-	(bind ?mascota (ask-user "¿Tienes mascota?" yes-no))
-
-	(bind ?tipo (ask-user "Elige tipo de residentes (familia / pareja / amigos)" t-residentes))
-
-	(bind ?transaccion (ask-user "¿Quieres comprar o alquilar?" t-transaccion))
-
-	(bind ?salario (ask-user "Introduce tu salario anual en euros: " number))
-
-	(bind ?n-residentes (ask-user "Introduce el numero de personas con las que vas a convivir: " number))
-
-	(assert(cliente(
-		(nombre ?name)
-		(trabajo ?trabajo)
-		(discapacidad ?discapacidad)
-		(mascota ?mascota)
-		(coche ?coche)
-		(tipo-residentes ?tipo)
-		(transaccion ?transaccion)
-		(ingresos-anuales ?salario)
-		(n-residentes ?n-residentes)))))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defmodule PREFERENCIAS (import CLIENTES))
 
 (deftemplate PREFERENCIAS::preferencias-precio "Información con las preferencias económicas de un cliente"
     (slot cliente       (type STRING))
-    (slot precio-max    (type INTEGER)))
+    (slot precio-max    (type INTEGER))
+    (slot transaccion   (type SYMBOL)   (allowed-symbols compra alquiler)))
 
 ;La idea es puntuar mejor a las casas con el nº de habitciones en el rango
 (deftemplate PREFERENCIAS::preferencias-tamaño "Información con las preferencias de espacio de un cliente"
@@ -207,65 +208,72 @@
     (cliente    (type STRING))
     (piso       (type STRING))
     (puntuacion (type FLOAT)))
-
+;Puntua como de bajo es el precio, como de espaciosa es y que el nº de habitaciones se acerque al nº maximo.
+(deffunction MATCH::puntua (?precio-max ?precio ?espaciosa ?metros ?hab ?hab-max )
+    (if (eq ?espaciosa si) then (bind ?factor 3) else (bind ?factor 6))
+    (+ (/ (- ?precio-max ?precio) 10) (/ ?metros ?factor) (* (abs (- ?hab ?hab-max)) 10)))
+    
 (defrule MATCH::match-precio
+    (cliente
+        (nombre         ?nombre)
+        (n-residentes   ?n-residentes))
     (preferencias-precio
+        (cliente        ?nombre)
+        (precio-max     ?precio-max)
+        (transaccion    ?transaccion))
+    (preferencias-tamaño
         (cliente            ?nombre)
-        (precio-max         ?precio-max))
+        (habitaciones-max   ?hab-max)
+        (habitaciones-min   ?hab-min)
+        (espaciosa          ?espaciosa))
+    (preferencias-zona
+        (cliente    ?nombre)
+        (zona       ?zona))
+    (preferencias-extras
+        (clientes   ?nombre)
+        (accesible  ?accesible)
+        (garaje     ?garje))
     (piso
-        (direccion  ?dir)
-        (precio     ?precio))
-    (=< ?precio ?precio-max)
+        (direccion          ?dir)
+        (precio             ?precio)        ;restrictivo con el máximo, puntua
+        (zona               ?zona)          ;restrictivo
+        (metros-cuadrados   ?metros)        ;restrictivo si se pide espacioso, puntua
+        (n-habitaciones     ?hab)           ;restrictivo con el minimo, puntuable con el maximo
+        (accesible          ?accesible)     ;restrictivo
+        (transaccion        ?transaccion))  ;restrictivo
+    
+    (test (>= ?precio   ?precio-max))
+    (test (>= ?hab      ?hab-min))              ;El minimo de habitaciones es restrictivo, el maximo se considera en la puntuacion
+    (test (>= ?metros   (* ?n-residentes 20)))  ;Un piso se puede considerar espacioso si tiene más de 20m^2 por residente (completamente inventado)
     =>
     (assert (compatible
         (cliente    ?nombre)
         (piso       ?dir)
-        (puntuacion (/ (- ?precio-max ?precio) 10)))))
+        (puntuacion (puntua ?precio-max ?precio ?espaciosa ?metros ?hab ?hab-max))))) ;funcion que asigna puntuación
 
+       (deftemplate PISOS::inmueble "Caracteristicas de un piso"
+    (slot direccion         (type STRING))
+    (slot zona              (type STRING))
+    (slot precio            (type FLOAT))
+    (slot metros-cuadrados  (type INTEGER))
+    (slot n-habitaciones    (type INTEGER))
+    (slot accesible         (type SYMBOL)   (allowed-symbols no si))
+    (slot transaccion       (type SYMBOL)   (allowed-symbols compra alquiler))
+    (multislot extras       (type SYMBOL)   (allowed-symbols garaje parque-infantil)))
+        
 ; La idea es hacer mas reglas como match-precio que actualicen la puntuacion de la compatibilidad (revertiendola y assertandola de nuevo)
 ; para hacer esto a lo mejor hace falta añadir algún slot más a compatible para saber que comprobaciones se han hecho ya
 
 (defmodule RESULTADOS (import ?ALL))
 
 ; IO para mostrar resultados
-;; Crear una lista con todos los matchs
-(defrule inicializar-lista-recomendaciones ;;TODO: modificar prioridad para que esto sea lo primero del modulo que se ejecute
-	cliente((nombre ?nombre))
-	=>
-	(assert (recomendaciones ?nombre []))
-) declare salience X
 
-(defrule lista-recomendaciones
-	(compatible
-        (cliente    ?nombre)
-        (piso       ?dir)
-        (puntuacion ?punt)
-    )
-    (recomendaciones ?nombre ?$lista)
+(defrule RESULTADOS::mostar-recomendaciones-ordenadas
+    ?compatible <-(compatible (cliente ?nombre) (puntuacion ?puntuacion)  (piso ?dir))
+    (not          (compatible (cliente ?nombre) (puntuacion ?puntuacion2&:(< ?puntuacion ?puntuacion2))))
     =>
-    (retract (recomendaciones ?nombre ?$lista))
-    (assert (recomendaciones ?nombre (insertar-ordenado ?dir ?punt ?$lista))))
-
-(deffunction insertar-ordenado (?dir ?punt $?lista)
-	  (if (eq (length$ $?lista) 0 ) then (insert$ $?lista 1 (create$ ?punt ?dir)) ;Si la lista esta vacia, insertamos la primera entrada
-	  else (if (>= ?punt (first$ $?lista)) then (insert$ $?lista 1 (create$ ?punt ?dir)) ; Si la puntuacion es mejor que el primer el de la lista, insertamos una nueva entrada al principio
-	  else ( bind $?lista ($insert (insertar-ordenado ?dir ?punt (rest$(rest$ $?lista))) 1 (first$ $?lista))) ; En otro caso, devolvemos la lista formada por el primer elemento mas el resultado de insertar la entrada en la tail de la lista
-	  (while (> (length$ $?lista 20)) delete-member$ $?lista (length$ $?lista)) ; Si la lista es muy larga, quitamos las entradas con menor puntuacion. El numero de entradas maximo es 20/2 = 10
-	  ?$lista
-)
-
-(defrule mostrar-recomendaciones ;;TODO modificar prioridad para que esto se ejecute lo ultimo
-	(recomendaciones ?nombre ?$lista)
-	=>
-	(mostrar-recomendaciones-fn ?$lista)
-) declare salience X
-
-(deffunction mostrar-recomendaciones-fn ($?lista)
-(if (> (length$ $?lista) 0) then
-  (bind ?punt (first$ $?lista))
-  (bind ?dir (nth 2 $?lista))
-  (printout t "Recomendamos el piso " ?dir ". Puntuacion asociada " ?punt  crlf)
-  (mostrar-recomendaciones-fn (rest$ (rest$ $?lista)))))
+    (printout t "Recomendamos el piso " ?dir ". Puntuacion asociada " ?puntuacion  clrf)
+    (retract ?compatible))
 
 ;; DATABASE:
 (deffacts MAIN::inmuebles-database 
