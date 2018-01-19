@@ -2,7 +2,7 @@
 ;   MAIN: Tiene 2 funciones auxiliares para la entrada de datos.
 ;   PISOS: define el template inmueble y lee los datos de los pisos
 ;   CLIENTES: define el template cliente y lee los datos del clientes
-;   PREFERENCIA: deduce las preferencias del cliente y las guarda en templates de preferencias
+;   PREFERENCIAS: deduce las preferencias del cliente y las guarda en templates de preferencias
 ;   MATCH: filtra los pisos que le puedan interesar al cliente y los puntua
 ;   RESULTADOS: muestra ordenadamente los pisos encontrados
 
@@ -33,13 +33,15 @@
 
 (defrule MAIN::inicio
     =>
+    (printout t "focus stack 1: " crlf);TODO: quitar estos codios de depuracion (list-focus-stack)
+    (list-focus-stack)
+    (reset);Para que los deffacts se aserten
     (focus PISOS));El programa empieza pidiendo los pisos
 
 
 
 
 (defmodule PISOS (export ?ALL) (import MAIN ?ALL))
-
 
 (deftemplate PISOS::inmueble "Caracteristicas de un piso"
     (slot direccion         (type STRING))
@@ -51,24 +53,52 @@
     (slot garaje            (type SYMBOL)   (allowed-symbols no si))
     (slot transaccion       (type SYMBOL)   (allowed-symbols compra alquiler)))
 
+(deffacts PISOS::pisos-iniciales
+    (inmueble
+        (direccion          "C/Mayor, 1, 1ºA")
+        (zona               "centro")
+        (precio             500.0)
+        (metros-cuadrados   100)
+        (n-habitaciones     2)
+        (accesible          si)
+        (garaje             no)
+        (transaccion        alquiler))
+    (inmueble
+        (direccion          "C/Calas, 9")
+        (zona               "hispanoamerica")
+        (precio             2000.0)
+        (metros-cuadrados   250)
+        (n-habitaciones     4)
+        (accesible          no)
+        (garaje             si)
+        (transaccion        alquiler))
+    (inmueble
+        (direccion          "C/Pensamiento, 13, 3ºE")
+        (zona               "tetuán")
+        (precio             150000.0)
+        (metros-cuadrados   110)
+        (n-habitaciones     3)
+        (accesible          si)
+        (garaje             si)
+        (transaccion        compra)))
+
 ;IO para leer información de pisos:
 
 (defrule PISOS::preguntas
-    (not (fin-preguntas))
     =>
-    (bind ?mas si)
+    (printout t "focus stack 2: " crlf)
+    (list-focus-stack)
+    (bind ?mas (ask-user "Ya hay 3 pisos en el sistema. Quiere introducir más pisos?" yes-no))
 
     (while (eq si ?mas) do
-    ;TODO preguntar todos los datos
-    (bind ?direccion (ask-user "En que direccion se encuentra?" string))
+        ;TODO preguntar todos los datos
+        (bind ?direccion (ask-user "En que direccion se encuentra?" string))
 
-    (assert (inmueble
-        (direccion ?direccion)))
-
+        (assert (inmueble
+            (direccion ?direccion)))
+            
     (bind ?mas (ask-user "Quiere introducir más pisos?" yes-no)))
-    (focus CLIENTES))
-
-
+    (focus CLIENTES)))
 
 (defmodule CLIENTES (export ?ALL) (import MAIN ?ALL))
 
@@ -83,10 +113,15 @@
     (slot ingresos-anuales  (type INTEGER)  (range 0 ?VARIABLE))
     (slot n-residentes      (type INTEGER)  (range 0 ?VARIABLE)))
 
+
+
+
 ;IO para leer información de clientes:
 
 (defrule CLIENTES::preguntas
     =>
+    (printout t "focus stack 3: " crlf)
+    (list-focus-stack)
     (printout t crlf "**********************************" crlf)
     (printout t "Escribe tu nombre y pulsa Enter> ")
     (bind ?name (read))
@@ -122,16 +157,9 @@
         (ingresos-anuales   ?salario)
         (n-residentes       ?n-residentes)))
 
-        (focus PREFERENCIAS MATCH RESULTADOS CLIENTES));; Ya tenemos los datos de usuario, podemos deducir sus preferencias
+        (focus PREFERENCIAS));; Ya tenemos los datos de usuario, podemos deducir sus preferencias
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-
-
-
-
 
 
 (defmodule PREFERENCIAS (import CLIENTES ?ALL) (export ?ALL))
@@ -177,6 +205,8 @@
         (ingresos-anuales   ?ingresos)
         (transaccion        compra))
     =>
+    (printout t "focus stack 4: " crlf)
+    (list-focus-stack)
     (assert (preferencias-precio
         (cliente        ?nombre)
         (precio-max     (* ?ingresos 9))))) ;El precio de la casa no debe superar el salario de 9 años
@@ -234,6 +264,14 @@
         (garaje     ?coche))))
 
 
+(defrule PREFERENCIAS::cambio-de-modulo
+    (declare (salience -10))
+    ?cliente <- (cliente)
+    =>
+    (retract ?cliente)
+    (focus MATCH))
+
+
 
 
 
@@ -241,6 +279,7 @@
 
 
 (defmodule MATCH (import PREFERENCIAS ?ALL) (import PISOS ?ALL) (export ?ALL))
+
 
 (deftemplate MATCH::compatible
     (slot cliente    (type STRING))
@@ -251,7 +290,8 @@
 (deffunction MATCH::puntua (?precio-max ?precio ?metros-min ?metros ?hab ?hab-max )
     (+ (/ (- ?precio-max ?precio) 10) (- ?metros ?metros-min) (* (abs (- ?hab ?hab-max)) 10)))
     
-(defrule MATCH::match (salience 30) ;Prioridad alta
+(defrule MATCH::match 
+    (declare (salience 30)) ;Prioridad alta
     (preferencias-precio
         (cliente        ?nombre)
         (precio-max     ?precio-max)
@@ -267,7 +307,7 @@
     (preferencias-extras
         (cliente   ?nombre)
         (accesible  ?accesible)
-        (garaje     ?garje))
+        (garaje     ?necesita-garaje))
     (inmueble
         (direccion          ?dir)
         (precio             ?precio)        ;restrictivo con el máximo, puntua
@@ -275,12 +315,16 @@
         (metros-cuadrados   ?metros)        ;restrictivo con el minimo, puntua
         (n-habitaciones     ?hab)           ;restrictivo con el minimo, puntuable con el maximo
         (accesible          ?accesible)     ;restrictivo
+        (garaje             ?garaje)        ;solo restrictivo si el cliente necesita garaje
         (transaccion        ?transaccion))  ;restrictivo
     
+    (test (or (eq no ?necesita-garaje) (eq si ?garaje)))
     (test (<= ?precio   ?precio-max))
     (test (>= ?hab      ?hab-min))              ;El minimo de habitaciones es restrictivo, el maximo se considera en la puntuacion
     (test (>= ?metros   ?metros-min))
     =>
+    (printout t "focus stack 5.0: " crlf)
+    (list-focus-stack)
     (assert (compatible
         (cliente    ?nombre)
         (piso       ?dir)
@@ -288,10 +332,13 @@
 
 (defrule MATCH::ningun-matching
     "Si no se ha encontradon ningún piso se vuelven a pedir datos al usuario."
-    (declare (salience 10));Prioridad baja
+    (declare (salience -10));Prioridad baja
     (not (compatible))
     =>
-    (printout t "Lo sentimos, no se ha encontrado ningún piso para usted." crlf))
+    (printout t "focus stack 5.1: " crlf)
+    (list-focus-stack)
+    (printout t "Lo sentimos, no se ha encontrado ningún piso para usted." crlf)
+    (focus CLIENTES))
 
 
 
@@ -311,5 +358,16 @@
     ?compatible <-(compatible (cliente ?nombre) (puntuacion ?puntuacion)  (piso ?dir))
     (not          (compatible (cliente ?nombre) (puntuacion ?puntuacion2&:(< ?puntuacion ?puntuacion2))))
     =>
+    
+    (printout t "focus stack 6: " crlf)
+    (list-focus-stack)
     (printout t "Recomendamos el piso " ?dir ". Puntuacion asociada " ?puntuacion  clrf)
     (retract ?compatible))
+    
+    
+(defrule RESULTADOS::vuelta-a-empezar
+    (declare (salience -10));prioridad baja
+    =>
+    (printout t "focus stack 7: " crlf)
+    (list-focus-stack)
+    (focus CLIENTES))
