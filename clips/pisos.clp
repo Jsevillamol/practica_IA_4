@@ -85,6 +85,8 @@
             
     	(bind ?mas (ask-user "Quiere introducir más pisos?" yes-no)))
 
+    (save-facts pisos-database.clp local inmueble) ; Guarda los inmuebles annadidos
+
     (focus CLIENTES)) ; A continuacion preguntamos a los clientes
 
 (defmodule CLIENTES (export ?ALL) (import MAIN ?ALL))
