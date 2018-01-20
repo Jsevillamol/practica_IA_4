@@ -33,9 +33,8 @@
 
 (defrule MAIN::inicio
     =>
-    (printout t "focus stack 1: " crlf);TODO: quitar estos codios de depuracion (list-focus-stack)
-    (list-focus-stack)
-    (reset);Para que los deffacts se aserten
+    ;(reset);Para que los deffacts se aserten
+    (printout t "Cambiando modulo: MAIN a PISOS" crlf)
     (focus PISOS));El programa empieza pidiendo los pisos
 
 
@@ -45,8 +44,8 @@
 
 (deftemplate PISOS::inmueble "Caracteristicas de un piso"
     (slot direccion         (type STRING))
-    (slot zona              (type STRING))
-    (slot precio            (type FLOAT))
+    (slot zona              (type SYMBOL))
+    (slot precio            (type INTEGER))
     (slot metros-cuadrados  (type INTEGER))
     (slot n-habitaciones    (type INTEGER))
     (slot accesible         (type SYMBOL)   (allowed-symbols no si))
@@ -57,11 +56,8 @@
 
 (defrule PISOS::preguntas
     =>
-    (printout t "focus stack 2: " crlf)
-    (list-focus-stack)
-
     (load-facts pisos-database.clp)
-    (bind ?mas (ask-user "Ya hay 3 pisos en el sistema. Quiere introducir más pisos?" yes-no))
+    (bind ?mas (ask-user "Ya hay algunos pisos en el sistema. Quiere introducir más pisos?" yes-no))
 
     (while (eq si ?mas) do
         (bind ?dir (ask-user "En que direccion se encuentra?" string))
@@ -74,26 +70,27 @@
         (bind ?garaje (ask-user "¿Tiene garaje?" yes-no))
 
         (assert(inmueble
-	        (direccion          ?dir)
-	        (precio             ?precio)
-	        (zona               ?zona)
-	        (metros-cuadrados   ?metros)
-	        (n-habitaciones     ?hab)
-	        (accesible          ?accesible)
-	        (garaje             ?garaje)
-	        (transaccion        ?transaccion)))
+            (direccion          ?dir)
+            (precio             ?precio)
+            (zona               ?zona)
+            (metros-cuadrados   ?metros)
+            (n-habitaciones     ?hab)
+            (accesible          ?accesible)
+            (garaje             ?garaje)
+            (transaccion        ?transaccion)))
             
-    	(bind ?mas (ask-user "Quiere introducir más pisos?" yes-no)))
+        (bind ?mas (ask-user "Quiere introducir más pisos?" yes-no)))
 
-    (save-facts pisos-database.clp local inmueble) ; Guarda los inmuebles annadidos
+    (save-facts pisos-database.clp local inmueble) ; Guarda los inmuebles anyadidos
 
+    (printout t "Cambiando modulo: PISOS a CLIENTES" crlf)
     (focus CLIENTES)) ; A continuacion preguntamos a los clientes
 
 (defmodule CLIENTES (export ?ALL) (import MAIN ?ALL))
 
 (deftemplate CLIENTES::cliente "Datos del cliente"
     (slot nombre            (type STRING))
-    (slot zona-trabajo      (type STRING))
+    (slot zona-trabajo      (type SYMBOL))
     (slot discapacidad      (type SYMBOL)   (allowed-symbols no si))
     (slot coche             (type SYMBOL)   (allowed-symbols no si))
     (slot mascota           (type SYMBOL)   (allowed-symbols no si))
@@ -106,18 +103,23 @@
 
 
 ;IO para leer información de clientes:
+(defrule CLIENTES::borrar-cliente-anterior
+    ?cliente <- (cliente)
+    =>
+    (retract ?cliente))
+
 
 (defrule CLIENTES::preguntas
+    (not (cliente))
     =>
-    (printout t "focus stack 3: " crlf)
-    (list-focus-stack)
-    (printout t crlf "**********************************" crlf)
     (printout t "Escribe tu nombre y pulsa Enter> ")
     (bind ?name (read))
+    (printout t crlf "*************************************************" crlf)
     (printout t " Hola, " ?name "." crlf)
     (printout t " Bienvenido al sistema de recomendación de casas." crlf)
-    (printout t " Por favor, responda a las preguntas y le diremos que casas son más adecuadas para usted." crlf)
-    (printout t "**********************************" crlf crlf)
+    (printout t " Por favor, responda a las preguntas y le diremos" crlf)
+    (printout t " que casas son más adecuadas para usted." crlf)
+    (printout t "*************************************************" crlf crlf)
 
     (bind ?trabajo      (ask-user "¿Donde trabajas?" string))
 
@@ -133,7 +135,7 @@
 
     (bind ?salario      (ask-user "Introduce tu salario anual en euros: " number))
 
-    (bind ?n-residentes (ask-user "Introduce el numero de personas con las que vas a convivir: " number))
+    (bind ?n-residentes (ask-user "Introduce el número de personas que vais a convivir: " number))
 
     (assert(cliente
         (nombre             ?name)
@@ -146,7 +148,8 @@
         (ingresos-anuales   ?salario)
         (n-residentes       ?n-residentes)))
 
-        (focus PREFERENCIAS));; Ya tenemos los datos de usuario, podemos deducir sus preferencias
+    (printout t "Cambiando modulo: CLIENTES a PREFERENCIAS" crlf)
+    (focus PREFERENCIAS MATCH RESULTADOS));; Ya tenemos los datos de usuario, podemos deducir sus preferencias
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -159,7 +162,7 @@
     (slot transaccion   (type SYMBOL)   (allowed-symbols compra alquiler)))
 
 ;La idea es puntuar mejor a las casas con el nº de habitaciones en el rango
-(deftemplate PREFERENCIAS::preferencias-tamanio "Información con las preferencias de espacio de un cliente"
+(deftemplate PREFERENCIAS::preferencias-tamanyo "Información con las preferencias de espacio de un cliente"
     (slot cliente           (type STRING))
     (slot habitaciones-min  (type INTEGER))
     (slot habitaciones-max  (type INTEGER))
@@ -168,7 +171,7 @@
 (deftemplate PREFERENCIAS::preferencias-zona
     "Información con las preferencias de zona de un cliente"
     (slot cliente    (type STRING))
-    (slot zona       (type STRING)))
+    (slot zona       (type SYMBOL)))
 
 (deftemplate PREFERENCIAS::preferencias-extras
     "Información con las preferencias de extras de un cliente"
@@ -194,8 +197,6 @@
         (ingresos-anuales   ?ingresos)
         (transaccion        compra))
     =>
-    (printout t "focus stack 4: " crlf)
-    (list-focus-stack)
     (assert (preferencias-precio
         (cliente        ?nombre)
         (precio-max     (* ?ingresos 9))))) ;El precio de la casa no debe superar el salario de 9 años
@@ -205,27 +206,27 @@
 (deffunction metros-necesarios (?n-residentes ?mascota ?tipo-residentes)
     (if (eq si ?mascota) then (* ?n-residentes 20) else (* ?n-residentes 15)))
 
-(defrule PREFERENCIAS::deducir-preferencias-tamanio-familia
+(defrule PREFERENCIAS::deducir-preferencias-tamanyo-familia
     (cliente
         (nombre             ?nombre)
         (mascota            ?mascota)
         (tipo-residentes    familia)
         (n-residentes       ?n-residentes))
     =>
-    (assert (preferencias-tamanio
+    (assert (preferencias-tamanyo
         (cliente            ?nombre)
         (habitaciones-max   (- ?n-residentes 1))            ;Normalmente en las familias los padres o hermanos comparten habitación
         (habitaciones-min   (div (+ 1 ?n-residentes) 2))    ;Como mucho compartir habitaciones de 2 en dos
-        (metros-min          (metros-necesarios ?n-residentes ?mascota familia)))))
+        (metros-min         (metros-necesarios ?n-residentes ?mascota familia)))))
 
-(defrule PREFERENCIAS::deducir-preferencias-tamanio-amigos
+(defrule PREFERENCIAS::deducir-preferencias-tamanyo-amigos
     (cliente
         (nombre             ?nombre)
         (mascota            ?mascota)
         (tipo-residentes    amigos)
         (n-residentes       ?n-residentes))
     =>
-    (assert (preferencias-tamanio
+    (assert (preferencias-tamanyo
         (cliente            ?nombre)
         (habitaciones-max   ?n-residentes)  ;No hacen falta más habitaciones de los amigos que hay
         (habitaciones-min   ?n-residentes)  ;Los amigos no suelen compartir habitación
@@ -253,16 +254,6 @@
         (garaje     ?coche))))
 
 
-(defrule PREFERENCIAS::cambio-de-modulo
-    (declare (salience -10))
-    ?cliente <- (cliente)
-    =>
-    (retract ?cliente)
-    (focus MATCH))
-
-
-
-
 
 
 
@@ -275,17 +266,18 @@
     (slot piso       (type STRING))
     (slot puntuacion (type FLOAT)))
 
+;TODO: al parecer salen puntuaciones negativas
 ;Puntua como de bajo es el precio, como de grande es y que el nº de habitaciones se acerque al nº maximo.
 (deffunction MATCH::puntua (?precio-max ?precio ?metros-min ?metros ?hab ?hab-max )
     (+ (/ (- ?precio-max ?precio) 10) (- ?metros ?metros-min) (* (abs (- ?hab ?hab-max)) 10)))
-    
-(defrule MATCH::match 
+
+(defrule MATCH::match
     (declare (salience 30)) ;Prioridad alta
     (preferencias-precio
         (cliente        ?nombre)
         (precio-max     ?precio-max)
         (transaccion    ?transaccion))
-    (preferencias-tamanio
+    (preferencias-tamanyo
         (cliente            ?nombre)
         (habitaciones-max   ?hab-max)
         (habitaciones-min   ?hab-min)
@@ -294,8 +286,8 @@
         (cliente    ?nombre)
         (zona       ?zona))
     (preferencias-extras
-        (cliente   ?nombre)
-        (accesible  ?accesible)
+        (cliente    ?nombre)
+        (accesible  ?necesita-accesibilidad)
         (garaje     ?necesita-garaje))
     (inmueble
         (direccion          ?dir)
@@ -303,17 +295,16 @@
         (zona               ?zona)          ;restrictivo
         (metros-cuadrados   ?metros)        ;restrictivo con el minimo, puntua
         (n-habitaciones     ?hab)           ;restrictivo con el minimo, puntuable con el maximo
-        (accesible          ?accesible)     ;restrictivo
+        (accesible          ?accesible)     ;solo restrictivo si el cliente necesita accesibilidad
         (garaje             ?garaje)        ;solo restrictivo si el cliente necesita garaje
         (transaccion        ?transaccion))  ;restrictivo
     
-    (test (or (eq no ?necesita-garaje) (eq si ?garaje)))
-    (test (<= ?precio   ?precio-max))
-    (test (>= ?hab      ?hab-min))              ;El minimo de habitaciones es restrictivo, el maximo se considera en la puntuacion
-    (test (>= ?metros   ?metros-min))
+;    (test (or (eq no ?necesita-accesibilidad) (eq si ?accesible)))
+;    (test (or (eq no ?necesita-garaje)        (eq si ?garaje)))
+;    (test (<= ?precio   ?precio-max))
+;    (test (>= ?hab      ?hab-min))              ;El minimo de habitaciones es restrictivo, el maximo se considera en la puntuacion
+;    (test (>= ?metros   ?metros-min))
     =>
-    (printout t "focus stack 5.0: " crlf)
-    (list-focus-stack)
     (assert (compatible
         (cliente    ?nombre)
         (piso       ?dir)
@@ -324,10 +315,7 @@
     (declare (salience -10));Prioridad baja
     (not (compatible))
     =>
-    (printout t "focus stack 5.1: " crlf)
-    (list-focus-stack)
-    (printout t "Lo sentimos, no se ha encontrado ningún piso para usted." crlf)
-    (focus CLIENTES))
+    (printout t "Lo sentimos, no se ha encontrado ningún piso para usted." crlf))
 
 
 
@@ -347,16 +335,6 @@
     ?compatible <-(compatible (cliente ?nombre) (puntuacion ?puntuacion)  (piso ?dir))
     (not          (compatible (cliente ?nombre) (puntuacion ?puntuacion2&:(< ?puntuacion ?puntuacion2))))
     =>
-    
-    (printout t "focus stack 6: " crlf)
-    (list-focus-stack)
-    (printout t "Recomendamos el piso " ?dir ". Puntuacion asociada " ?puntuacion  clrf)
+    (printout t "Recomendamos el piso " ?dir ". Puntuacion asociada " ?puntuacion "." crlf)
     (retract ?compatible))
-    
-    
-(defrule RESULTADOS::vuelta-a-empezar
-    (declare (salience -10));prioridad baja
-    =>
-    (printout t "focus stack 7: " crlf)
-    (list-focus-stack)
-    (focus CLIENTES))
+
