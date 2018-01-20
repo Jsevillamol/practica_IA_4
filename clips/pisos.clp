@@ -11,36 +11,34 @@
 
 (deffunction MAIN::is-of-type (?answer ?type)
     "Check that the answer has the right form"
-    (if (eq ?type yes-no)               then (or (eq ?answer si) (eq ?answer no))
+    (if      (eq ?type yes-no)          then (or (eq ?answer si) (eq ?answer no))
     else (if (eq ?type number)          then (numberp ?answer)
-    else (if (eq ?type string)			then (stringp ?answer)
+    else (if (eq ?type string)          then (stringp ?answer)
     else (if (eq ?type t-residentes)    then (or (eq ?answer familia) (eq ?answer pareja) (eq ?answer amigos))
     else (if (eq ?type t-transaccion)   then (or (eq ?answer compra)  (eq ?answer alquiler))
-    else (> (str-length ?answer) 0)))))))
-    
+    else TRUE))))))
+
 (deffunction MAIN::ask-user (?question ?type)
     "Ask a question, and return the answer"
     (printout t ?question " ")
-    (if (eq ?type yes-no) then
-        (printout t "(si / no) "))
+    (if (eq ?type yes-no) then (printout t "(si / no) "))
     (bind ?answer (read))
     (while (not (is-of-type ?answer ?type)) do
         (printout t ?question " ")
-        (if (eq ?type yes-no) then
-            (printout t "(si / no) "))
-        (if (eq ?type string) then 
-        	(printout t "(pon tu respuesta entre comillas) "))
+        (if (eq ?type yes-no) then (printout t "(si / no) "))
+        (if (eq ?type string) then (printout t "(pon tu respuesta entre comillas) "))
         (bind ?answer (read)))
     ?answer)
 
 
 (defrule MAIN::inicio
     =>
-    ;(reset);Para que los deffacts se aserten
     (printout t "Cambiando modulo: MAIN a PISOS" crlf)
     (focus PISOS));El programa empieza pidiendo los pisos
 
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 (defmodule PISOS (export ?ALL) (import MAIN ?ALL))
@@ -63,14 +61,14 @@
     (bind ?mas (ask-user "Ya hay algunos pisos en el sistema. Quiere introducir más pisos?" yes-no))
 
     (while (eq si ?mas) do
-        (bind ?dir (ask-user "En que direccion se encuentra?" string))
-        (bind ?zona (ask-user "En que zona se encuentra?" symbol))
-        (bind ?transaccion (ask-user "Quiere alquilar o ponerlo a la venta? (compra/alquiler)" t-transaccion))
-        (bind ?precio (ask-user "¿A que precio?" number))
-        (bind ?metros (ask-user "¿Cuantos metros cuadrados tiene el piso?" number))
-        (bind ?hab (ask-user "¿Cuantas habitaciones tiene el piso?" number))
-        (bind ?accesible (ask-user "¿Tiene facilidades para minusvalidos?" yes-no))
-        (bind ?garaje (ask-user "¿Tiene garaje?" yes-no))
+        (bind ?dir          (ask-user "En que direccion se encuentra?" string))
+        (bind ?zona         (ask-user "En que zona se encuentra?" symbol))
+        (bind ?transaccion  (ask-user "Quiere alquilar o ponerlo a la venta? (compra/alquiler)" t-transaccion))
+        (bind ?precio       (ask-user "¿A que precio?" number))
+        (bind ?metros       (ask-user "¿Cuantos metros cuadrados tiene el piso?" number))
+        (bind ?hab          (ask-user "¿Cuantas habitaciones tiene el piso?" number))
+        (bind ?accesible    (ask-user "¿Tiene facilidades para minusvalidos?" yes-no))
+        (bind ?garaje       (ask-user "¿Tiene garaje?" yes-no))
 
         (assert(inmueble
             (direccion          ?dir)
@@ -89,6 +87,12 @@
     (printout t "Cambiando modulo: PISOS a CLIENTES" crlf)
     (focus CLIENTES)) ; A continuacion preguntamos a los clientes
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
 (defmodule CLIENTES (export ?ALL) (import MAIN ?ALL) (import PISOS ?ALL))
 
 (deftemplate CLIENTES::cliente "Datos del cliente"
@@ -102,15 +106,12 @@
     (slot ingresos-anuales  (type INTEGER)  (range 0 ?VARIABLE))
     (slot n-residentes      (type INTEGER)  (range 0 ?VARIABLE)))
 
-
-
-
-;IO para leer información de clientes:
 (defrule CLIENTES::borrar-cliente-anterior
     ?cliente <- (cliente)
     =>
     (retract ?cliente))
 
+;IO para leer información de clientes:
 
 (defrule CLIENTES::preguntas
     (not (cliente))
@@ -125,28 +126,13 @@
     (printout t "*************************************************" crlf crlf)
 
     (bind ?trabajo      (ask-user "¿Donde trabajas?" symbol))
-    (printout t "Respuesta registrada: " ?trabajo crlf)
-
     (bind ?discapacidad (ask-user "¿Vas a vivir con alguien con discapacidades físicas?" yes-no))
-    (printout t "Respuesta registrada: " ?discapacidad crlf)
-
     (bind ?coche        (ask-user "¿Tienes coche?" yes-no))
-    (printout t "Respuesta registrada: " ?coche crlf)
-
     (bind ?mascota      (ask-user "¿Tienes mascota?" yes-no))
-    (printout t "Respuesta registrada: " ?mascota crlf)
-
     (bind ?tipo         (ask-user "Elige tipo de residentes (familia / pareja / amigos)" t-residentes))
-    (printout t "Respuesta registrada: " ?tipo crlf)
-
     (bind ?transaccion  (ask-user "¿Quieres compra o alquiler?" t-transaccion))
-    (printout t "Respuesta registrada: " ?transaccion crlf)
-
     (bind ?salario      (ask-user "Introduce tu salario anual en euros: " number))
-    (printout t "Respuesta registrada: " ?salario crlf)
-
     (bind ?n-residentes (ask-user "Introduce el número de personas que vais a convivir: " number))
-    (printout t "Respuesta registrada: " ?n-residentes crlf)
 
     (assert(cliente
         (nombre             ?name)
@@ -158,21 +144,19 @@
         (transaccion        ?transaccion)
         (ingresos-anuales   ?salario)
         (n-residentes       ?n-residentes)))
+    (printout t "Introduce alquiler o compra y luego los ingresos: ")
+;    (assert(cliente;TODO
+;        (nombre             "Anon")
+;        (zona-trabajo       madrid)
+;       (discapacidad       no)
+;        (mascota            no)
+;        (coche              no)
+;        (tipo-residentes    amigos)
+;        (transaccion        (read))
+;        (ingresos-anuales   (read))
+;        (n-residentes       2)))
 
-
-    ;(assert(cliente
-    ;    (nombre             "jaime")
-    ;    (zona-trabajo       madrid)
-    ;    (discapacidad       no)
-    ;    (mascota            no)
-    ;    (coche              no)
-    ;    (tipo-residentes    amigos)
-    ;    (transaccion        (read))
-    ;    (ingresos-anuales   1500000000)
-    ;    (n-residentes       2)))
-
-    
-    (printout t "Cambiando modulo: CLIENTES a PREFERENCIAS" crlf)
+    (printout t "Cambiando modulo: CLIENTES a PREFERENCIAS" crlf);TODO
     (focus PREFERENCIAS MATCH RESULTADOS));; Ya tenemos los datos de usuario, podemos deducir sus preferencias
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -180,13 +164,15 @@
 
 (defmodule PREFERENCIAS (import CLIENTES ?ALL) (export ?ALL))
 
-(deftemplate PREFERENCIAS::preferencias-precio "Información con las preferencias económicas de un cliente"
+(deftemplate PREFERENCIAS::preferencias-precio
+    "Información con las preferencias económicas de un cliente"
     (slot cliente       (type STRING))
     (slot precio-max    (type INTEGER))
-    (slot transaccion   (type SYMBOL)   (allowed-symbols null alquiler compra)))
+    (slot transaccion   (type SYMBOL)   (allowed-symbols alquiler compra)))
 
 ;La idea es puntuar mejor a las casas con el nº de habitaciones en el rango
-(deftemplate PREFERENCIAS::preferencias-tamanyo "Información con las preferencias de espacio de un cliente"
+(deftemplate PREFERENCIAS::preferencias-tamanyo
+    "Información con las preferencias de espacio de un cliente"
     (slot cliente           (type STRING))
     (slot habitaciones-min  (type INTEGER))
     (slot habitaciones-max  (type INTEGER))
@@ -211,12 +197,11 @@
         (ingresos-anuales   ?ingresos)
         (transaccion        alquiler))
     =>
-    (printout t "")
+    (printout t "Preferencias deducidas para alquiler: precio maximo= " (integer (* (/ ?ingresos 12) 0.4)) crlf);TODO
     (assert (preferencias-precio
         (cliente        ?nombre)
-        (precio-max     (integer (* (/ ?ingresos 12) 0.4)))) ;EL gasto en alquiler no debe superar el 40% del sueldo
-        (transaccion alquiler))
-    (printout t "Preferencias deducidas para alquiler: precio maximo= " (integer (* (/ ?ingresos 12) 0.4)) crlf))
+        (precio-max     (integer (* (/ ?ingresos 12) 0.4))) ;EL gasto en alquiler no debe superar el 40% del sueldo
+        (transaccion    alquiler))))
 
 (defrule PREFERENCIAS::deducir-preferencias-economicas-compra
     (cliente
@@ -226,9 +211,9 @@
     =>
     (assert (preferencias-precio
         (cliente        ?nombre)
-        (precio-max     (* ?ingresos 9))) ;El precio de la casa no debe superar el salario de 9 años
-        (transaccion compra))
-    (printout t "Preferencias deducidas para compra: precio maximo= " (* ?ingresos 9) crlf))
+        (precio-max     (* ?ingresos 9)) ;El precio de la casa no debe superar el salario de 9 años
+        (transaccion    compra)))
+    (printout t "Preferencias deducidas para compra: precio maximo= " (* ?ingresos 9) crlf));TODO
 
 ;Esta función calcula los metros cuadrados minimos que van a necesitar los residentes
 ;ESta implementación es extremadamente sencilla.
@@ -247,11 +232,10 @@
         (habitaciones-max   (- ?n-residentes 1))            ;Normalmente en las familias los padres o hermanos comparten habitación
         (habitaciones-min   (div (+ 1 ?n-residentes) 2))    ;Como mucho compartir habitaciones de dos en dos
         (metros-min         (metros-necesarios ?n-residentes ?mascota familia))))
-    (printout t "Preferencias deducidas para familia :" crlf
-    	"habitaciones maximas=" (- ?n-residentes 1) crlf
-    	"habitaciones minimas=" (div (+ 1 ?n-residentes) 2) crlf
-    	"metros cuadrados minimos=" (metros-necesarios ?n-residentes ?mascota familia) crlf
-      crlf))
+    (printout t "Familia. ";TODO
+        " habitaciones maximas: "       (- ?n-residentes 1)
+        " habitaciones minimas: "       (div (+ 1 ?n-residentes) 2)
+        " metros cuadrados minimos: "   (metros-necesarios ?n-residentes ?mascota familia)))
 
 (defrule PREFERENCIAS::deducir-preferencias-tamanyo-amigos
     (cliente
@@ -265,11 +249,10 @@
         (habitaciones-max   ?n-residentes)  ;No hacen falta más habitaciones de los amigos que hay
         (habitaciones-min   ?n-residentes)  ;Los amigos no suelen compartir habitación
         (metros-min         (metros-necesarios ?n-residentes ?mascota amigos))))
-    (printout t "Preferencias deducidas para amigos :" crlf
-    	"habitaciones maximas=" ?n-residentes crlf
-    	"habitaciones minimas=" ?n-residentes crlf
-    	"metros cuadrados minimos=" (metros-necesarios ?n-residentes ?mascota amigos) crlf
-      crlf))
+    (printout t "Amigos.";TODO
+        " habitaciones maximas: "       (- ?n-residentes 1)
+        "; habitaciones minimas: "       (div (+ 1 ?n-residentes) 2)
+        "; metros cuadrados minimos: "   (metros-necesarios ?n-residentes ?mascota amigos) crlf))
 
 ;Con una base de datos de las zonas y su disposición se podria crear preferencias de las zonas cercanas al trabajo.
 (defrule PREFERENCIAS::deducir-preferencias-zona
@@ -279,7 +262,8 @@
     =>
     (assert (preferencias-zona
         (cliente    ?nombre)
-        (zona       ?zona))))
+        (zona       ?zona)))
+    (printout t "Zona preferida: " ?zona crlf));TODO
 
 (defrule PREFERENCIAS::deducir-preferencias-extras
     (cliente
@@ -294,7 +278,7 @@
 
 
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 (defmodule MATCH (import PREFERENCIAS ?ALL) (import PISOS ?ALL) (export ?ALL))
@@ -305,7 +289,7 @@
     (slot piso       (type STRING))
     (slot puntuacion (type FLOAT)))
 
-;TODO: al parecer salen puntuaciones negativas ; Q: porque has quitado los tests?
+;TODO: al parecer salen puntuaciones negativas
 ;Puntua como de bajo es el precio, como de grande es y que el nº de habitaciones se acerque al nº maximo.
 (deffunction MATCH::puntua (?precio-max ?precio ?metros-min ?metros ?hab ?hab-max )
     (+ (/ (- ?precio-max ?precio) 10) (- ?metros ?metros-min) (* (abs (- ?hab ?hab-max)) 10)))
@@ -315,8 +299,7 @@
     (preferencias-precio
         (cliente        ?nombre)
         (precio-max     ?precio-max)
-        (transaccion    ?trans1)
-     	)
+        (transaccion    ?transaccion))
     (preferencias-tamanyo
         (cliente            ?nombre)
         (habitaciones-max   ?hab-max)
@@ -337,18 +320,15 @@
         (n-habitaciones     ?hab)           ;restrictivo con el minimo, puntuable con el maximo
         (accesible          ?accesible)     ;solo restrictivo si el cliente necesita accesibilidad
         (garaje             ?garaje)        ;solo restrictivo si el cliente necesita garaje
-        (transaccion        ?trans2)  ;restrictivo
-    	)
-    
+        (transaccion        ?transaccion))  ;restrictivo
+
     (test (or (eq no ?necesita-accesibilidad) (eq si ?accesible)))
     (test (or (eq no ?necesita-garaje)        (eq si ?garaje)))
     (test (<= ?precio   ?precio-max))
     (test (>= ?hab      ?hab-min))              ;El minimo de habitaciones es restrictivo, el maximo se considera en la puntuacion
     (test (>= ?metros   ?metros-min))
-
-    ;(test (eq ?trans1 ?trans2))
     =>
-    (printout t "piso= " ?dir " trans1= " ?trans1 " trans2= " ?trans2 crlf)
+    (printout t "piso= " ?dir " transaccion= " ?transaccion crlf)
     (assert (compatible
         (cliente    ?nombre)
         (piso       ?dir)
@@ -364,28 +344,34 @@
 
 
 (defrule MATCH::limpiar-preferencias-precio
-	(declare (salience -20))
-	?pref<-(preferencias-precio)
-	=>
-	(retract ?pref))
+    (declare (salience -20))
+    ?pref<-(preferencias-precio)
+    =>
+    (facts)
+    (printout t "Eliminando preferencias-precio" crlf)
+    (retract ?pref))
 
 (defrule MATCH::limpiar-preferencias-tamanyo
-	(declare (salience -20))
-	?pref<-(preferencias-tamanyo)
-	=>
-	(retract ?pref))
+    (declare (salience -21))
+    ?pref<-(preferencias-tamanyo)
+    =>
+    (printout t "Eliminando preferencias-tamanyo" crlf)
+    (retract ?pref))
 
 (defrule MATCH::limpiar-preferencias-zona
-	(declare (salience -20))
-	?pref<-(preferencias-zona)
-	=>
-	(retract ?pref))
+    (declare (salience -22))
+    ?pref<-(preferencias-zona)
+    =>
+    (printout t "Eliminando preferencias-zona" crlf)
+    (retract ?pref))
 
 (defrule MATCH::limpiar-preferencias-extras
-	(declare (salience -20))
-	?pref<-(preferencias-extras)
-	=>
-	(retract ?pref))
+    (declare (salience -23))
+    ?pref<-(preferencias-extras)
+    =>
+    (printout t "Eliminando preferencias-extras" crlf)
+    (facts)
+    (retract ?pref))
 
 
 
