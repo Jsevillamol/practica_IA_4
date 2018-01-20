@@ -91,14 +91,28 @@
     (bind ?mas (ask-user "Ya hay 3 pisos en el sistema. Quiere introducir más pisos?" yes-no))
 
     (while (eq si ?mas) do
-        ;TODO preguntar todos los datos
-        (bind ?direccion (ask-user "En que direccion se encuentra?" string))
+        (bind ?dir (ask-user "En que direccion se encuentra?" string))
+        (bind ?zona (ask-user "En que zona se encuentra?" string))
+        (bind ?transaccion (ask-user "Quiere alquilar o ponerlo a la venta? (compra/alquiler)" t-transaccion))
+        (bind ?precio (ask-user "¿A que precio?" number))
+        (bind ?metros (ask-user "¿Cuantos metros cuadrados tiene el piso?" number))
+        (bind ?hab (ask-user "¿Cuantas habitaciones tiene el piso?" number))
+        (bind ?accesible (ask-user "¿Tiene facilidades para minusvalidos?" yes-no))
+        (bind ?garaje (ask-user "¿Tiene garaje?" yes-no))
 
-        (assert (inmueble
-            (direccion ?direccion)))
+        (assert(inmueble
+	        (direccion          ?dir)
+	        (precio             ?precio)
+	        (zona               ?zona)
+	        (metros-cuadrados   ?metros)
+	        (n-habitaciones     ?hab)
+	        (accesible          ?accesible)
+	        (garaje             ?garaje)
+	        (transaccion        ?transaccion)))
             
-    (bind ?mas (ask-user "Quiere introducir más pisos?" yes-no)))
-    (focus CLIENTES)))
+    	(bind ?mas (ask-user "Quiere introducir más pisos?" yes-no)))
+
+    (focus CLIENTES)) ; A continuacion preguntamos a los clientes
 
 (defmodule CLIENTES (export ?ALL) (import MAIN ?ALL))
 
@@ -170,7 +184,7 @@
     (slot transaccion   (type SYMBOL)   (allowed-symbols compra alquiler)))
 
 ;La idea es puntuar mejor a las casas con el nº de habitaciones en el rango
-(deftemplate PREFERENCIAS::preferencias-tamaño "Información con las preferencias de espacio de un cliente"
+(deftemplate PREFERENCIAS::preferencias-tamanio "Información con las preferencias de espacio de un cliente"
     (slot cliente           (type STRING))
     (slot habitaciones-min  (type INTEGER))
     (slot habitaciones-max  (type INTEGER))
@@ -216,27 +230,27 @@
 (deffunction metros-necesarios (?n-residentes ?mascota ?tipo-residentes)
     (if (eq si ?mascota) then (* ?n-residentes 20) else (* ?n-residentes 15)))
 
-(defrule PREFERENCIAS::deducir-preferencias-tamaño-familia
+(defrule PREFERENCIAS::deducir-preferencias-tamanio-familia
     (cliente
         (nombre             ?nombre)
         (mascota            ?mascota)
         (tipo-residentes    familia)
         (n-residentes       ?n-residentes))
     =>
-    (assert (preferencias-tamaño
+    (assert (preferencias-tamanio
         (cliente            ?nombre)
         (habitaciones-max   (- ?n-residentes 1))            ;Normalmente en las familias los padres o hermanos comparten habitación
         (habitaciones-min   (div (+ 1 ?n-residentes) 2))    ;Como mucho compartir habitaciones de 2 en dos
         (metros-min          (metros-necesarios ?n-residentes ?mascota familia)))))
 
-(defrule PREFERENCIAS::deducir-preferencias-tamaño-amigos
+(defrule PREFERENCIAS::deducir-preferencias-tamanio-amigos
     (cliente
         (nombre             ?nombre)
         (mascota            ?mascota)
         (tipo-residentes    amigos)
         (n-residentes       ?n-residentes))
     =>
-    (assert (preferencias-tamaño
+    (assert (preferencias-tamanio
         (cliente            ?nombre)
         (habitaciones-max   ?n-residentes)  ;No hacen falta más habitaciones de los amigos que hay
         (habitaciones-min   ?n-residentes)  ;Los amigos no suelen compartir habitación
@@ -296,7 +310,7 @@
         (cliente        ?nombre)
         (precio-max     ?precio-max)
         (transaccion    ?transaccion))
-    (preferencias-tamaño
+    (preferencias-tamanio
         (cliente            ?nombre)
         (habitaciones-max   ?hab-max)
         (habitaciones-min   ?hab-min)
