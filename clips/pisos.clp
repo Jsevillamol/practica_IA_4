@@ -82,12 +82,65 @@
             
         (bind ?mas (ask-user "Quiere introducir más pisos?" yes-no)))
 
+    (bind ?mas (ask-user "Quiere modificar la informacion de algun piso?" yes-no))
+
+    (while (eq si ?mas) do
+        (bind ?dir (ask-user "Introduzca la direccion del piso a modificar" string))
+        (assert(modificacion-pendiente ?dir))
+        (bind ?mas (ask-user "Quiere modificar más pisos?" yes-no)))
+
     (save-facts pisos-database.clp local inmueble) ; Guarda los inmuebles anyadidos
 
     (printout t "Cambiando modulo: PISOS a CLIENTES" crlf)
     (focus CLIENTES)) ; A continuacion preguntamos a los clientes
 
+(defrule PISOS:modificar-piso
+	?modificacion <- (modificacion-pendiente ?dir)
+	?inmueble <- (inmueble
+        (direccion          ?dir)
+        (precio             ?precio)
+        (zona               ?zona)
+        (metros-cuadrados   ?metros)
+        (n-habitaciones     ?hab)
+        (accesible          ?accesible)
+        (garaje             ?garaje)
+        (transaccion        ?transaccion))
+	=>
+	(printout t "Modificando el piso " ?dir crlf)
+	(bind ?dir-nueva          (ask-user "¿Nueva direccion?" string))
+    (printout t "La zona anterior era: " ?zona crlf)
+    (bind ?zona-nueva         (ask-user "¿Nueva zona?" symbol))
+	(printout t "El tipo de transaccion anterior era: " ?transaccion crlf)
+    (bind ?transaccion-nuevo  (ask-user "Quiere alquilar o ponerlo a la venta? (compra/alquiler)" t-transaccion))
+    (printout t "El precio anterior era: " ?precio crlf)
+    (bind ?precio-nuevo       (ask-user "¿Nuevo precio?" number))
+    (printout t "El numero de metros cuadrados anterior era: " ?metros crlf)
+    (bind ?metros-nuevo       (ask-user "¿Cuantos metros cuadrados tiene el piso ahora?" number))
+    (printout t "El numero de habitaciones anterior era: " ?hab crlf)
+    (bind ?hab-nuevo          (ask-user "¿Cuantas habitaciones tiene el piso ahora?" number))
+    (printout t "Antes el piso " (if (eq ?accesible no) then "NO " else "") "tenia facilidades para minusvalidos." crlf)
+    (bind ?accesible-nuevo    (ask-user "¿Tiene ahora facilidades para minusvalidos?" yes-no))
+    (printout t "Antes el piso " (if (eq ?garaje no) then "NO " else "") "tenia garaje." crlf)
+    (bind ?garaje-nuevo       (ask-user "¿Tiene ahora garaje?" yes-no))
 
+    (retract ?inmueble)
+	(assert(inmueble
+            (direccion          ?dir-nueva)
+            (precio             ?precio-nuevo)
+            (zona               ?zona-nueva)
+            (metros-cuadrados   ?metros-nuevo)
+            (n-habitaciones     ?hab-nuevo)
+            (accesible          ?accesible-nuevo)
+            (garaje             ?garaje-nuevo)
+            (transaccion        ?transaccion-nuevo)))
+    (retract ?modificacion))
+
+(defrule PISOS::modificar-piso-error
+	?modificacion-pendiente<-(modificacion-pendiente ?dir)
+	(not (inmueble (direccion ?dir)))
+	=>
+	(printout t "No existe ningun piso registrado con esa direccion" crlf)
+	(retract ?modificacion-pendiente))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
