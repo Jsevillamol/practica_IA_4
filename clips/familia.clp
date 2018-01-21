@@ -10,12 +10,14 @@
 (defrule padre
     (dd ?x ? ?y ?)
     =>
-    (assert (padre ?x ?y)))
+    (assert (padre ?x ?y))
+    (assert (ascendiente ?x ?y)))
 
 (defrule madre
     (dd ? ?x ?y ?)
     =>
-    (assert (madre ?x ?y)))
+    (assert (madre ?x ?y))
+    (assert (ascendiente ?x ?y)))
 
 (defrule hijo
     (or (dd ?x ? ?y h) (dd ? ?x ?y h))
@@ -30,7 +32,7 @@
 (defrule hermano
     (dd ?x ?y ?a ?)
     (dd ?x ?y ?b h)
-	(test (neq ?a ?b))
+    (test (neq ?a ?b))
     =>
     (assert (hermano ?b ?a)))
 
@@ -70,8 +72,8 @@
     (assert (prima ?p ?x)))
 
 (defrule ascendiente
-    (or
-        (or (padre ?x ?y) (madre ?x ?y))
-        (and (ascendiente ?x ?z) (ascendiente ?z ?y)))
+    "Los padres y madres ya se han asertado como ascendientes."
+    (ascendiente ?x ?z) 
+    (ascendiente ?z ?y)
     =>
     (assert (ascendiente ?x ?y)))

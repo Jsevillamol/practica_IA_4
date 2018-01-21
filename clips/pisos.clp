@@ -93,7 +93,7 @@
     (while (eq si ?mas) do
         (bind ?dir (ask-user    "Introduzca la dirección del piso a eliminar" string))
         (assert(eliminacion-pendiente ?dir))
-        (printout t             "Eliminación pendiente. Más adelante la información se eliminara automáticamente." crlf)
+        (printout t             "Eliminación pendiente. Más adelante la información se eliminará automáticamente." crlf)
         (bind ?mas (ask-user    "Quiere eliminar más pisos?" yes-no)))) 
 
 (defrule PISOS:modificar-piso
