@@ -347,30 +347,30 @@
     (declare (salience -20))
     ?pref<-(preferencias-precio)
     =>
-    (facts)
-    (printout t "Eliminando preferencias-precio" crlf)
+    ;(facts)
+    ;(printout t "Eliminando preferencias-precio" crlf)
     (retract ?pref))
 
 (defrule MATCH::limpiar-preferencias-tamanyo
     (declare (salience -21))
     ?pref<-(preferencias-tamanyo)
     =>
-    (printout t "Eliminando preferencias-tamanyo" crlf)
+    ;(printout t "Eliminando preferencias-tamanyo" crlf)
     (retract ?pref))
 
 (defrule MATCH::limpiar-preferencias-zona
     (declare (salience -22))
     ?pref<-(preferencias-zona)
     =>
-    (printout t "Eliminando preferencias-zona" crlf)
+    ;(printout t "Eliminando preferencias-zona" crlf)
     (retract ?pref))
 
 (defrule MATCH::limpiar-preferencias-extras
     (declare (salience -23))
     ?pref<-(preferencias-extras)
     =>
-    (printout t "Eliminando preferencias-extras" crlf)
-    (facts)
+    ;(printout t "Eliminando preferencias-extras" crlf)
+    ;(facts)
     (retract ?pref))
 
 
@@ -381,10 +381,25 @@
 
 ; IO para mostrar resultados:
 
+(defrule RESULTADOS::init-counter
+	(declare (salience +10))
+	=>
+	(assert(resultados-mostrados 0)))
+
 (defrule RESULTADOS::mostrar-recomendaciones-ordenadas
     ?compatible <-(compatible (cliente ?nombre) (puntuacion ?puntuacion)  (piso ?dir))
     (not          (compatible (cliente ?nombre) (puntuacion ?puntuacion2&:(< ?puntuacion ?puntuacion2))))
+    ?counter <- (resultados-mostrados ?x)
+    (test(< ?x 5))
     =>
     (printout t "Recomendamos el piso " ?dir ". Puntuacion asociada " ?puntuacion "." crlf)
-    (retract ?compatible))
+    (retract ?compatible)
+    (retract ?counter)
+    (assert(resultados-mostrados (+ ?x 1))))
 
+(defrule RESULTADOS::clean-matches
+	?compatible <- (compatible)
+	(resultados-mostrados ?x)
+    (test(>= ?x 5))
+	=>
+	(retract ?compatible))
