@@ -83,16 +83,18 @@
         (bind ?mas (ask-user "Quiere introducir más pisos?" yes-no)))
 
     (bind ?mas (ask-user "Quiere modificar la informacion de algun piso?" yes-no))
-
     (while (eq si ?mas) do
         (bind ?dir (ask-user "Introduzca la direccion del piso a modificar" string))
         (assert(modificacion-pendiente ?dir))
+        (printout t "Modificacion pendiente registrada. Mas adelante accedera al menu de modificacion" crlf)
         (bind ?mas (ask-user "Quiere modificar más pisos?" yes-no)))
 
-    (save-facts pisos-database.clp local inmueble) ; Guarda los inmuebles anyadidos
-
-    (printout t "Cambiando modulo: PISOS a CLIENTES" crlf)
-    (focus CLIENTES)) ; A continuacion preguntamos a los clientes
+    (bind ?mas (ask-user "Quiere eliminar la informacion de algun piso?" yes-no))
+    (while (eq si ?mas) do
+        (bind ?dir (ask-user "Introduzca la direccion del piso a eliminar" string))
+        (assert(eliminacion-pendiente ?dir))
+        (printout t "Eliminacion pendiente registrada. Mas adelante la informacion se eliminara automaticamente." crlf)
+        (bind ?mas (ask-user "Quiere eliminar más pisos?" yes-no)))) 
 
 (defrule PISOS:modificar-piso
 	?modificacion <- (modificacion-pendiente ?dir)
@@ -139,8 +141,33 @@
 	?modificacion-pendiente<-(modificacion-pendiente ?dir)
 	(not (inmueble (direccion ?dir)))
 	=>
+	(printout t "Error al intentar modificar el piso " ?dir "." crlf)
 	(printout t "No existe ningun piso registrado con esa direccion" crlf)
 	(retract ?modificacion-pendiente))
+
+(defrule PISOS::eliminar-piso
+	?eliminacion <- (eliminacion-pendiente ?dir)
+	?inmueble <- (inmueble (direccion ?dir))
+	=>
+	(retract ?inmueble)
+	(printout t "Piso " ?dir " eliminado." crlf)
+	(retract ?eliminacion))
+
+(defrule PISOS::eliminar-piso-error
+	?eliminacion<-(eliminacion-pendiente ?dir)
+	(not (inmueble (direccion ?dir)))
+	=>
+	(printout t "Error al intentar eliminar el piso " ?dir "." crlf)
+	(printout t "No existe ningun piso registrado con esa direccion" crlf)
+	(retract ?eliminacion))
+
+(defrule PISOS::change-module
+	(declare (salience -10))
+	=>
+	(save-facts pisos-database.clp local inmueble) ; Guarda los inmuebles anyadidos
+
+    (printout t "Cambiando modulo: PISOS a CLIENTES" crlf)
+    (focus CLIENTES)) ; A continuacion preguntamos a los clientes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
