@@ -16,7 +16,7 @@ busquedaGraphDFS([nodo(estado([U1,L1], [U2,L2]), Coste, Solucion) | _], _, Coste
 
 % Node expansion
 busquedaGraphDFS([NodoActual | Frontera], Visitados, Coste, Solucion) :-
-	%write("Expandiendo "), write(NodoActual), nl,
+	write("Expandiendo "), write(NodoActual), nl,
 	hijos(NodoActual, Hijos), % genera los hijos del nodo actual
 	%write("Hijos del nodo actual: "), write(Hijos), nl,
 	NodoActual = nodo(EstadoActual, _, _),
@@ -66,7 +66,7 @@ aplicar(
 	nodo(estado([U1,L1], [0,L2]), Coste, [esperar | Solucion_parcial])
 ) :-
 	U1_old > U2_old,
-	U1 is U2_old - U2_old,
+	U1 is U1_old - U2_old,
 	L1 is L1_old + U2_old,
 	L2 is L2_old + U2_old,
 	Coste is Coste_old + U2_old.
