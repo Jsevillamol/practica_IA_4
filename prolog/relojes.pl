@@ -1,7 +1,11 @@
 
 % estado([ParteSuperior1, ParteInferior1], [ParteSuperior2, ParteInferior2])
+% representa la cantidad de arena en minutos que queda en cada parte de sendos relojes
 
 % nodo(estado, coste, solucion_parcial)
+% estado = el estado donde se encuentra el nodo
+% coste = coste asociado al nodo
+% solucion_parcial = secuencia de operadores que transforman el estado inicial en el nodo actual
 
 % Nodo inicial
 nodo(estado([7,0],[11,0]), 0, [], []).
@@ -11,10 +15,15 @@ resolver(Coste, Solucion):-
 	busquedaGraphDFS([nodo(estado([7,0],[11,0]), 0, [])], [], Coste, Solucion).
 
 % Goal test
+% Las soluciones son aquellas en las que aparece el numero 3 en alguna parte del estado
 busquedaGraphDFS([nodo(estado([U1,L1], [U2,L2]), Coste, Solucion) | _], _, Coste, Solucion):-
 	U1 = 3 ; L1 = 3 ; U2 = 3; L2 = 3.
 
 % Node expansion
+% NodoActual = Nodo a expandir en el siguiente paso de la busqueda
+% Frontera = Nodos que quedan por expandir
+% Visitados = Estados que ya han sido visitados en el pasado
+% Coste, Solucion = Parametros de salida
 busquedaGraphDFS([NodoActual | Frontera], Visitados, Coste, Solucion) :-
 	write("Expandiendo "), write(NodoActual), nl,
 	hijos(NodoActual, Hijos), % genera los hijos del nodo actual
@@ -49,6 +58,7 @@ aplicar(
 	).
 
 % Esperar
+% Espera a que la arena caiga de los relojes hasta que uno de ellos se vacie
 aplicar(
 	esperar, 
 	nodo(estado([U1_old,L1_old], [U2_old,L2_old]), Coste_old, Solucion_parcial),
@@ -74,6 +84,7 @@ aplicar(
 % Util
 
 % filtrar([Nodos], [Estados], Resultado)
+% Elimina de la lista [Nodos] los nodos con un estado en [Estados] y devuelve el resultado en Resultado
 filtrar([], _, []).
 
 filtrar([Nodo | Nodos], Visitados, Resultado) :-
