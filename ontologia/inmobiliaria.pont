@@ -1,0 +1,288 @@
+; Fri Mar 23 16:33:11 CET 2018
+; 
+;+ (version "3.5")
+;+ (build "Build 663")
+
+
+(defclass %3ACLIPS_TOP_LEVEL_SLOT_CLASS "Fake class to save top-level slot information"
+	(is-a USER)
+	(role abstract)
+	(single-slot plazas_garaje
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot pagina_web
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot piso
+;+		(comment "El piso en el que se encuentra la vivienda")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot n_ba%C3%B1os
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot contaminaci%C3%B3n
+;+		(comment "Nivel de contaminación en una zona")
+		(type SYMBOL)
+		(allowed-values baja alta)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot contiene
+;+		(comment "Viviendas a la venta en el distrito")
+		(type INSTANCE)
+;+		(allowed-classes Vivienda)
+;+		(inverse-slot distrito)
+		(create-accessor read-write))
+	(multislot vende
+		(type INSTANCE)
+;+		(allowed-classes Vivienda)
+;+		(inverse-slot vendido_por)
+		(create-accessor read-write))
+	(single-slot vendido_por
+		(type INSTANCE)
+;+		(allowed-classes Inmobiliaria)
+;+		(cardinality 0 1)
+;+		(inverse-slot vende)
+		(create-accessor read-write))
+	(single-slot n_plantas
+;+		(comment "Número de plantas de la vivienda")
+		(type INTEGER)
+		(range 1 %3FVARIABLE)
+		(default 1)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot criminalidad
+		(type SYMBOL)
+		(allowed-values baja alta)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot direccion
+;+		(comment "Dirección física de un piso")
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot sede
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot jardin%3F
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot ascensor%3F
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot metros_cuadrados
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot n_dormitorios
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot precio
+;+		(comment "Precio en USD")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot cocina_independiente%3F
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot telefono
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot nombre
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot chimenea%3F
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot distrito
+		(type INSTANCE)
+;+		(allowed-classes Distrito)
+;+		(cardinality 1 1)
+;+		(inverse-slot contiene)
+		(create-accessor read-write)))
+
+(defclass Inmobiliaria "Agencia inmobiliaria"
+	(is-a USER)
+	(role abstract)
+	(multislot vende
+		(type INSTANCE)
+;+		(allowed-classes Vivienda)
+		(create-accessor read-write))
+	(single-slot nombre
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write)))
+
+(defclass Inmobiliaria_online
+	(is-a Inmobiliaria)
+	(role concrete)
+	(single-slot pagina_web
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass Inmobiliaria_fisica
+	(is-a Inmobiliaria)
+	(role concrete)
+	(single-slot telefono
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot sede
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass Distrito "Distritos de Madrid"
+	(is-a USER)
+	(role concrete)
+	(single-slot criminalidad
+		(type SYMBOL)
+		(allowed-values baja alta)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot nombre
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot contaminaci%C3%B3n
+;+		(comment "Nivel de contaminación en una zona")
+		(type SYMBOL)
+		(allowed-values baja alta)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(multislot contiene
+;+		(comment "Viviendas a la venta en el distrito")
+		(type INSTANCE)
+;+		(allowed-classes Vivienda)
+		(create-accessor read-write)))
+
+(defclass Vivienda
+	(is-a USER)
+	(role abstract)
+	(single-slot vendido_por
+		(type INSTANCE)
+;+		(allowed-classes Inmobiliaria)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot n_dormitorios
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot n_ba%C3%B1os
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot cocina_independiente%3F
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot direccion
+;+		(comment "Dirección física de un piso")
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot precio
+;+		(comment "Precio en USD")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot plazas_garaje
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot metros_cuadrados
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot chimenea%3F
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot jardin%3F
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot distrito
+		(type INSTANCE)
+;+		(allowed-classes Distrito)
+;+		(cardinality 1 1)
+		(create-accessor read-write)))
+
+(defclass Piso
+	(is-a Vivienda)
+	(role concrete)
+	(single-slot ascensor%3F
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot piso
+;+		(comment "El piso en el que se encuentra la vivienda")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write)))
+
+(defclass Estudio
+	(is-a Piso)
+	(role concrete))
+
+(defclass Piso_bajo
+	(is-a Piso)
+	(role concrete)
+	(single-slot piso
+;+		(comment "El piso en el que se encuentra la vivienda")
+		(type INTEGER)
+		(range 0 0)
+;+		(value 0)
+;+		(cardinality 1 1)
+		(create-accessor read-write)))
+
+(defclass Chalet
+	(is-a Vivienda)
+	(role abstract)
+	(single-slot n_plantas
+;+		(comment "Número de plantas de la vivienda")
+		(type INTEGER)
+		(range 1 %3FVARIABLE)
+		(default 1)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass Chalet_independiente
+	(is-a Chalet)
+	(role concrete))
+
+(defclass Chalet_adosado
+	(is-a Chalet)
+	(role concrete))

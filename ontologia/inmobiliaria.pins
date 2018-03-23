@@ -1,0 +1,421 @@
+; Fri Mar 23 16:33:11 CET 2018
+; 
+;+ (version "3.5")
+;+ (build "Build 663")
+
+([inmobiliaria_Class10] of  Distrito
+
+	(contaminaci%C3%B3n alta)
+	(contiene
+		[inmobiliaria_Class44]
+		[inmobiliaria_Class38]
+		[inmobiliaria_Class33]
+		[inmobiliaria_Class23])
+	(criminalidad baja)
+	(nombre "Moncloa-Aravaca"))
+
+([inmobiliaria_Class11] of  Distrito
+
+	(contaminaci%C3%B3n alta)
+	(contiene
+		[inmobiliaria_Class36]
+		[inmobiliaria_Class41]
+		[inmobiliaria_Class32]
+		[inmobiliaria_Class22]
+		[inmobiliaria_Class20])
+	(criminalidad alta)
+	(nombre "Latina"))
+
+([inmobiliaria_Class12] of  Distrito
+
+	(contaminaci%C3%B3n baja)
+	(contiene
+		[inmobiliaria_Class43]
+		[inmobiliaria_Class27]
+		[inmobiliaria_Class39]
+		[inmobiliaria_Class30]
+		[inmobiliaria_Class37]
+		[inmobiliaria_Class21]
+		[inmobiliaria_Class19]
+		[inmobiliaria_Class18])
+	(criminalidad alta)
+	(nombre "Chamberí"))
+
+([inmobiliaria_Class13] of  Inmobiliaria_fisica
+
+	(nombre "TuCasa")
+	(sede "C/ Falsa 123")
+	(telefono "915555555")
+	(vende
+		[inmobiliaria_Class18]
+		[inmobiliaria_Class22]
+		[inmobiliaria_Class25]
+		[inmobiliaria_Class36]
+		[inmobiliaria_Class39]
+		[inmobiliaria_Class41]
+		[inmobiliaria_Class27]))
+
+([inmobiliaria_Class14] of  Inmobiliaria_fisica
+
+	(nombre "MiCasa")
+	(sede "C/ Calle 42")
+	(telefono "915555555")
+	(vende
+		[inmobiliaria_Class17]
+		[inmobiliaria_Class21]
+		[inmobiliaria_Class30]
+		[inmobiliaria_Class31]
+		[inmobiliaria_Class34]
+		[inmobiliaria_Class38]))
+
+([inmobiliaria_Class15] of  Inmobiliaria_online
+
+	(nombre "CasaOnline")
+	(pagina_web "www.casaonline.rolf")
+	(vende
+		[inmobiliaria_Class20]
+		[inmobiliaria_Class24]
+		[inmobiliaria_Class29]
+		[inmobiliaria_Class33]
+		[inmobiliaria_Class43]
+		[inmobiliaria_Class44]))
+
+([inmobiliaria_Class16] of  Inmobiliaria_online
+
+	(nombre "BuscaCasa")
+	(pagina_web "www.buscacasa.lol")
+	(vende
+		[inmobiliaria_Class19]
+		[inmobiliaria_Class23]
+		[inmobiliaria_Class32]
+		[inmobiliaria_Class37]
+		[inmobiliaria_Class40]
+		[inmobiliaria_Class42]))
+
+([inmobiliaria_Class17] of  Estudio
+
+	(ascensor%3F FALSE)
+	(direccion "C/ EstudioGrande 3")
+	(distrito [inmobiliaria_Class9])
+	(metros_cuadrados 300)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 0)
+	(piso 5)
+	(plazas_garaje 0)
+	(precio 500000)
+	(vendido_por [inmobiliaria_Class14]))
+
+([inmobiliaria_Class18] of  Estudio
+
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Estudio 42")
+	(distrito [inmobiliaria_Class12])
+	(metros_cuadrados 10)
+	(n_ba%C3%B1os 0)
+	(n_dormitorios 0)
+	(piso 2)
+	(plazas_garaje 0)
+	(precio 10000)
+	(vendido_por [inmobiliaria_Class13]))
+
+([inmobiliaria_Class19] of  Estudio
+
+	(direccion "C/ EstudioCutre 1")
+	(distrito [inmobiliaria_Class12])
+	(metros_cuadrados 20)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 0)
+	(piso 0)
+	(plazas_garaje 1)
+	(precio 30000)
+	(vendido_por [inmobiliaria_Class16]))
+
+([inmobiliaria_Class20] of  Estudio
+
+	(direccion "C/ EstudioCaro 4")
+	(distrito [inmobiliaria_Class11])
+	(metros_cuadrados 100)
+	(n_ba%C3%B1os 2)
+	(n_dormitorios 0)
+	(piso 3)
+	(plazas_garaje 2)
+	(precio 2000000)
+	(vendido_por [inmobiliaria_Class15]))
+
+([inmobiliaria_Class21] of  Piso_bajo
+
+	(ascensor%3F FALSE)
+	(chimenea%3F TRUE)
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Piso Bajo 1")
+	(distrito [inmobiliaria_Class12])
+	(jardin%3F TRUE)
+	(metros_cuadrados 500)
+	(n_ba%C3%B1os 2)
+	(n_dormitorios 4)
+	(plazas_garaje 3)
+	(precio 20000000)
+	(vendido_por [inmobiliaria_Class14]))
+
+([inmobiliaria_Class22] of  Piso_bajo
+
+	(direccion "C/ Piso Bajo 2")
+	(distrito [inmobiliaria_Class11])
+	(metros_cuadrados 5)
+	(n_ba%C3%B1os 0)
+	(n_dormitorios 1)
+	(plazas_garaje 0)
+	(precio 10)
+	(vendido_por [inmobiliaria_Class13]))
+
+([inmobiliaria_Class23] of  Piso_bajo
+
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Piso Bajo 3")
+	(distrito [inmobiliaria_Class10])
+	(metros_cuadrados 100)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 1)
+	(plazas_garaje 1)
+	(precio 30000)
+	(vendido_por [inmobiliaria_Class16]))
+
+([inmobiliaria_Class24] of  Piso_bajo
+
+	(direccion "C/ Piso Bajo")
+	(distrito [inmobiliaria_Class9])
+	(metros_cuadrados 30)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 3)
+	(plazas_garaje 1)
+	(precio 50000)
+	(vendido_por [inmobiliaria_Class15]))
+
+([inmobiliaria_Class25] of  Piso
+
+	(ascensor%3F TRUE)
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Piso 1")
+	(distrito [inmobiliaria_Class9])
+	(metros_cuadrados 70)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 2)
+	(piso 9)
+	(plazas_garaje 0)
+	(precio 200000)
+	(vendido_por [inmobiliaria_Class13]))
+
+([inmobiliaria_Class27] of  Piso
+
+	(chimenea%3F FALSE)
+	(direccion "C/ Piso 2")
+	(distrito [inmobiliaria_Class12])
+	(metros_cuadrados 30)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 1)
+	(piso 1)
+	(plazas_garaje 1)
+	(precio 700000)
+	(vendido_por [inmobiliaria_Class13]))
+
+([inmobiliaria_Class29] of  Piso
+
+	(direccion "C/ Piso 3")
+	(distrito [inmobiliaria_Class9])
+	(metros_cuadrados 50)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 0)
+	(piso 3)
+	(plazas_garaje 2)
+	(precio 12)
+	(vendido_por [inmobiliaria_Class15]))
+
+([inmobiliaria_Class30] of  Chalet_adosado
+
+	(chimenea%3F TRUE)
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Adosado 1")
+	(distrito [inmobiliaria_Class12])
+	(jardin%3F TRUE)
+	(metros_cuadrados 1000)
+	(n_ba%C3%B1os 4)
+	(n_dormitorios 10)
+	(n_plantas 1)
+	(plazas_garaje 10)
+	(precio 1000000000)
+	(vendido_por [inmobiliaria_Class14]))
+
+([inmobiliaria_Class31] of  Chalet_adosado
+
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Adosado 2")
+	(distrito [inmobiliaria_Class9])
+	(metros_cuadrados 765432)
+	(n_ba%C3%B1os 3)
+	(n_dormitorios 6)
+	(plazas_garaje 4)
+	(precio 324567)
+	(vendido_por [inmobiliaria_Class14]))
+
+([inmobiliaria_Class32] of  Chalet_adosado
+
+	(direccion "C/ Adosado 3")
+	(distrito [inmobiliaria_Class11])
+	(metros_cuadrados 13)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 2)
+	(plazas_garaje 3)
+	(precio 345)
+	(vendido_por [inmobiliaria_Class16]))
+
+([inmobiliaria_Class33] of  Chalet_independiente
+
+	(chimenea%3F TRUE)
+	(direccion "C/ Chalet 1")
+	(distrito [inmobiliaria_Class10])
+	(metros_cuadrados 234)
+	(n_ba%C3%B1os 5)
+	(n_dormitorios 1)
+	(n_plantas 2)
+	(plazas_garaje 2)
+	(precio 54634223)
+	(vendido_por [inmobiliaria_Class15]))
+
+([inmobiliaria_Class34] of  Chalet_independiente
+
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Chalet 2")
+	(distrito [inmobiliaria_Class9])
+	(metros_cuadrados 23)
+	(n_ba%C3%B1os 5)
+	(n_dormitorios 1)
+	(n_plantas 1)
+	(plazas_garaje 2)
+	(precio 1234)
+	(vendido_por [inmobiliaria_Class14]))
+
+([inmobiliaria_Class36] of  Chalet_independiente
+
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Chalet 3")
+	(distrito [inmobiliaria_Class11])
+	(metros_cuadrados 40)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 1)
+	(n_plantas 1)
+	(plazas_garaje 1)
+	(precio 12345654)
+	(vendido_por [inmobiliaria_Class13]))
+
+([inmobiliaria_Class37] of  Chalet_independiente
+
+	(chimenea%3F TRUE)
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Chalet 4")
+	(distrito [inmobiliaria_Class12])
+	(metros_cuadrados 1000)
+	(n_ba%C3%B1os 3)
+	(n_dormitorios 5)
+	(n_plantas 3)
+	(plazas_garaje 10)
+	(precio 3000000)
+	(vendido_por [inmobiliaria_Class16]))
+
+([inmobiliaria_Class38] of  Chalet_adosado
+
+	(direccion "C/ Adosado 4")
+	(distrito [inmobiliaria_Class10])
+	(metros_cuadrados 234)
+	(n_ba%C3%B1os 2)
+	(n_dormitorios 1)
+	(n_plantas 2)
+	(plazas_garaje 3)
+	(precio 312456)
+	(vendido_por [inmobiliaria_Class14]))
+
+([inmobiliaria_Class39] of  Piso
+
+	(ascensor%3F TRUE)
+	(direccion "C/ Piso 4")
+	(distrito [inmobiliaria_Class12])
+	(metros_cuadrados 41)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 2)
+	(piso 5)
+	(plazas_garaje 0)
+	(precio 4322)
+	(vendido_por [inmobiliaria_Class13]))
+
+([inmobiliaria_Class40] of  Piso
+
+	(ascensor%3F TRUE)
+	(chimenea%3F TRUE)
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Piso 5")
+	(distrito [inmobiliaria_Class9])
+	(metros_cuadrados 2323)
+	(n_ba%C3%B1os 5)
+	(n_dormitorios 2)
+	(piso 4)
+	(plazas_garaje 4)
+	(precio 123456)
+	(vendido_por [inmobiliaria_Class16]))
+
+([inmobiliaria_Class41] of  Piso
+
+	(chimenea%3F FALSE)
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Piso 6")
+	(distrito [inmobiliaria_Class11])
+	(metros_cuadrados 234)
+	(n_ba%C3%B1os 4)
+	(n_dormitorios 0)
+	(piso 6)
+	(plazas_garaje 0)
+	(precio 2134)
+	(vendido_por [inmobiliaria_Class13]))
+
+([inmobiliaria_Class42] of  Piso
+
+	(direccion "C/ Piso 7")
+	(distrito [inmobiliaria_Class9])
+	(metros_cuadrados 10)
+	(n_ba%C3%B1os 0)
+	(n_dormitorios 1)
+	(piso 7)
+	(plazas_garaje 0)
+	(precio 10)
+	(vendido_por [inmobiliaria_Class16]))
+
+([inmobiliaria_Class43] of  Chalet_adosado
+
+	(direccion "C/ Adosado 5")
+	(distrito [inmobiliaria_Class12])
+	(metros_cuadrados 35)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 1)
+	(n_plantas 1)
+	(plazas_garaje 1)
+	(precio 76054)
+	(vendido_por [inmobiliaria_Class15]))
+
+([inmobiliaria_Class44] of  Chalet_independiente
+
+	(chimenea%3F TRUE)
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Chalet 5")
+	(distrito [inmobiliaria_Class10])
+	(jardin%3F TRUE)
+	(metros_cuadrados 10000)
+	(n_ba%C3%B1os 10)
+	(n_dormitorios 20)
+	(n_plantas 10)
+	(plazas_garaje 2)
+	(precio 100000000)
+	(vendido_por [inmobiliaria_Class15]))
+
+([inmobiliaria_Class9] of  Distrito
+
+	(contaminaci%C3%B3n baja)
+	(criminalidad baja)
+	(nombre "Arganzuela"))
