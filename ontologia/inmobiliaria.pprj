@@ -1,4 +1,4 @@
-; Fri Mar 23 16:33:11 CET 2018
+; Sun Mar 25 21:02:08 CEST 2018
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -20,15 +20,20 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[inmobiliaria_ProjectKB_Class10099]
-		[inmobiliaria_ProjectKB_Class10100]
-		[inmobiliaria_ProjectKB_Class10101]
-		[inmobiliaria_ProjectKB_Class10102]
-		[inmobiliaria_ProjectKB_Class10103]
-		[inmobiliaria_ProjectKB_Class10104]))
+		[inmobiliaria_ProjectKB_Class20291]
+		[inmobiliaria_ProjectKB_Class20292]
+		[inmobiliaria_ProjectKB_Class20293]
+		[inmobiliaria_ProjectKB_Class20294]
+		[inmobiliaria_ProjectKB_Class20295]
+		[inmobiliaria_ProjectKB_Class20296]
+		[inmobiliaria_ProjectKB_Class20297]
+		[inmobiliaria_ProjectKB_Class20298]
+		[inmobiliaria_ProjectKB_Class20299]
+		[inmobiliaria_ProjectKB_Class20300]))
 
 ([CLSES_TAB] of  Widget
 
+	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.ClsesTab"))
 
 ([CREATION_TIMESTAMP_WIDGET] of  Widget
@@ -41,6 +46,7 @@
 
 ([FORMS_TAB] of  Widget
 
+	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.FormsTab"))
 
 ([inmobiliaria_ProjectKB_Class1] of  Widget
@@ -52,40 +58,47 @@
 ([inmobiliaria_ProjectKB_Class10] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class10099] of  String
+([inmobiliaria_ProjectKB_Class10084] of  Widget
 
-	(name "Vivienda")
-	(string_value "direccion"))
+	(height 60)
+	(is_hidden FALSE)
+	(label "Startup file name")
+	(name ":STARTUP-FILE")
+	(property_list [inmobiliaria_ProjectKB_Class10085])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class10085] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class10086] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(label "Startup expression")
+	(name ":STARTUP-EXPRESSION")
+	(property_list [inmobiliaria_ProjectKB_Class10087])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 250)
+	(x 0)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class10087] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class10088] of  Widget
+
+	(is_hidden FALSE)
+	(name ":JESS-RULE")
+	(property_list [inmobiliaria_ProjectKB_Class20099])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
 
 ([inmobiliaria_ProjectKB_Class101] of  String
 
 	(name "SearchTab_Query")
-	(string_value "Query Name: 1. Pisos con ascensor en Arganzuela baratos y grandes\nMatch All:true\nLength: 4\nPiso	precio	is less than	Other:300000	1	\nPiso	metros_cuadrados	is greater than	Other:70	1	\nPiso	distrito	contains	Instance:inmobiliaria_Class9|Arganzuela	1	\nPiso	ascensor?	is	Other:true	1	\n\nQuery Name: 2. Chalets independientes con jardín, chimenea y dos plazas de garaje en Moncloa-Aravaca\nMatch All:true\nLength: 4\nChalet_independiente	jardin?	is	Other:true	1	\nChalet_independiente	chimenea?	is	Other:true	1	\nChalet_independiente	plazas_garaje	is	Other:2	1	\nChalet_independiente	distrito	contains	Instance:inmobiliaria_Class10|Moncloa-Aravaca	1	\n\nQuery Name: 3 Aux. Pisos en latina\nMatch All:true\nLength: 1\nPiso	distrito	contains	Instance:inmobiliaria_Class11|Latina	1	\n\nQuery Name: 3. Inmobiliarias online con pisos en Latina\nMatch All:true\nLength: 1\nInmobiliaria_online	vende	contains	Query:3 Aux. Pisos en latina|3 Aux. Pisos en latina	1	\n\nQuery Name: 4. Estudios con cocina independiente en Chamberí vendidos por TuCasa\nMatch All:true\nLength: 3\nEstudio	cocina_independiente?	is	Other:true	1	\nEstudio	distrito	contains	Instance:inmobiliaria_Class12|Chamberí	1	\nEstudio	vendido_por	contains	Instance:inmobiliaria_Class13|TuCasa	1	\n\nQuery Name: 5 Aux. Inmobiliarias online\nMatch All:true\nLength: 1\nInmobiliaria_online	pagina_web	contains	Other:www	1	\n\nQuery Name: 6 Aux. Buen distrito\nMatch All:true\nLength: 2\nDistrito	criminalidad	is	Other:baja	1	\nDistrito	contaminación	is	Other:baja	1	\n\nQuery Name: 6. Viviendas de 3 dormitorios en un buen distrito\nMatch All:true\nLength: 2\nVivienda	n_dormitorios	is	Other:3	1	\nVivienda	distrito	contains	Query:6 Aux. Buen distrito|6 Aux. Buen distrito	1	\n\nQuery Name: 7. Viviendas accesibles (chalets, pisos bajos y pisos con ascensor)\nMatch All:false\nLength: 3\nChalet	 		Other:	1	\nPiso_bajo	 		Other:	1	\nPiso	ascensor?	is	Other:true	1	\n\nQuery Name: 5. Chalets caros en inmobiliarias online\nMatch All:true\nLength: 2\nChalet	precio	is greater than	Other:1000000	1	\nChalet	vendido_por	contains	Query:5 Aux. Inmobiliarias online|5 Aux. Inmobiliarias online	1	\n\n"))
-
-([inmobiliaria_ProjectKB_Class10100] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([inmobiliaria_ProjectKB_Class10101] of  String
-
-	(name "Distrito")
-	(string_value "nombre"))
-
-([inmobiliaria_ProjectKB_Class10102] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([inmobiliaria_ProjectKB_Class10103] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([inmobiliaria_ProjectKB_Class10104] of  String
-
-	(name "Inmobiliaria")
-	(string_value "nombre"))
+	(string_value "Query Name: 1. Pisos con ascensor en Arganzuela baratos y grandes\nMatch All:true\nLength: 4\nPiso	precio	is less than	Other:300000	1	\nPiso	metros_cuadrados	is greater than	Other:70	1	\nPiso	distrito	contains	Instance:inmobiliaria_Class9|Arganzuela	1	\nPiso	ascensor?	is	Other:true	1	\n\nQuery Name: 2. Chalets independientes con jardín, chimenea y dos plazas de garaje en Moncloa-Aravaca\nMatch All:true\nLength: 4\nChalet_independiente	jardin?	is	Other:true	1	\nChalet_independiente	chimenea?	is	Other:true	1	\nChalet_independiente	plazas_garaje	is	Other:2	1	\nChalet_independiente	distrito	contains	Instance:inmobiliaria_Class10|Moncloa-Aravaca	1	\n\nQuery Name: 3 Aux. Pisos en latina\nMatch All:true\nLength: 1\nPiso	distrito	contains	Instance:inmobiliaria_Class11|Latina	1	\n\nQuery Name: 3. Inmobiliarias online con pisos en Latina\nMatch All:true\nLength: 1\nInmobiliaria_online	vende	contains	Query:3 Aux. Pisos en latina|3 Aux. Pisos en latina	1	\n\nQuery Name: 4. Estudios con cocina independiente en Chamberí vendidos por TuCasa\nMatch All:true\nLength: 3\nEstudio	cocina_independiente?	is	Other:true	1	\nEstudio	distrito	contains	Instance:inmobiliaria_Class12|Chamberí	1	\nEstudio	vendido_por	contains	Instance:inmobiliaria_Class13|TuCasa	1	\n\nQuery Name: 5 Aux. Inmobiliarias online\nMatch All:true\nLength: 1\nInmobiliaria_online	pagina_web	contains	Other:www	1	\n\nQuery Name: 6 Aux. Buen distrito\nMatch All:true\nLength: 2\nDistrito	criminalidad	is	Other:baja	1	\nDistrito	contaminación	is	Other:baja	1	\n\nQuery Name: 6. Viviendas de 3 dormitorios en un buen distrito\nMatch All:true\nLength: 2\nVivienda	n_dormitorios	is	Other:3	1	\nVivienda	distrito	contains	Query:6 Aux. Buen distrito|6 Aux. Buen distrito	1	\n\nQuery Name: 7. Viviendas accesibles (chalets, pisos bajos y pisos con ascensor)\nMatch All:false\nLength: 3\nChalet	 	Other:	null	\nPiso_bajo	 	Other:	null	\nPiso	ascensor?	is	Other:true	1	\n\nQuery Name: 5. Chalets caros en inmobiliarias online\nMatch All:true\nLength: 2\nChalet	precio	is greater than	Other:1000000	1	\nChalet	vendido_por	contains	Query:5 Aux. Inmobiliarias online|5 Aux. Inmobiliarias online	1	\n\n"))
 
 ([inmobiliaria_ProjectKB_Class10110] of  Widget
 
@@ -1792,6 +1805,630 @@
 ([inmobiliaria_ProjectKB_Class20] of  Property_List
 )
 
+([inmobiliaria_ProjectKB_Class20099] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class20100]
+		[inmobiliaria_ProjectKB_Class20101]
+		[inmobiliaria_ProjectKB_Class20103]
+		[inmobiliaria_ProjectKB_Class20105]
+		[inmobiliaria_ProjectKB_Class20107]))
+
+([inmobiliaria_ProjectKB_Class20100] of  Property_List
+
+	(name "layout properties"))
+
+([inmobiliaria_ProjectKB_Class20101] of  Widget
+
+	(height 120)
+	(is_hidden FALSE)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(property_list [inmobiliaria_ProjectKB_Class20102])
+	(widget_class_name "se.liu.ida.JessTab.JessDocumentationWidget")
+	(width 200)
+	(x 250)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20102] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20103] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":DEFINITION-NAME")
+	(property_list [inmobiliaria_ProjectKB_Class20104])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20104] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20105] of  Widget
+
+	(height 250)
+	(is_hidden FALSE)
+	(label "Jess definition")
+	(name ":DEFINITION")
+	(property_list [inmobiliaria_ProjectKB_Class20106])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionWidget")
+	(width 450)
+	(x 0)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class20106] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20107] of  Widget
+
+	(height 30)
+	(is_hidden FALSE)
+	(label "Save definition in knowledge base")
+	(name ":KB-SAVE")
+	(property_list [inmobiliaria_ProjectKB_Class20108])
+	(widget_class_name "edu.stanford.smi.protege.widget.CheckBoxWidget")
+	(width 250)
+	(x 0)
+	(y 380))
+
+([inmobiliaria_ProjectKB_Class20108] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20109] of  Widget
+
+	(is_hidden FALSE)
+	(name ":JESS-FUNCTION")
+	(property_list [inmobiliaria_ProjectKB_Class20120])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
+([inmobiliaria_ProjectKB_Class20120] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class20121]
+		[inmobiliaria_ProjectKB_Class20122]
+		[inmobiliaria_ProjectKB_Class20124]
+		[inmobiliaria_ProjectKB_Class20126]
+		[inmobiliaria_ProjectKB_Class20128]))
+
+([inmobiliaria_ProjectKB_Class20121] of  Property_List
+
+	(name "layout properties"))
+
+([inmobiliaria_ProjectKB_Class20122] of  Widget
+
+	(height 120)
+	(is_hidden FALSE)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(property_list [inmobiliaria_ProjectKB_Class20123])
+	(widget_class_name "se.liu.ida.JessTab.JessDocumentationWidget")
+	(width 200)
+	(x 250)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20123] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20124] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":DEFINITION-NAME")
+	(property_list [inmobiliaria_ProjectKB_Class20125])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20125] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20126] of  Widget
+
+	(height 250)
+	(is_hidden FALSE)
+	(label "Jess definition")
+	(name ":DEFINITION")
+	(property_list [inmobiliaria_ProjectKB_Class20127])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionWidget")
+	(width 450)
+	(x 0)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class20127] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20128] of  Widget
+
+	(height 30)
+	(is_hidden FALSE)
+	(label "Save definition in knowledge base")
+	(name ":KB-SAVE")
+	(property_list [inmobiliaria_ProjectKB_Class20129])
+	(widget_class_name "edu.stanford.smi.protege.widget.CheckBoxWidget")
+	(width 250)
+	(x 0)
+	(y 380))
+
+([inmobiliaria_ProjectKB_Class20129] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20130] of  Widget
+
+	(is_hidden FALSE)
+	(name ":JESS-DEFGLOBAL")
+	(property_list [inmobiliaria_ProjectKB_Class20139])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
+([inmobiliaria_ProjectKB_Class20139] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class20140]
+		[inmobiliaria_ProjectKB_Class20141]
+		[inmobiliaria_ProjectKB_Class20143]
+		[inmobiliaria_ProjectKB_Class20145]))
+
+([inmobiliaria_ProjectKB_Class20140] of  Property_List
+
+	(name "layout properties"))
+
+([inmobiliaria_ProjectKB_Class20141] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":DEFINITION-NAME")
+	(property_list [inmobiliaria_ProjectKB_Class20142])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20142] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20143] of  Widget
+
+	(height 250)
+	(is_hidden FALSE)
+	(label "Jess definition")
+	(name ":DEFINITION")
+	(property_list [inmobiliaria_ProjectKB_Class20144])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionWidget")
+	(width 450)
+	(x 0)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class20144] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20145] of  Widget
+
+	(height 30)
+	(is_hidden FALSE)
+	(label "Save definition in knowledge base")
+	(name ":KB-SAVE")
+	(property_list [inmobiliaria_ProjectKB_Class20146])
+	(widget_class_name "edu.stanford.smi.protege.widget.CheckBoxWidget")
+	(width 250)
+	(x 0)
+	(y 380))
+
+([inmobiliaria_ProjectKB_Class20146] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20147] of  Widget
+
+	(is_hidden FALSE)
+	(name ":JESS-DEFTEMPLATE")
+	(property_list [inmobiliaria_ProjectKB_Class20158])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
+([inmobiliaria_ProjectKB_Class20158] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class20159]
+		[inmobiliaria_ProjectKB_Class20160]
+		[inmobiliaria_ProjectKB_Class20162]
+		[inmobiliaria_ProjectKB_Class20164]
+		[inmobiliaria_ProjectKB_Class20166]))
+
+([inmobiliaria_ProjectKB_Class20159] of  Property_List
+
+	(name "layout properties"))
+
+([inmobiliaria_ProjectKB_Class20160] of  Widget
+
+	(height 120)
+	(is_hidden FALSE)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(property_list [inmobiliaria_ProjectKB_Class20161])
+	(widget_class_name "se.liu.ida.JessTab.JessDocumentationWidget")
+	(width 200)
+	(x 250)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20161] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20162] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":DEFINITION-NAME")
+	(property_list [inmobiliaria_ProjectKB_Class20163])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20163] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20164] of  Widget
+
+	(height 250)
+	(is_hidden FALSE)
+	(label "Jess definition")
+	(name ":DEFINITION")
+	(property_list [inmobiliaria_ProjectKB_Class20165])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionWidget")
+	(width 450)
+	(x 0)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class20165] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20166] of  Widget
+
+	(height 30)
+	(is_hidden FALSE)
+	(label "Save definition in knowledge base")
+	(name ":KB-SAVE")
+	(property_list [inmobiliaria_ProjectKB_Class20167])
+	(widget_class_name "edu.stanford.smi.protege.widget.CheckBoxWidget")
+	(width 250)
+	(x 0)
+	(y 380))
+
+([inmobiliaria_ProjectKB_Class20167] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20168] of  Widget
+
+	(is_hidden FALSE)
+	(name ":JESS-DEFFACTS")
+	(property_list [inmobiliaria_ProjectKB_Class20179])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
+([inmobiliaria_ProjectKB_Class20179] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class20180]
+		[inmobiliaria_ProjectKB_Class20181]
+		[inmobiliaria_ProjectKB_Class20183]
+		[inmobiliaria_ProjectKB_Class20185]
+		[inmobiliaria_ProjectKB_Class20187]))
+
+([inmobiliaria_ProjectKB_Class20180] of  Property_List
+
+	(name "layout properties"))
+
+([inmobiliaria_ProjectKB_Class20181] of  Widget
+
+	(height 120)
+	(is_hidden FALSE)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(property_list [inmobiliaria_ProjectKB_Class20182])
+	(widget_class_name "se.liu.ida.JessTab.JessDocumentationWidget")
+	(width 200)
+	(x 250)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20182] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20183] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":DEFINITION-NAME")
+	(property_list [inmobiliaria_ProjectKB_Class20184])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20184] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20185] of  Widget
+
+	(height 250)
+	(is_hidden FALSE)
+	(label "Jess definition")
+	(name ":DEFINITION")
+	(property_list [inmobiliaria_ProjectKB_Class20186])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionWidget")
+	(width 450)
+	(x 0)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class20186] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20187] of  Widget
+
+	(height 30)
+	(is_hidden FALSE)
+	(label "Save definition in knowledge base")
+	(name ":KB-SAVE")
+	(property_list [inmobiliaria_ProjectKB_Class20188])
+	(widget_class_name "edu.stanford.smi.protege.widget.CheckBoxWidget")
+	(width 250)
+	(x 0)
+	(y 380))
+
+([inmobiliaria_ProjectKB_Class20188] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20189] of  Widget
+
+	(is_hidden FALSE)
+	(name ":JESS-DEFMESSAGE-HANDLER")
+	(property_list [inmobiliaria_ProjectKB_Class20200])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
+([inmobiliaria_ProjectKB_Class20200] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class20201]
+		[inmobiliaria_ProjectKB_Class20202]
+		[inmobiliaria_ProjectKB_Class20204]
+		[inmobiliaria_ProjectKB_Class20206]
+		[inmobiliaria_ProjectKB_Class20208]))
+
+([inmobiliaria_ProjectKB_Class20201] of  Property_List
+
+	(name "layout properties"))
+
+([inmobiliaria_ProjectKB_Class20202] of  Widget
+
+	(height 120)
+	(is_hidden FALSE)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(property_list [inmobiliaria_ProjectKB_Class20203])
+	(widget_class_name "se.liu.ida.JessTab.JessDocumentationWidget")
+	(width 200)
+	(x 250)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20203] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20204] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":DEFINITION-NAME")
+	(property_list [inmobiliaria_ProjectKB_Class20205])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20205] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20206] of  Widget
+
+	(height 250)
+	(is_hidden FALSE)
+	(label "Jess definition")
+	(name ":DEFINITION")
+	(property_list [inmobiliaria_ProjectKB_Class20207])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionWidget")
+	(width 450)
+	(x 0)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class20207] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20208] of  Widget
+
+	(height 30)
+	(is_hidden FALSE)
+	(label "Save definition in knowledge base")
+	(name ":KB-SAVE")
+	(property_list [inmobiliaria_ProjectKB_Class20209])
+	(widget_class_name "edu.stanford.smi.protege.widget.CheckBoxWidget")
+	(width 250)
+	(x 0)
+	(y 380))
+
+([inmobiliaria_ProjectKB_Class20209] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20210] of  Widget
+
+	(is_hidden FALSE)
+	(name ":JESS-DEFMETHOD")
+	(property_list [inmobiliaria_ProjectKB_Class20221])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
+([inmobiliaria_ProjectKB_Class20221] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class20222]
+		[inmobiliaria_ProjectKB_Class20223]
+		[inmobiliaria_ProjectKB_Class20225]
+		[inmobiliaria_ProjectKB_Class20227]
+		[inmobiliaria_ProjectKB_Class20229]))
+
+([inmobiliaria_ProjectKB_Class20222] of  Property_List
+
+	(name "layout properties"))
+
+([inmobiliaria_ProjectKB_Class20223] of  Widget
+
+	(height 120)
+	(is_hidden FALSE)
+	(label "Documentation")
+	(name ":DOCUMENTATION")
+	(property_list [inmobiliaria_ProjectKB_Class20224])
+	(widget_class_name "se.liu.ida.JessTab.JessDocumentationWidget")
+	(width 200)
+	(x 250)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20224] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20225] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(label "Name")
+	(name ":DEFINITION-NAME")
+	(property_list [inmobiliaria_ProjectKB_Class20226])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionNameWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20226] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20227] of  Widget
+
+	(height 250)
+	(is_hidden FALSE)
+	(label "Jess definition")
+	(name ":DEFINITION")
+	(property_list [inmobiliaria_ProjectKB_Class20228])
+	(widget_class_name "se.liu.ida.JessTab.JessDefinitionWidget")
+	(width 450)
+	(x 0)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class20228] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20229] of  Widget
+
+	(height 30)
+	(is_hidden FALSE)
+	(label "Save definition in knowledge base")
+	(name ":KB-SAVE")
+	(property_list [inmobiliaria_ProjectKB_Class20230])
+	(widget_class_name "edu.stanford.smi.protege.widget.CheckBoxWidget")
+	(width 250)
+	(x 0)
+	(y 380))
+
+([inmobiliaria_ProjectKB_Class20230] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20231] of  Property_List
+
+	(name "layout properties"))
+
+([inmobiliaria_ProjectKB_Class20232] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20233] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20234] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20235] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20291] of  String
+
+	(name "Vivienda")
+	(string_value "direccion"))
+
+([inmobiliaria_ProjectKB_Class20292] of  String
+
+	(name "Cliente")
+	(string_value "nombre"))
+
+([inmobiliaria_ProjectKB_Class20293] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([inmobiliaria_ProjectKB_Class20294] of  String
+
+	(name "Distrito")
+	(string_value "nombre"))
+
+([inmobiliaria_ProjectKB_Class20295] of  String
+
+	(name ":RULE")
+	(string_value "%3ADEFINITION-NAME"))
+
+([inmobiliaria_ProjectKB_Class20296] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([inmobiliaria_ProjectKB_Class20297] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([inmobiliaria_ProjectKB_Class20298] of  String
+
+	(name ":FUNCTION")
+	(string_value "%3ADEFINITION-NAME"))
+
+([inmobiliaria_ProjectKB_Class20299] of  String
+
+	(name "Inmobiliaria")
+	(string_value "nombre"))
+
+([inmobiliaria_ProjectKB_Class20300] of  String
+
+	(name ":JESS-DEFINITION")
+	(string_value "%3ADEFINITION-NAME"))
+
+([inmobiliaria_ProjectKB_Class20301] of  Map_Entry
+
+	(key "suppress_instance_counting")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([inmobiliaria_ProjectKB_Class20302] of  Map_Entry
+
+	(key "add_name_on_instance_form")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([inmobiliaria_ProjectKB_Class20303] of  Map_Entry
+
+	(key "change_tracking_active")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
 ([inmobiliaria_ProjectKB_Class21] of  Widget
 
 	(is_hidden TRUE)
@@ -1962,7 +2599,7 @@
 
 ([inmobiliaria_ProjectKB_Class55] of  Widget
 
-	(is_hidden TRUE)
+	(is_hidden FALSE)
 	(property_list [inmobiliaria_ProjectKB_Class56])
 	(widget_class_name "se.liu.ida.JessTab.JessTab"))
 
@@ -2059,8 +2696,26 @@
 ([inmobiliaria_ProjectKB_Class74] of  Property_List
 )
 
+([inmobiliaria_ProjectKB_Class75] of  Widget
+
+	(is_hidden FALSE)
+	(name ":JESS-ENGINE")
+	(property_list [inmobiliaria_ProjectKB_Class82])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
 ([inmobiliaria_ProjectKB_Class8] of  Property_List
 )
+
+([inmobiliaria_ProjectKB_Class82] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class83]
+		[inmobiliaria_ProjectKB_Class10084]
+		[inmobiliaria_ProjectKB_Class10086]))
+
+([inmobiliaria_ProjectKB_Class83] of  Property_List
+
+	(name "layout properties"))
 
 ([inmobiliaria_ProjectKB_Class84] of  Widget
 
@@ -2179,6 +2834,7 @@
 
 ([INSTANCES_TAB] of  Widget
 
+	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
 ([KB_238435_Class0] of  String
@@ -2187,7 +2843,11 @@
 	(string_value "edu.stanford.smi.protege.storage.clips.ClipsKnowledgeBaseFactory"))
 
 ([KB_238435_Class1] of  Map
-)
+
+	(entries
+		[inmobiliaria_ProjectKB_Class20301]
+		[inmobiliaria_ProjectKB_Class20302]
+		[inmobiliaria_ProjectKB_Class20303]))
 
 ([KB_238435_Class100] of  String
 
@@ -2281,7 +2941,7 @@
 	(name "classes_file_name")
 	(string_value "inmobiliaria.pont"))
 
-([KB_947659_Class0] of  Map
+([KB_335751_Class0] of  Map
 )
 
 ([LAYOUT_PROPERTIES] of  Property_List
@@ -2296,6 +2956,7 @@
 	(display_hidden_classes TRUE)
 	(display_multi_parent_class_icon TRUE)
 	(is_readonly FALSE)
+	(tabbed_instance_form_layout FALSE)
 	(undo_enabled TRUE)
 	(update_modification_slots FALSE))
 
@@ -2305,6 +2966,7 @@
 	(is_hidden FALSE)
 	(label "Description")
 	(name ":PAL-DESCRIPTION")
+	(property_list [inmobiliaria_ProjectKB_Class20233])
 	(widget_class_name "edu.stanford.smi.protege.widget.TextAreaWidget")
 	(width 250)
 	(x 275)
@@ -2327,6 +2989,7 @@
 	(is_hidden FALSE)
 	(label "Name")
 	(name ":PAL-NAME")
+	(property_list [inmobiliaria_ProjectKB_Class20232])
 	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
 	(width 275)
 	(x 0)
@@ -2338,7 +3001,8 @@
 		[PAL_NAME_WIDGET]
 		[PAL_RANGE_WIDGET]
 		[PAL_DESCRIPTION_WIDGET]
-		[PAL_STATEMENT_WIDGET]))
+		[PAL_STATEMENT_WIDGET]
+		[inmobiliaria_ProjectKB_Class20231]))
 
 ([PAL_RANGE_WIDGET] of  Widget
 
@@ -2346,6 +3010,7 @@
 	(is_hidden FALSE)
 	(label "Range")
 	(name ":PAL-RANGE")
+	(property_list [inmobiliaria_ProjectKB_Class20234])
 	(widget_class_name "edu.stanford.smi.protegex.widget.pal.constraint.PalRangeWidget")
 	(width 250)
 	(x 275)
@@ -2357,6 +3022,7 @@
 	(is_hidden FALSE)
 	(label "Statement")
 	(name ":PAL-STATEMENT")
+	(property_list [inmobiliaria_ProjectKB_Class20235])
 	(widget_class_name "edu.stanford.smi.protegex.widget.pal.constraint.PalConstraintWidget")
 	(width 275)
 	(x 0)
@@ -2370,20 +3036,29 @@
 		[inmobiliaria_ProjectKB_Class84]
 		[inmobiliaria_ProjectKB_Class10112]
 		[STANDARD_CLASS_FORM_WIDGET]
+		[inmobiliaria_ProjectKB_Class20130]
 		[STANDARD_SLOT_FORM_WIDGET]
 		[inmobiliaria_ProjectKB_Class97]
 		[inmobiliaria_ProjectKB_Class10141]
+		[inmobiliaria_ProjectKB_Class20109]
+		[inmobiliaria_ProjectKB_Class20168]
+		[inmobiliaria_ProjectKB_Class20210]
 		[inmobiliaria_ProjectKB_Class10289]
 		[INSTANCE_ANNOTATION_FORM_WIDGET]
 		[inmobiliaria_ProjectKB_Class10318]
+		[inmobiliaria_ProjectKB_Class20189]
 		[STANDARD_FACET_FORM_WIDGET]
 		[PAL_FORM_WIDGET]
+		[inmobiliaria_ProjectKB_Class20147]
 		[inmobiliaria_ProjectKB_Class10170]
-		[inmobiliaria_ProjectKB_Class10223])
+		[inmobiliaria_ProjectKB_Class10088]
+		[inmobiliaria_ProjectKB_Class10223]
+		[inmobiliaria_ProjectKB_Class75])
 	(default_cls_metaclass ":STANDARD-CLASS")
 	(default_facet_metaclass ":STANDARD-FACET")
 	(default_instance_widget_class_name "edu.stanford.smi.protege.widget.FormWidget")
 	(default_slot_metaclass ":STANDARD-SLOT")
+	(journaling_enabled FALSE)
 	(next_frame_number 0)
 	(options [option_instance])
 	(property_map [KB_238435_Class1])
@@ -2393,15 +3068,54 @@
 		[SLOTS_TAB]
 		[FORMS_TAB]
 		[INSTANCES_TAB]
-		[QUERIES_TAB]))
+		[QUERIES_TAB]
+		[inmobiliaria_ProjectKB_Class57]
+		[inmobiliaria_ProjectKB_Class39]
+		[inmobiliaria_ProjectKB_Class17]
+		[inmobiliaria_ProjectKB_Class71]
+		[inmobiliaria_ProjectKB_Class35]
+		[inmobiliaria_ProjectKB_Class67]
+		[inmobiliaria_ProjectKB_Class49]
+		[inmobiliaria_ProjectKB_Class41]
+		[inmobiliaria_ProjectKB_Class55]
+		[inmobiliaria_ProjectKB_Class19]
+		[inmobiliaria_ProjectKB_Class21]
+		[inmobiliaria_ProjectKB_Class15]
+		[inmobiliaria_ProjectKB_Class51]
+		[inmobiliaria_ProjectKB_Class9]
+		[inmobiliaria_ProjectKB_Class47]
+		[inmobiliaria_ProjectKB_Class1]
+		[inmobiliaria_ProjectKB_Class27]
+		[inmobiliaria_ProjectKB_Class23]
+		[inmobiliaria_ProjectKB_Class5]
+		[inmobiliaria_ProjectKB_Class63]
+		[inmobiliaria_ProjectKB_Class25]
+		[inmobiliaria_ProjectKB_Class43]
+		[inmobiliaria_ProjectKB_Class69]
+		[inmobiliaria_ProjectKB_Class37]
+		[inmobiliaria_ProjectKB_Class53]
+		[inmobiliaria_ProjectKB_Class61]
+		[inmobiliaria_ProjectKB_Class65]
+		[inmobiliaria_ProjectKB_Class73]
+		[inmobiliaria_ProjectKB_Class3]
+		[inmobiliaria_ProjectKB_Class11]
+		[inmobiliaria_ProjectKB_Class33]
+		[inmobiliaria_ProjectKB_Class29]
+		[inmobiliaria_ProjectKB_Class45]
+		[inmobiliaria_ProjectKB_Class59]
+		[inmobiliaria_ProjectKB_Class7]
+		[inmobiliaria_ProjectKB_Class31]
+		[inmobiliaria_ProjectKB_Class13]))
 
 ([QUERIES_TAB] of  Widget
 
+	(is_hidden FALSE)
 	(property_list [KB_238435_Class98])
 	(widget_class_name "edu.stanford.smi.protegex.queries_tab.QueriesTab"))
 
 ([SLOTS_TAB] of  Widget
 
+	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.SlotsTab"))
 
 ([SOURCES] of  Property_List

@@ -1,4 +1,4 @@
-; Fri Mar 23 16:33:11 CET 2018
+; Sun Mar 25 21:02:08 CEST 2018
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -12,6 +12,16 @@
 		(range 0 %3FVARIABLE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot %3ASTARTUP-FILE
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot discapacidad%3F
+;+		(comment "Indica si algún miembro de la familia tiene alguna discapacidad física para ofrecerle viviendas accesibles.")
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot pagina_web
 		(type STRING)
 ;+		(cardinality 0 1)
@@ -20,6 +30,11 @@
 ;+		(comment "El piso en el que se encuentra la vivienda")
 		(type INTEGER)
 		(range 0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot distrito_deseado
+		(type INSTANCE)
+;+		(allowed-classes Distrito)
 ;+		(cardinality 1 1)
 		(create-accessor read-write))
 	(single-slot n_ba%C3%B1os
@@ -44,6 +59,12 @@
 ;+		(allowed-classes Vivienda)
 ;+		(inverse-slot vendido_por)
 		(create-accessor read-write))
+	(single-slot n_miembros_familia
+;+		(comment "Número de miembros de los que consta la familia del cliente.")
+		(type INTEGER)
+		(range 1 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
 	(single-slot vendido_por
 		(type INSTANCE)
 ;+		(allowed-classes Inmobiliaria)
@@ -62,6 +83,10 @@
 		(allowed-values baja alta)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot %3ASTARTUP-EXPRESSION
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot direccion
 ;+		(comment "Dirección física de un piso")
 		(type STRING)
@@ -76,6 +101,23 @@
 		(allowed-values FALSE TRUE)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
+	(single-slot presupuesto_maximo
+;+		(comment "Máxima cantidad de dinero que desea gastarse el cliente")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot presupuesto_minimo
+;+		(comment "Mínima cantidad de dinero que quiere gastar el cliente")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+		(default 0)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot %3ADEFINITION-NAME
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
 	(single-slot ascensor%3F
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
@@ -85,6 +127,12 @@
 		(type INTEGER)
 		(range 0 %3FVARIABLE)
 ;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot %3AKB-SAVE
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default FALSE)
+;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot n_dormitorios
 		(type INTEGER)
@@ -100,6 +148,10 @@
 	(single-slot cocina_independiente%3F
 		(type SYMBOL)
 		(allowed-values FALSE TRUE)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot %3ADEFINITION
+		(type STRING)
 ;+		(cardinality 0 1)
 		(create-accessor read-write))
 	(single-slot telefono
@@ -120,6 +172,106 @@
 ;+		(allowed-classes Distrito)
 ;+		(cardinality 1 1)
 ;+		(inverse-slot contiene)
+		(create-accessor read-write)))
+
+(defclass %3AJESS-ENGINE
+	(is-a %3ASYSTEM-CLASS)
+	(role concrete)
+	(single-slot %3ASTARTUP-EXPRESSION
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot %3ASTARTUP-FILE
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass %3AJESS-DEFINITION
+	(is-a %3ASYSTEM-CLASS)
+	(role abstract)
+	(single-slot %3ADEFINITION-NAME
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot %3ADEFINITION
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot %3AKB-SAVE
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+		(default FALSE)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass %3AJESS-DEFGLOBAL
+	(is-a %3AJESS-DEFINITION)
+	(role concrete))
+
+(defclass %3AJESS-DEFTEMPLATE
+	(is-a %3AJESS-DEFINITION)
+	(role concrete)
+	(multislot %3ADOCUMENTATION
+		(type STRING)
+		(create-accessor read-write)))
+
+(defclass %3AJESS-DEFFACTS
+	(is-a %3AJESS-DEFINITION)
+	(role concrete)
+	(multislot %3ADOCUMENTATION
+		(type STRING)
+		(create-accessor read-write)))
+
+(defclass %3AJESS-DEFMESSAGE-HANDLER
+	(is-a %3AJESS-DEFINITION)
+	(role concrete)
+	(multislot %3ADOCUMENTATION
+		(type STRING)
+		(create-accessor read-write)))
+
+(defclass %3AJESS-DEFMETHOD
+	(is-a %3AJESS-DEFINITION)
+	(role concrete)
+	(multislot %3ADOCUMENTATION
+		(type STRING)
+		(create-accessor read-write)))
+
+(defclass %3ARULE
+	(is-a %3ASYSTEM-CLASS)
+	(role abstract)
+	(single-slot %3ADEFINITION-NAME
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot %3ADEFINITION
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass %3AJESS-RULE
+	(is-a %3AJESS-DEFINITION %3ARULE)
+	(role concrete)
+	(multislot %3ADOCUMENTATION
+		(type STRING)
+		(create-accessor read-write)))
+
+(defclass %3AFUNCTION
+	(is-a %3ASYSTEM-CLASS)
+	(role abstract)
+	(single-slot %3ADEFINITION-NAME
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot %3ADEFINITION
+		(type STRING)
+;+		(cardinality 0 1)
+		(create-accessor read-write)))
+
+(defclass %3AJESS-FUNCTION
+	(is-a %3AFUNCTION %3AJESS-DEFINITION)
+	(role concrete)
+	(multislot %3ADOCUMENTATION
+		(type STRING)
 		(create-accessor read-write)))
 
 (defclass Inmobiliaria "Agencia inmobiliaria"
@@ -286,3 +438,41 @@
 (defclass Chalet_adosado
 	(is-a Chalet)
 	(role concrete))
+
+(defclass Cliente
+	(is-a USER)
+	(role concrete)
+	(single-slot presupuesto_minimo
+;+		(comment "Mínima cantidad de dinero que quiere gastar el cliente")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+		(default 0)
+;+		(cardinality 0 1)
+		(create-accessor read-write))
+	(single-slot nombre
+		(type STRING)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot discapacidad%3F
+;+		(comment "Indica si algún miembro de la familia tiene alguna discapacidad física para ofrecerle viviendas accesibles.")
+		(type SYMBOL)
+		(allowed-values FALSE TRUE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot presupuesto_maximo
+;+		(comment "Máxima cantidad de dinero que desea gastarse el cliente")
+		(type INTEGER)
+		(range 0 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot distrito_deseado
+		(type INSTANCE)
+;+		(allowed-classes Distrito)
+;+		(cardinality 1 1)
+		(create-accessor read-write))
+	(single-slot n_miembros_familia
+;+		(comment "Número de miembros de los que consta la familia del cliente.")
+		(type INTEGER)
+		(range 1 %3FVARIABLE)
+;+		(cardinality 1 1)
+		(create-accessor read-write)))
