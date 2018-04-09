@@ -1,6 +1,7 @@
 (mapclass Cliente)
 (mapclass Distrito)
 (mapclass Vivienda)
+(mapclass Inmobiliaria)
 
 ; Mapa de clientes a perfiles
 
@@ -21,7 +22,7 @@
 	(discapacidad? ?discapacity)
 	(distrito_deseado ?desired_district)
 	(n_miembros_familia ?n)
-	(presupuesto_maximo ?max:&(< ?max 10000))
+	(presupuesto_maximo ?max&:(< ?max 10000))
 	(presupuesto_minimo ?min))
 =>
 (assert (perfil-cliente ?name clase-baja)))
@@ -72,13 +73,19 @@
 
 ; Mapa de edificios a perfiles para los que son adecuados
 
+(defrule dummy
+	?vivienda <- (object (is-a Vivienda))
+	=>
+	(assert (it-worked))
+)
+
 (defrule perfil-vivienda-clase-alta
 	?vivienda <- (object (is-a Vivienda)
 		(direccion ?dir)
-		(chimenea? True)
-		(cocina_independiente? True)
+		(chimenea? TRUE)
+		(cocina_independiente? TRUE)
 		(distrito ?dist)
-		(jardin True)
+		(jardin? TRUE)
 		(metros_cuadrados ?square_meters)
 		(n_baños ?n_baths&:(> ?n_baths 1))
 		(n_dormitorios ?n_dorms)
@@ -96,7 +103,7 @@
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
 		(distrito ?dist)
-		(jardin ?garden)
+		(jardin? ?garden)
 		(metros_cuadrados ?square_meters)
 		(n_baños ?n_baths)
 		(n_dormitorios ?n_dorms)
@@ -114,7 +121,7 @@
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
 		(distrito ?dist)
-		(jardin ?garden)
+		(jardin? ?garden)
 		(metros_cuadrados ?square_meters&:(< ?square_meters 200))
 		(n_baños ?n_baths&:(eq ?n_baths 1))
 		(n_dormitorios ?n_dorms&:(<= ?n_dorms 2))
@@ -132,7 +139,7 @@
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
 		(distrito ?dist)
-		(jardin ?garden)
+		(jardin? ?garden)
 		(metros_cuadrados ?square_meters&:(> ?square_meters 100))
 		(n_baños ?n_baths&:(>= ?n_baths 1))
 		(n_dormitorios ?n_dorms&:(>= ?n_dorms 2))
@@ -150,7 +157,7 @@
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
 		(distrito ?dist)
-		(jardin ?garden)
+		(jardin? ?garden)
 		(metros_cuadrados ?square_meters&:(> ?square_meters 200))
 		(n_baños ?n_baths&:(>= ?n_baths 2))
 		(n_dormitorios ?n_dorms&:(>= ?n_dorms 3))
@@ -178,7 +185,7 @@
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
 		(distrito ?desired_district)
-		(jardin ?garden)
+		(jardin? ?garden)
 		(metros_cuadrados ?square_meters)
 		(n_baños ?n_baths)
 		(n_dormitorios ?n_dorms)
@@ -208,7 +215,7 @@
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
 		(distrito ?desired_district)
-		(jardin ?garden)
+		(jardin? ?garden)
 		(metros_cuadrados ?square_meters)
 		(n_baños ?n_baths)
 		(n_dormitorios ?n_dorms)
