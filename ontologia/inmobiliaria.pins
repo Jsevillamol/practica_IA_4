@@ -1,7 +1,16 @@
-; Sat Apr 14 11:51:43 CEST 2018
+; Sun Apr 15 01:42:09 CEST 2018
 ; 
 ;+ (version "3.4.8")
 ;+ (build "Build 629")
+
+([inmobiliaria_Class0] of  Cliente
+
+	(discapacidad%3F TRUE)
+	(distrito_deseado [inmobiliaria_Class11])
+	(n_miembros_familia 2)
+	(nombre "David")
+	(presupuesto_maximo 2000000)
+	(presupuesto_minimo 1000001))
 
 ([inmobiliaria_Class1] of  %3APAL-CONSTRAINT
 )

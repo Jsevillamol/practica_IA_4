@@ -73,32 +73,22 @@
 
 ; Mapa de edificios a perfiles para los que son adecuados
 
-(defrule dummy
-	?vivienda <- (object (is-a Vivienda))
-	=>
-	(assert (it-worked))
-)
 
 (defrule perfil-vivienda-clase-alta
-	?vivienda <- (object (is-a Vivienda)
+	?vivienda <- (object (is-a ?tipo-vivienda)
 		(direccion ?dir)
 		(chimenea? TRUE)
 		(cocina_independiente? TRUE)
-		(distrito ?dist)
 		(jardin? TRUE)
-		(metros_cuadrados ?square_meters)
 		(n_baños ?n_baths&:(> ?n_baths 1))
-		(n_dormitorios ?n_dorms)
-		(plazas_garaje ?n_garage&:(> ?n_garage 1))
-		(precio ?price)
-		(vendido_por ?seller)
-		)
+		(plazas_garaje ?n_garage&:(> ?n_garage 1)))
+	(test (superclassp Vivienda ?tipo-vivienda))
 	=>
 	(assert (perfil-vivienda ?dir clase-alta))
 )
 
 (defrule perfil-vivienda-clase-baja
-	?vivienda <- (object (is-a Vivienda)
+	?vivienda <- (object (is-a ?tipo-vivienda)
 		(direccion ?dir)
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
@@ -111,12 +101,13 @@
 		(precio ?price)
 		(vendido_por ?seller)
 		)
+	(test (superclassp Vivienda ?tipo-vivienda))
 	=>
 	(assert (perfil-vivienda ?dir clase-baja))
 )
 
 (defrule perfil-vivienda-soltero
-	?vivienda <- (object (is-a Vivienda)
+	?vivienda <- (object (is-a ?tipo-vivienda)
 		(direccion ?dir)
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
@@ -129,12 +120,13 @@
 		(precio ?price)
 		(vendido_por ?seller)
 		)
+	(test (superclassp Vivienda ?tipo-vivienda))
 	=>
 	(assert (perfil-vivienda ?dir soltero))
 )
 
 (defrule perfil-vivienda-familia
-	?vivienda <- (object (is-a Vivienda)
+	?vivienda <- (object (is-a ?tipo-vivienda)
 		(direccion ?dir)
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
@@ -147,12 +139,13 @@
 		(precio ?price)
 		(vendido_por ?seller)
 		)
+	(test (superclassp Vivienda ?tipo-vivienda))
 	=>
 	(assert (perfil-vivienda ?dir familia))
 )
 
 (defrule perfil-vivienda-familia-numerosa
-	?vivienda <- (object (is-a Vivienda)
+	?vivienda <- (object (is-a ?tipo-vivienda)
 		(direccion ?dir)
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
@@ -165,6 +158,7 @@
 		(precio ?price)
 		(vendido_por ?seller)
 		)
+	(test (superclassp Vivienda ?tipo-vivienda))
 	=>
 	(assert (perfil-vivienda ?dir familia-numerosa))
 )
@@ -180,7 +174,7 @@
 		(presupuesto_maximo ?max)
 		(presupuesto_minimo ?min))
 
-	?vivienda <- (object (is-a Vivienda)
+	?vivienda <- (object (is-a ?tipo-vivienda)
 		(direccion ?dir)
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
@@ -193,6 +187,7 @@
 		(precio ?price)
 		(vendido_por ?seller)
 		)
+	(test (superclassp Vivienda ?tipo-vivienda))
 	(test (and (<= ?min ?price) (<= ?price ?max)))
 =>
 	(assert (adecuado ?name ?dir))
@@ -210,7 +205,7 @@
 		(presupuesto_maximo ?max)
 		(presupuesto_minimo ?min))
 
-	?vivienda <- (object (is-a Vivienda)
+	?vivienda <- (object (is-a ?tipo-vivienda)
 		(direccion ?dir)
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
@@ -223,6 +218,7 @@
 		(precio ?price)
 		(vendido_por ?seller)
 		)
+	(test (superclassp Vivienda ?tipo-vivienda))
 	(perfil-cliente ?name ?perfil)
 	(perfil-vivienda ?dir ?perfil)
 =>
