@@ -1,7 +1,7 @@
-; Mon Apr 09 14:42:15 CEST 2018
+; Sat Apr 14 11:51:43 CEST 2018
 ; 
-;+ (version "3.5")
-;+ (build "Build 663")
+;+ (version "3.4.8")
+;+ (build "Build 629")
 
 ([ANNOTATED_INSTANCE_WIDGET] of  Widget
 
@@ -20,16 +20,16 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[inmobiliaria_ProjectKB_Class10004]
-		[inmobiliaria_ProjectKB_Class10005]
-		[inmobiliaria_ProjectKB_Class10006]
-		[inmobiliaria_ProjectKB_Class10007]
-		[inmobiliaria_ProjectKB_Class10008]
-		[inmobiliaria_ProjectKB_Class10009]
-		[inmobiliaria_ProjectKB_Class10010]
-		[inmobiliaria_ProjectKB_Class10011]
-		[inmobiliaria_ProjectKB_Class10012]
-		[inmobiliaria_ProjectKB_Class10013]))
+		[inmobiliaria_ProjectKB_Class10056]
+		[inmobiliaria_ProjectKB_Class10057]
+		[inmobiliaria_ProjectKB_Class10058]
+		[inmobiliaria_ProjectKB_Class10059]
+		[inmobiliaria_ProjectKB_Class10060]
+		[inmobiliaria_ProjectKB_Class10061]
+		[inmobiliaria_ProjectKB_Class10062]
+		[inmobiliaria_ProjectKB_Class10063]
+		[inmobiliaria_ProjectKB_Class10064]
+		[inmobiliaria_ProjectKB_Class10065]))
 
 ([CLSES_TAB] of  Widget
 
@@ -49,80 +49,77 @@
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.FormsTab"))
 
-([inmobiliaria_ProjectKB_Class1] of  Widget
+([inmobiliaria_ProjectKB_Class10004] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class2])
+	(property_list [inmobiliaria_ProjectKB_Class20005])
 	(widget_class_name "edu.stanford.smi.protegex.owl.ui.widget.OWLFormsTab"))
 
-([inmobiliaria_ProjectKB_Class10] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class10004] of  String
+([inmobiliaria_ProjectKB_Class10056] of  String
 
 	(name "Vivienda")
 	(string_value "direccion"))
 
-([inmobiliaria_ProjectKB_Class10005] of  String
+([inmobiliaria_ProjectKB_Class10057] of  String
 
 	(name "Cliente")
 	(string_value "nombre"))
 
-([inmobiliaria_ProjectKB_Class10006] of  String
+([inmobiliaria_ProjectKB_Class10058] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([inmobiliaria_ProjectKB_Class10007] of  String
+([inmobiliaria_ProjectKB_Class10059] of  String
 
 	(name "Distrito")
 	(string_value "nombre"))
 
-([inmobiliaria_ProjectKB_Class10008] of  String
+([inmobiliaria_ProjectKB_Class10060] of  String
 
 	(name ":RULE")
 	(string_value "%3ADEFINITION-NAME"))
 
-([inmobiliaria_ProjectKB_Class10009] of  String
+([inmobiliaria_ProjectKB_Class10061] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
 
-([inmobiliaria_ProjectKB_Class10010] of  String
+([inmobiliaria_ProjectKB_Class10062] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([inmobiliaria_ProjectKB_Class10011] of  String
+([inmobiliaria_ProjectKB_Class10063] of  String
 
 	(name ":FUNCTION")
 	(string_value "%3ADEFINITION-NAME"))
 
-([inmobiliaria_ProjectKB_Class10012] of  String
+([inmobiliaria_ProjectKB_Class10064] of  String
 
 	(name "Inmobiliaria")
 	(string_value "nombre"))
 
-([inmobiliaria_ProjectKB_Class10013] of  String
+([inmobiliaria_ProjectKB_Class10065] of  String
 
 	(name ":JESS-DEFINITION")
 	(string_value "%3ADEFINITION-NAME"))
 
-([inmobiliaria_ProjectKB_Class10014] of  Map_Entry
+([inmobiliaria_ProjectKB_Class10066] of  Map_Entry
 
 	(key "suppress_instance_counting")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([inmobiliaria_ProjectKB_Class10015] of  Map_Entry
+([inmobiliaria_ProjectKB_Class10067] of  Map_Entry
 
 	(key "add_name_on_instance_form")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([inmobiliaria_ProjectKB_Class10016] of  Map_Entry
+([inmobiliaria_ProjectKB_Class10068] of  Map_Entry
 
 	(key "change_tracking_active")
 	(key_class "java.lang.String")
@@ -165,11 +162,6 @@
 	(name ":JESS-RULE")
 	(property_list [inmobiliaria_ProjectKB_Class20099])
 	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
-
-([inmobiliaria_ProjectKB_Class101] of  String
-
-	(name "SearchTab_Query")
-	(string_value "Query Name: 1. Pisos con ascensor en Arganzuela baratos y grandes\nMatch All:true\nLength: 4\nPiso	precio	is less than	Other:300000	1	\nPiso	metros_cuadrados	is greater than	Other:70	1	\nPiso	distrito	contains	Instance:inmobiliaria_Class9|Arganzuela	1	\nPiso	ascensor?	is	Other:true	1	\n\nQuery Name: 2. Chalets independientes con jardín, chimenea y dos plazas de garaje en Moncloa-Aravaca\nMatch All:true\nLength: 4\nChalet_independiente	jardin?	is	Other:true	1	\nChalet_independiente	chimenea?	is	Other:true	1	\nChalet_independiente	plazas_garaje	is	Other:2	1	\nChalet_independiente	distrito	contains	Instance:inmobiliaria_Class10|Moncloa-Aravaca	1	\n\nQuery Name: 3 Aux. Pisos en latina\nMatch All:true\nLength: 1\nPiso	distrito	contains	Instance:inmobiliaria_Class11|Latina	1	\n\nQuery Name: 3. Inmobiliarias online con pisos en Latina\nMatch All:true\nLength: 1\nInmobiliaria_online	vende	contains	Query:3 Aux. Pisos en latina|3 Aux. Pisos en latina	1	\n\nQuery Name: 4. Estudios con cocina independiente en Chamberí vendidos por TuCasa\nMatch All:true\nLength: 3\nEstudio	cocina_independiente?	is	Other:true	1	\nEstudio	distrito	contains	Instance:inmobiliaria_Class12|Chamberí	1	\nEstudio	vendido_por	contains	Instance:inmobiliaria_Class13|TuCasa	1	\n\nQuery Name: 5 Aux. Inmobiliarias online\nMatch All:true\nLength: 1\nInmobiliaria_online	pagina_web	contains	Other:www	1	\n\nQuery Name: 6 Aux. Buen distrito\nMatch All:true\nLength: 2\nDistrito	criminalidad	is	Other:baja	1	\nDistrito	contaminación	is	Other:baja	1	\n\nQuery Name: 6. Viviendas de 3 dormitorios en un buen distrito\nMatch All:true\nLength: 2\nVivienda	n_dormitorios	is	Other:3	1	\nVivienda	distrito	contains	Query:6 Aux. Buen distrito|6 Aux. Buen distrito	1	\n\nQuery Name: 7. Viviendas accesibles (chalets, pisos bajos y pisos con ascensor)\nMatch All:false\nLength: 3\nChalet	 	Other:	null	\nPiso_bajo	 	Other:	null	\nPiso	ascensor?	is	Other:true	1	\n\nQuery Name: 5. Chalets caros en inmobiliarias online\nMatch All:true\nLength: 2\nChalet	precio	is greater than	Other:1000000	1	\nChalet	vendido_por	contains	Query:5 Aux. Inmobiliarias online|5 Aux. Inmobiliarias online	1	\n\n"))
 
 ([inmobiliaria_ProjectKB_Class10110] of  Widget
 
@@ -1828,33 +1820,6 @@
 
 	(name "layout properties"))
 
-([inmobiliaria_ProjectKB_Class11] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class12])
-	(widget_class_name "edu.stanford.smi.protegex.owl.ui.cls.OWLClassesTab"))
-
-([inmobiliaria_ProjectKB_Class12] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class13] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class14])
-	(widget_class_name "edu.stanford.smi.protegex.server_changes.prompt.UsersTab"))
-
-([inmobiliaria_ProjectKB_Class14] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class15] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class16])
-	(widget_class_name "edu.stanford.smi.protege.query.LuceneQueryPlugin"))
-
-([inmobiliaria_ProjectKB_Class16] of  Property_List
-)
-
 ([inmobiliaria_ProjectKB_Class17] of  Widget
 
 	(is_hidden TRUE)
@@ -1870,10 +1835,181 @@
 	(property_list [inmobiliaria_ProjectKB_Class20])
 	(widget_class_name "edu.stanford.smi.protege.widget.KAToolTab"))
 
-([inmobiliaria_ProjectKB_Class2] of  Property_List
+([inmobiliaria_ProjectKB_Class20] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class20] of  Property_List
+([inmobiliaria_ProjectKB_Class20005] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20006] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class20007])
+	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalQueriesTab"))
+
+([inmobiliaria_ProjectKB_Class20007] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20008] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class20009])
+	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab"))
+
+([inmobiliaria_ProjectKB_Class20009] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20010] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class20011])
+	(widget_class_name "edu.stanford.smi.protegex.owl.ui.cls.OWLClassesTab"))
+
+([inmobiliaria_ProjectKB_Class20011] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20012] of  Widget
+
+	(is_hidden FALSE)
+	(property_list [inmobiliaria_ProjectKB_Class20013])
+	(widget_class_name "edu.stanford.smi.protegex.queries_tab.QueriesTab"))
+
+([inmobiliaria_ProjectKB_Class20013] of  Property_List
+
+	(properties [inmobiliaria_ProjectKB_Class30080]))
+
+([inmobiliaria_ProjectKB_Class20014] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class20015])
+	(widget_class_name "edu.stanford.smi.protege.query.LuceneQueryPlugin"))
+
+([inmobiliaria_ProjectKB_Class20015] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20016] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30017])
+	(widget_class_name "edu.stanford.smi.protegex.server_changes.prompt.UsersTab"))
+
+([inmobiliaria_ProjectKB_Class20017] of  Widget
+
+	(is_hidden FALSE)
+	(name "Cliente")
+	(property_list [inmobiliaria_ProjectKB_Class20018])
+	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
+([inmobiliaria_ProjectKB_Class20018] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class20019]
+		[inmobiliaria_ProjectKB_Class20020]
+		[inmobiliaria_ProjectKB_Class20022]
+		[inmobiliaria_ProjectKB_Class20024]
+		[inmobiliaria_ProjectKB_Class20026]
+		[inmobiliaria_ProjectKB_Class20028]
+		[inmobiliaria_ProjectKB_Class20032]))
+
+([inmobiliaria_ProjectKB_Class20019] of  Property_List
+
+	(name "layout properties"))
+
+([inmobiliaria_ProjectKB_Class20020] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "presupuesto_minimo")
+	(property_list [inmobiliaria_ProjectKB_Class20021])
+	(widget_class_name "edu.stanford.smi.protege.widget.IntegerFieldWidget")
+	(width 100)
+	(x 200)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20021] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20022] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "nombre")
+	(property_list [inmobiliaria_ProjectKB_Class20023])
+	(widget_class_name "edu.stanford.smi.protege.widget.TextFieldWidget")
+	(width 200)
+	(x 0)
+	(y 0))
+
+([inmobiliaria_ProjectKB_Class20023] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20024] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "discapacidad?")
+	(property_list [inmobiliaria_ProjectKB_Class20025])
+	(widget_class_name "edu.stanford.smi.protege.widget.CheckBoxWidget")
+	(width 200)
+	(x 0)
+	(y 60))
+
+([inmobiliaria_ProjectKB_Class20025] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20026] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "presupuesto_maximo")
+	(property_list [inmobiliaria_ProjectKB_Class20027])
+	(widget_class_name "edu.stanford.smi.protege.widget.IntegerFieldWidget")
+	(width 100)
+	(x 100)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class20027] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class20028] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "distrito_deseado")
+	(property_list [inmobiliaria_ProjectKB_Class20029])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceFieldWidget")
+	(width 200)
+	(x 200)
+	(y 60))
+
+([inmobiliaria_ProjectKB_Class20029] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class20030]
+		[inmobiliaria_ProjectKB_Class20031]))
+
+([inmobiliaria_ProjectKB_Class20030] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-View References to Value"))
+
+([inmobiliaria_ProjectKB_Class20031] of  Boolean
+
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
+
+([inmobiliaria_ProjectKB_Class20032] of  Widget
+
+	(height 60)
+	(is_hidden FALSE)
+	(name "n_miembros_familia")
+	(property_list [inmobiliaria_ProjectKB_Class20033])
+	(widget_class_name "edu.stanford.smi.protege.widget.IntegerFieldWidget")
+	(width 100)
+	(x 0)
+	(y 120))
+
+([inmobiliaria_ProjectKB_Class20033] of  Property_List
 )
 
 ([inmobiliaria_ProjectKB_Class20099] of  Property_List
@@ -2429,146 +2565,292 @@
 ([inmobiliaria_ProjectKB_Class20235] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class21] of  Widget
+([inmobiliaria_ProjectKB_Class30017] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30018] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class22])
+	(property_list [inmobiliaria_ProjectKB_Class30019])
 	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.KnowledgeTreeTab"))
 
-([inmobiliaria_ProjectKB_Class22] of  Property_List
+([inmobiliaria_ProjectKB_Class30019] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class23] of  Widget
+([inmobiliaria_ProjectKB_Class30020] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class24])
+	(property_list [inmobiliaria_ProjectKB_Class30021])
+	(widget_class_name "org.algernon.kb.okbc.protege.plugins.AlgernonTab"))
+
+([inmobiliaria_ProjectKB_Class30021] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30022] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30023])
 	(widget_class_name "edu.stanford.smi.protegex.prompt.PromptTab"))
 
-([inmobiliaria_ProjectKB_Class24] of  Property_List
+([inmobiliaria_ProjectKB_Class30023] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class25] of  Widget
+([inmobiliaria_ProjectKB_Class30024] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class26])
+	(property_list [inmobiliaria_ProjectKB_Class30025])
 	(widget_class_name "edu.stanford.smi.protege.keywordsearch.StringSearch"))
 
-([inmobiliaria_ProjectKB_Class26] of  Property_List
+([inmobiliaria_ProjectKB_Class30025] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class27] of  Widget
+([inmobiliaria_ProjectKB_Class30026] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class28])
+	(property_list [inmobiliaria_ProjectKB_Class30027])
 	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalConstraintsTab"))
 
-([inmobiliaria_ProjectKB_Class28] of  Property_List
+([inmobiliaria_ProjectKB_Class30027] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class29] of  Widget
+([inmobiliaria_ProjectKB_Class30028] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class30])
+	(property_list [inmobiliaria_ProjectKB_Class30029])
 	(widget_class_name "edu.stanford.smi.protegex.owl.ui.metadatatab.OWLMetadataTab"))
 
-([inmobiliaria_ProjectKB_Class3] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class4])
-	(widget_class_name "org.protege.owl.mm.portability.protege3.MappingMasterTab"))
-
-([inmobiliaria_ProjectKB_Class30] of  Property_List
+([inmobiliaria_ProjectKB_Class30029] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class31] of  Widget
+([inmobiliaria_ProjectKB_Class30030] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class32])
+	(property_list [inmobiliaria_ProjectKB_Class30031])
+	(widget_class_name "edu.stanford.smi.RemoteKBTab.WordNetTab"))
+
+([inmobiliaria_ProjectKB_Class30031] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30032] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30033])
 	(widget_class_name "edu.stanford.smi.protegex.owl.swrl.ui.tab.SWRLTab"))
 
-([inmobiliaria_ProjectKB_Class32] of  Property_List
+([inmobiliaria_ProjectKB_Class30033] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class33] of  Widget
+([inmobiliaria_ProjectKB_Class30034] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class34])
+	(property_list [inmobiliaria_ProjectKB_Class30035])
+	(widget_class_name "org.protege.owl.mm.protege3.MappingMasterTab"))
+
+([inmobiliaria_ProjectKB_Class30035] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30036] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30037])
+	(widget_class_name "edu.stanford.smi.RemoteKBTab.UMLSTab"))
+
+([inmobiliaria_ProjectKB_Class30037] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30038] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30039])
 	(widget_class_name "edu.stanford.smi.protegex.owl.ui.individuals.OWLIndividualsTab"))
 
-([inmobiliaria_ProjectKB_Class34] of  Property_List
+([inmobiliaria_ProjectKB_Class30039] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class35] of  Widget
+([inmobiliaria_ProjectKB_Class30040] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class36])
+	(property_list [inmobiliaria_ProjectKB_Class30041])
 	(widget_class_name "uk.ac.man.cs.mig.coode.debugger.test.DebuggerTestTab"))
 
-([inmobiliaria_ProjectKB_Class36] of  Property_List
+([inmobiliaria_ProjectKB_Class30041] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class37] of  Widget
+([inmobiliaria_ProjectKB_Class30042] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class38])
+	(property_list [inmobiliaria_ProjectKB_Class30043])
 	(widget_class_name "org.protege.owl.axiome.ui.AxiomeTab"))
 
-([inmobiliaria_ProjectKB_Class38] of  Property_List
+([inmobiliaria_ProjectKB_Class30043] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class39] of  Widget
+([inmobiliaria_ProjectKB_Class30044] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class40])
+	(property_list [inmobiliaria_ProjectKB_Class30045])
 	(widget_class_name "edu.stanford.smi.protegex.changes.ChangesTab"))
 
-([inmobiliaria_ProjectKB_Class4] of  Property_List
+([inmobiliaria_ProjectKB_Class30045] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class40] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class41] of  Widget
+([inmobiliaria_ProjectKB_Class30046] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class42])
+	(property_list [inmobiliaria_ProjectKB_Class30047])
 	(widget_class_name "ca.uvic.csr.shrimp.jambalaya.JambalayaTab"))
 
-([inmobiliaria_ProjectKB_Class42] of  Property_List
+([inmobiliaria_ProjectKB_Class30047] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class43] of  Widget
+([inmobiliaria_ProjectKB_Class30048] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class44])
+	(property_list [inmobiliaria_ProjectKB_Class30049])
 	(widget_class_name "TGViztab.TGVizTab"))
 
-([inmobiliaria_ProjectKB_Class44] of  Property_List
+([inmobiliaria_ProjectKB_Class30049] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class45] of  Widget
+([inmobiliaria_ProjectKB_Class30050] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class46])
+	(property_list [inmobiliaria_ProjectKB_Class30051])
 	(widget_class_name "edu.stanford.smi.protegex.owl.ui.properties.OWLPropertiesTab"))
 
-([inmobiliaria_ProjectKB_Class46] of  Property_List
+([inmobiliaria_ProjectKB_Class30051] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class47] of  Widget
+([inmobiliaria_ProjectKB_Class30052] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class48])
+	(property_list [inmobiliaria_ProjectKB_Class30053])
 	(widget_class_name "uk.ac.man.ac.mig.coode.individuals.ui.OWLDLIndividualsTab"))
 
-([inmobiliaria_ProjectKB_Class48] of  Property_List
+([inmobiliaria_ProjectKB_Class30053] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class49] of  Widget
+([inmobiliaria_ProjectKB_Class30054] of  Widget
 
 	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class50])
+	(property_list [inmobiliaria_ProjectKB_Class30055])
 	(widget_class_name "edu.stanford.smi.protege.widget.instance_tree.InstanceTreeTab"))
+
+([inmobiliaria_ProjectKB_Class30055] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30056] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30057])
+	(widget_class_name "edu.stanford.smi.protegex.evaluation.MetaAnalysis"))
+
+([inmobiliaria_ProjectKB_Class30057] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30058] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30059])
+	(widget_class_name "edu.stanford.smi.protegex.changes.changesKBViewTab.ChangesKBViewTab"))
+
+([inmobiliaria_ProjectKB_Class30059] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30060] of  Widget
+
+	(is_hidden FALSE)
+	(property_list [inmobiliaria_ProjectKB_Class30061])
+	(widget_class_name "se.liu.ida.JessTab.JessTab"))
+
+([inmobiliaria_ProjectKB_Class30061] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30062] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30063])
+	(widget_class_name "edu.stanford.smi.protegex.changeanalysis.ChangeAnalysisTab"))
+
+([inmobiliaria_ProjectKB_Class30063] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30064] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30065])
+	(widget_class_name "uk.ac.man.cs.mig.coode.owlviz.ui.OWLVizTab"))
+
+([inmobiliaria_ProjectKB_Class30065] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30066] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30067])
+	(widget_class_name "edu.stanford.smi.protegex.changes.stats.ChangeStatisticsTab"))
+
+([inmobiliaria_ProjectKB_Class30067] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30068] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30069])
+	(widget_class_name "script.ProtegeScriptTab"))
+
+([inmobiliaria_ProjectKB_Class30069] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30070] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30071])
+	(widget_class_name "edu.stanford.smi.protegex.chatPlugin.ChatTab"))
+
+([inmobiliaria_ProjectKB_Class30071] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30072] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30073])
+	(widget_class_name "edu.stanford.smi.protegex.fctab.FacetConstraintsTab"))
+
+([inmobiliaria_ProjectKB_Class30073] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30074] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30075])
+	(widget_class_name "edu.stanford.smi.protegex.xml.tab.XMLTab"))
+
+([inmobiliaria_ProjectKB_Class30075] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30076] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30077])
+	(widget_class_name "edu.stanford.smi.protegex.datamaster.DataMasterTab"))
+
+([inmobiliaria_ProjectKB_Class30077] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30078] of  Widget
+
+	(is_hidden TRUE)
+	(property_list [inmobiliaria_ProjectKB_Class30079])
+	(widget_class_name "ezpal.EZPalTab"))
+
+([inmobiliaria_ProjectKB_Class30079] of  Property_List
+)
+
+([inmobiliaria_ProjectKB_Class30080] of  String
+
+	(name "SearchTab_Query")
+	(string_value "Query Name: Q1\nMatch All:true\nLength: 4\nPiso	precio	is less than	Other:300000	1	\nPiso	ascensor?	is	Other:true	1	\nPiso	distrito	contains	Instance:inmobiliaria_Class9|Arganzuela	1	\nPiso	metros_cuadrados	is greater than	Other:70	1	\n\nQuery Name: Q2\nMatch All:true\nLength: 4\nChalet_independiente	jardin?	is	Other:true	1	\nChalet_independiente	chimenea?	is	Other:true	1	\nChalet_independiente	plazas_garaje	is	Other:2	1	\nChalet_independiente	distrito	contains	Instance:inmobiliaria_Class10|Moncloa-Aravaca	1	\n\nQuery Name: Q3\nMatch All:true\nLength: 1\nInmobiliaria_online	vende	contains	Query:Q3aux|Q3aux	1	\n\nQuery Name: Q3aux\nMatch All:true\nLength: 1\nPiso	distrito	contains	Instance:inmobiliaria_Class11|Latina	1	\n\nQuery Name: Q4\nMatch All:true\nLength: 3\nEstudio	cocina_independiente?	is	Other:true	1	\nEstudio	distrito	contains	Instance:inmobiliaria_Class12|Chamberí	1	\nEstudio	vendido_por	contains	Instance:inmobiliaria_Class13|TuCasa	1	\n\nQuery Name: Q5aux1\nMatch All:true\nLength: 2\nChalet	precio	is greater than	Other:1000000	1	\nChalet	vendido_por	contains	Query:Q5aux2|Q5aux2	1	\n\nQuery Name: Q5aux2\nMatch All:true\nLength: 1\nInmobiliaria_online	nombre	is not	Other:16584165316516416	1	\n\nQuery Name: Q5\nMatch All:true\nLength: 1\nDistrito	contiene	contains	Query:Q5aux1|Q5aux1	1	\n\nQuery Name: Q6aux\nMatch All:true\nLength: 2\nDistrito	criminalidad	is	Other:baja	1	\nDistrito	contaminación	is	Other:baja	1	\n\nQuery Name: Q6\nMatch All:true\nLength: 2\nVivienda	n_dormitorios	is	Other:3	1	\nVivienda	distrito	contains	Query:Q6aux|Q6aux	1	\n\nQuery Name: Q7\nMatch All:false\nLength: 3\nChalet	 		Other:	1	\nPiso_bajo	 		Other:	1	\nPiso	ascensor?	is	Other:true	1	\n\n"))
 
 ([inmobiliaria_ProjectKB_Class5] of  Widget
 
@@ -2576,124 +2858,7 @@
 	(property_list [inmobiliaria_ProjectKB_Class6])
 	(widget_class_name "edu.stanford.smi.protege.widget.ProtegePropertiesTab"))
 
-([inmobiliaria_ProjectKB_Class50] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class51] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class52])
-	(widget_class_name "edu.stanford.smi.protegex.evaluation.MetaAnalysis"))
-
-([inmobiliaria_ProjectKB_Class52] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class53] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class54])
-	(widget_class_name "edu.stanford.smi.protegex.changes.changesKBViewTab.ChangesKBViewTab"))
-
-([inmobiliaria_ProjectKB_Class54] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class55] of  Widget
-
-	(is_hidden FALSE)
-	(property_list [inmobiliaria_ProjectKB_Class56])
-	(widget_class_name "se.liu.ida.JessTab.JessTab"))
-
-([inmobiliaria_ProjectKB_Class56] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class57] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class58])
-	(widget_class_name "edu.stanford.smi.protegex.changeanalysis.ChangeAnalysisTab"))
-
-([inmobiliaria_ProjectKB_Class58] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class59] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class60])
-	(widget_class_name "uk.ac.man.cs.mig.coode.owlviz.ui.OWLVizTab"))
-
 ([inmobiliaria_ProjectKB_Class6] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class60] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class61] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class62])
-	(widget_class_name "edu.stanford.smi.protegex.changes.stats.ChangeStatisticsTab"))
-
-([inmobiliaria_ProjectKB_Class62] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class63] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class64])
-	(widget_class_name "script.ProtegeScriptTab"))
-
-([inmobiliaria_ProjectKB_Class64] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class65] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class66])
-	(widget_class_name "edu.stanford.smi.protegex.chatPlugin.ChatTab"))
-
-([inmobiliaria_ProjectKB_Class66] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class67] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class68])
-	(widget_class_name "edu.stanford.smi.protegex.fctab.FacetConstraintsTab"))
-
-([inmobiliaria_ProjectKB_Class68] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class69] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class70])
-	(widget_class_name "edu.stanford.smi.protegex.xml.tab.XMLTab"))
-
-([inmobiliaria_ProjectKB_Class7] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class8])
-	(widget_class_name "edu.stanford.smi.protegex.widget.pal.PalQueriesTab"))
-
-([inmobiliaria_ProjectKB_Class70] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class71] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class72])
-	(widget_class_name "edu.stanford.smi.protegex.datamaster.DataMasterTab"))
-
-([inmobiliaria_ProjectKB_Class72] of  Property_List
-)
-
-([inmobiliaria_ProjectKB_Class73] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class74])
-	(widget_class_name "ezpal.EZPalTab"))
-
-([inmobiliaria_ProjectKB_Class74] of  Property_List
 )
 
 ([inmobiliaria_ProjectKB_Class75] of  Widget
@@ -2702,9 +2867,6 @@
 	(name ":JESS-ENGINE")
 	(property_list [inmobiliaria_ProjectKB_Class82])
 	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
-
-([inmobiliaria_ProjectKB_Class8] of  Property_List
-)
 
 ([inmobiliaria_ProjectKB_Class82] of  Property_List
 
@@ -2758,12 +2920,6 @@
 
 	(boolean_value FALSE)
 	(name "ButtonDisplayed-View References to Value"))
-
-([inmobiliaria_ProjectKB_Class9] of  Widget
-
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class10])
-	(widget_class_name "dfki.protege.ontoviz_tab.OntovizTab"))
 
 ([inmobiliaria_ProjectKB_Class90] of  Boolean
 
@@ -2845,9 +3001,9 @@
 ([KB_238435_Class1] of  Map
 
 	(entries
-		[inmobiliaria_ProjectKB_Class10014]
-		[inmobiliaria_ProjectKB_Class10015]
-		[inmobiliaria_ProjectKB_Class10016]))
+		[inmobiliaria_ProjectKB_Class10066]
+		[inmobiliaria_ProjectKB_Class10067]
+		[inmobiliaria_ProjectKB_Class10068]))
 
 ([KB_238435_Class100] of  String
 
@@ -2932,16 +3088,12 @@
 ([KB_238435_Class97] of  Property_List
 )
 
-([KB_238435_Class98] of  Property_List
-
-	(properties [inmobiliaria_ProjectKB_Class101]))
-
 ([KB_238435_Class99] of  String
 
 	(name "classes_file_name")
 	(string_value "inmobiliaria.pont"))
 
-([KB_607179_Class3] of  Map
+([KB_275321_Class3] of  Map
 )
 
 ([LAYOUT_PROPERTIES] of  Property_List
@@ -3033,6 +3185,7 @@
 	(browser_slot_names [BROWSER_SLOT_NAMES])
 	(customized_instance_widgets
 		[inmobiliaria_ProjectKB_Class10252]
+		[inmobiliaria_ProjectKB_Class20017]
 		[inmobiliaria_ProjectKB_Class84]
 		[inmobiliaria_ProjectKB_Class10112]
 		[STANDARD_CLASS_FORM_WIDGET]
@@ -3068,50 +3221,47 @@
 		[SLOTS_TAB]
 		[FORMS_TAB]
 		[INSTANCES_TAB]
-		[QUERIES_TAB]
-		[inmobiliaria_ProjectKB_Class57]
-		[inmobiliaria_ProjectKB_Class39]
+		[inmobiliaria_ProjectKB_Class20012]
+		[inmobiliaria_ProjectKB_Class30020]
+		[inmobiliaria_ProjectKB_Class30062]
+		[inmobiliaria_ProjectKB_Class30044]
 		[inmobiliaria_ProjectKB_Class17]
-		[inmobiliaria_ProjectKB_Class71]
-		[inmobiliaria_ProjectKB_Class35]
-		[inmobiliaria_ProjectKB_Class67]
-		[inmobiliaria_ProjectKB_Class49]
-		[inmobiliaria_ProjectKB_Class41]
-		[inmobiliaria_ProjectKB_Class55]
+		[inmobiliaria_ProjectKB_Class30076]
+		[inmobiliaria_ProjectKB_Class30040]
+		[inmobiliaria_ProjectKB_Class30072]
+		[inmobiliaria_ProjectKB_Class30054]
+		[inmobiliaria_ProjectKB_Class30046]
+		[inmobiliaria_ProjectKB_Class30060]
 		[inmobiliaria_ProjectKB_Class19]
-		[inmobiliaria_ProjectKB_Class21]
-		[inmobiliaria_ProjectKB_Class15]
-		[inmobiliaria_ProjectKB_Class51]
-		[inmobiliaria_ProjectKB_Class9]
-		[inmobiliaria_ProjectKB_Class47]
-		[inmobiliaria_ProjectKB_Class1]
-		[inmobiliaria_ProjectKB_Class27]
-		[inmobiliaria_ProjectKB_Class23]
+		[inmobiliaria_ProjectKB_Class30018]
+		[inmobiliaria_ProjectKB_Class20014]
+		[inmobiliaria_ProjectKB_Class30056]
+		[inmobiliaria_ProjectKB_Class20008]
+		[inmobiliaria_ProjectKB_Class30052]
+		[inmobiliaria_ProjectKB_Class10004]
+		[inmobiliaria_ProjectKB_Class30026]
+		[inmobiliaria_ProjectKB_Class30022]
 		[inmobiliaria_ProjectKB_Class5]
-		[inmobiliaria_ProjectKB_Class63]
-		[inmobiliaria_ProjectKB_Class25]
-		[inmobiliaria_ProjectKB_Class43]
-		[inmobiliaria_ProjectKB_Class69]
-		[inmobiliaria_ProjectKB_Class37]
-		[inmobiliaria_ProjectKB_Class53]
-		[inmobiliaria_ProjectKB_Class61]
-		[inmobiliaria_ProjectKB_Class65]
-		[inmobiliaria_ProjectKB_Class73]
-		[inmobiliaria_ProjectKB_Class3]
-		[inmobiliaria_ProjectKB_Class11]
-		[inmobiliaria_ProjectKB_Class33]
-		[inmobiliaria_ProjectKB_Class29]
-		[inmobiliaria_ProjectKB_Class45]
-		[inmobiliaria_ProjectKB_Class59]
-		[inmobiliaria_ProjectKB_Class7]
-		[inmobiliaria_ProjectKB_Class31]
-		[inmobiliaria_ProjectKB_Class13]))
-
-([QUERIES_TAB] of  Widget
-
-	(is_hidden FALSE)
-	(property_list [KB_238435_Class98])
-	(widget_class_name "edu.stanford.smi.protegex.queries_tab.QueriesTab"))
+		[inmobiliaria_ProjectKB_Class30068]
+		[inmobiliaria_ProjectKB_Class30024]
+		[inmobiliaria_ProjectKB_Class30048]
+		[inmobiliaria_ProjectKB_Class30036]
+		[inmobiliaria_ProjectKB_Class30074]
+		[inmobiliaria_ProjectKB_Class30042]
+		[inmobiliaria_ProjectKB_Class30058]
+		[inmobiliaria_ProjectKB_Class30066]
+		[inmobiliaria_ProjectKB_Class30070]
+		[inmobiliaria_ProjectKB_Class30078]
+		[inmobiliaria_ProjectKB_Class30034]
+		[inmobiliaria_ProjectKB_Class20010]
+		[inmobiliaria_ProjectKB_Class30038]
+		[inmobiliaria_ProjectKB_Class30028]
+		[inmobiliaria_ProjectKB_Class30050]
+		[inmobiliaria_ProjectKB_Class30064]
+		[inmobiliaria_ProjectKB_Class20006]
+		[inmobiliaria_ProjectKB_Class30032]
+		[inmobiliaria_ProjectKB_Class20016]
+		[inmobiliaria_ProjectKB_Class30030]))
 
 ([SLOTS_TAB] of  Widget
 
