@@ -1,4 +1,4 @@
-; Sun Apr 15 15:08:24 CEST 2018
+; Sun Apr 15 19:30:47 CEST 2018
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -10,7 +10,9 @@
 	(n_miembros_familia 4)
 	(nombre "David")
 	(presupuesto_maximo 2000000)
-	(presupuesto_minimo 1000001))
+	(presupuesto_minimo 1000001)
+	(recomendaciones [inmobiliaria_Class40016])
+	(requisitos_minimos [inmobiliaria_Class20]))
 
 ([inmobiliaria_Class1] of  %3APAL-CONSTRAINT
 )
@@ -39,8 +41,9 @@
 	(distrito_deseado [inmobiliaria_Class12])
 	(n_miembros_familia 1)
 	(nombre "Jaime")
-	(presupuesto_maximo 100000)
-	(presupuesto_minimo 94010))
+	(presupuesto_maximo 1000)
+	(presupuesto_minimo 0)
+	(recomendaciones [inmobiliaria_Class30031]))
 
 ([inmobiliaria_Class11] of  Distrito
 
@@ -50,7 +53,8 @@
 		[inmobiliaria_Class41]
 		[inmobiliaria_Class32]
 		[inmobiliaria_Class22]
-		[inmobiliaria_Class20])
+		[inmobiliaria_Class20]
+		[inmobiliaria_Class40016])
 	(criminalidad alta)
 	(nombre "Latina"))
 
@@ -65,7 +69,8 @@
 		[inmobiliaria_Class37]
 		[inmobiliaria_Class21]
 		[inmobiliaria_Class19]
-		[inmobiliaria_Class18])
+		[inmobiliaria_Class18]
+		[inmobiliaria_Class30031])
 	(criminalidad alta)
 	(nombre "Chamberí"))
 
@@ -81,7 +86,8 @@
 		[inmobiliaria_Class36]
 		[inmobiliaria_Class39]
 		[inmobiliaria_Class41]
-		[inmobiliaria_Class27]))
+		[inmobiliaria_Class27]
+		[inmobiliaria_Class30031]))
 
 ([inmobiliaria_Class14] of  Inmobiliaria_fisica
 
@@ -94,7 +100,8 @@
 		[inmobiliaria_Class30]
 		[inmobiliaria_Class31]
 		[inmobiliaria_Class34]
-		[inmobiliaria_Class38]))
+		[inmobiliaria_Class38]
+		[inmobiliaria_Class40016]))
 
 ([inmobiliaria_Class15] of  Inmobiliaria_online
 
@@ -160,8 +167,12 @@
 
 ([inmobiliaria_Class20] of  Estudio
 
+	(ascensor%3F FALSE)
+	(chimenea%3F FALSE)
+	(cocina_independiente%3F FALSE)
 	(direccion "C/ EstudioCaro 4")
 	(distrito [inmobiliaria_Class11])
+	(jardin%3F FALSE)
 	(metros_cuadrados 100)
 	(n_ba%C3%B1os 2)
 	(n_dormitorios 0)
@@ -177,7 +188,12 @@
 	(n_miembros_familia 2)
 	(nombre "Agapito")
 	(presupuesto_maximo 1000000000)
-	(presupuesto_minimo 0))
+	(presupuesto_minimo 0)
+	(recomendaciones [inmobiliaria_Class23])
+	(requisitos_minimos
+		[inmobiliaria_Class44]
+		[inmobiliaria_Class38]
+		[inmobiliaria_Class33]))
 
 ([inmobiliaria_Class21] of  Piso_bajo
 
@@ -281,6 +297,18 @@
 	(plazas_garaje 10)
 	(precio 1000000000)
 	(vendido_por [inmobiliaria_Class14]))
+
+([inmobiliaria_Class30031] of  Piso
+
+	(direccion "C/ Piso Barato en Chamberí")
+	(distrito [inmobiliaria_Class12])
+	(metros_cuadrados 50)
+	(n_ba%C3%B1os 1)
+	(n_dormitorios 1)
+	(piso 4)
+	(plazas_garaje 0)
+	(precio 10)
+	(vendido_por [inmobiliaria_Class13]))
 
 ([inmobiliaria_Class31] of  Chalet_adosado
 
@@ -397,6 +425,21 @@
 	(plazas_garaje 4)
 	(precio 123456)
 	(vendido_por [inmobiliaria_Class16]))
+
+([inmobiliaria_Class40016] of  Chalet_independiente
+
+	(chimenea%3F TRUE)
+	(cocina_independiente%3F TRUE)
+	(direccion "C/ Chalet en Latina")
+	(distrito [inmobiliaria_Class11])
+	(jardin%3F TRUE)
+	(metros_cuadrados 1000)
+	(n_ba%C3%B1os 2)
+	(n_dormitorios 4)
+	(n_plantas 1)
+	(plazas_garaje 4)
+	(precio 1000002)
+	(vendido_por [inmobiliaria_Class14]))
 
 ([inmobiliaria_Class41] of  Piso
 

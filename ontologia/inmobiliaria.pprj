@@ -1,4 +1,4 @@
-; Sun Apr 15 15:08:24 CEST 2018
+; Sun Apr 15 19:30:47 CEST 2018
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -21,16 +21,16 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[inmobiliaria_ProjectKB_Class40022]
-		[inmobiliaria_ProjectKB_Class40023]
-		[inmobiliaria_ProjectKB_Class40024]
 		[inmobiliaria_ProjectKB_Class40025]
 		[inmobiliaria_ProjectKB_Class40026]
 		[inmobiliaria_ProjectKB_Class40027]
 		[inmobiliaria_ProjectKB_Class40028]
 		[inmobiliaria_ProjectKB_Class40029]
 		[inmobiliaria_ProjectKB_Class40030]
-		[inmobiliaria_ProjectKB_Class40031]))
+		[inmobiliaria_ProjectKB_Class40031]
+		[inmobiliaria_ProjectKB_Class40032]
+		[inmobiliaria_ProjectKB_Class40033]
+		[inmobiliaria_ProjectKB_Class40034]))
 
 ([CLSES_TAB] of  Widget
 
@@ -2845,89 +2845,89 @@
 	(boolean_value FALSE)
 	(name "ButtonDisplayed-Delete Instance"))
 
-([inmobiliaria_ProjectKB_Class40022] of  String
+([inmobiliaria_ProjectKB_Class40025] of  String
 
 	(name "Vivienda")
 	(string_value "direccion"))
 
-([inmobiliaria_ProjectKB_Class40023] of  String
+([inmobiliaria_ProjectKB_Class40026] of  String
 
 	(name "Cliente")
 	(string_value "nombre"))
 
-([inmobiliaria_ProjectKB_Class40024] of  String
+([inmobiliaria_ProjectKB_Class40027] of  String
 
 	(name ":INSTANCE-ANNOTATION")
 	(string_value "%3AANNOTATION-TEXT"))
 
-([inmobiliaria_ProjectKB_Class40025] of  String
+([inmobiliaria_ProjectKB_Class40028] of  String
 
 	(name "Distrito")
 	(string_value "nombre"))
 
-([inmobiliaria_ProjectKB_Class40026] of  String
+([inmobiliaria_ProjectKB_Class40029] of  String
 
 	(name ":RULE")
 	(string_value "%3ADEFINITION-NAME"))
 
-([inmobiliaria_ProjectKB_Class40027] of  String
+([inmobiliaria_ProjectKB_Class40030] of  String
 
 	(name ":PAL-CONSTRAINT")
 	(string_value "%3APAL-NAME"))
 
-([inmobiliaria_ProjectKB_Class40028] of  String
+([inmobiliaria_ProjectKB_Class40031] of  String
 
 	(name ":META-CLASS")
 	(string_value "%3ANAME"))
 
-([inmobiliaria_ProjectKB_Class40029] of  String
+([inmobiliaria_ProjectKB_Class40032] of  String
 
 	(name ":FUNCTION")
 	(string_value "%3ADEFINITION-NAME"))
 
-([inmobiliaria_ProjectKB_Class40030] of  String
+([inmobiliaria_ProjectKB_Class40033] of  String
 
 	(name "Inmobiliaria")
 	(string_value "nombre"))
 
-([inmobiliaria_ProjectKB_Class40031] of  String
+([inmobiliaria_ProjectKB_Class40034] of  String
 
 	(name ":JESS-DEFINITION")
 	(string_value "%3ADEFINITION-NAME"))
 
-([inmobiliaria_ProjectKB_Class40032] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40035] of  Map_Entry
 
 	(key "suppress_instance_counting")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([inmobiliaria_ProjectKB_Class40033] of  Map
+([inmobiliaria_ProjectKB_Class40036] of  Map
 
-	(entries [inmobiliaria_ProjectKB_Class40034]))
+	(entries [inmobiliaria_ProjectKB_Class40037]))
 
-([inmobiliaria_ProjectKB_Class40034] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40037] of  Map_Entry
 
 	(key "inmobiliaria_Class10000")
 	(key_class "edu.stanford.smi.protege.model.Frame")
 	(value "34 335 202 123")
 	(value_class "java.awt.Rectangle"))
 
-([inmobiliaria_ProjectKB_Class40035] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40038] of  Map_Entry
 
 	(key "InstanceDisplay.yellow_stickies")
 	(key_class "java.lang.String")
-	(value "inmobiliaria_ProjectKB_Class40033")
+	(value "inmobiliaria_ProjectKB_Class40036")
 	(value_class "java.util.Map"))
 
-([inmobiliaria_ProjectKB_Class40036] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40039] of  Map_Entry
 
 	(key "add_name_on_instance_form")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([inmobiliaria_ProjectKB_Class40037] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40040] of  Map_Entry
 
 	(key "change_tracking_active")
 	(key_class "java.lang.String")
@@ -3085,9 +3085,6 @@
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
-([KB_163864_Class6] of  Map
-)
-
 ([KB_238435_Class0] of  String
 
 	(name "factory_class_name")
@@ -3096,11 +3093,11 @@
 ([KB_238435_Class1] of  Map
 
 	(entries
-		[inmobiliaria_ProjectKB_Class40032]
 		[inmobiliaria_ProjectKB_Class40035]
-		[inmobiliaria_ProjectKB_Class40036]
-		[inmobiliaria_ProjectKB_Class40037])
-	(referenced_maps [inmobiliaria_ProjectKB_Class40033]))
+		[inmobiliaria_ProjectKB_Class40038]
+		[inmobiliaria_ProjectKB_Class40039]
+		[inmobiliaria_ProjectKB_Class40040])
+	(referenced_maps [inmobiliaria_ProjectKB_Class40036]))
 
 ([KB_238435_Class100] of  String
 
@@ -3189,6 +3186,9 @@
 
 	(name "classes_file_name")
 	(string_value "inmobiliaria.pont"))
+
+([KB_512144_Class6] of  Map
+)
 
 ([LAYOUT_PROPERTIES] of  Property_List
 

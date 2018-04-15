@@ -33,7 +33,7 @@
 =>
 (assert (perfil-cliente ?name pareja)))
 
-(defrule perfil-familia
+(defrule perfil-cliente-familia
 (object (is-a Cliente) 
 	(nombre ?name)
 	(n_miembros_familia ?n&:(or (eq ?n 3) (eq ?n 4)))
@@ -41,21 +41,18 @@
 =>
 (assert (perfil-cliente ?name familia)))
 
-(defrule perfil-familia-numerosa
+(defrule perfil-cliente-familia-numerosa
 (object (is-a Cliente) 
 	(nombre ?name)
 	(n_miembros_familia ?n&:(> ?n 4))
 	(presupuesto_maximo ?max))
 =>
-(assert (perfil-cliente ?name soltero)))
+(assert (perfil-cliente ?name familia-numerosa)))
 
 
 
 
 ; Mapa de edificios a perfiles para los que son adecuados
-
-
-
 
 
 (defrule perfil-vivienda-clase-alta
@@ -175,8 +172,10 @@
 	(test (not (member$ ?vivienda (slot-get ?cliente requisitos_minimos))))
 	(test (not (member$ ?vivienda (slot-get ?cliente recomendaciones))))
 =>
-	(printout t "Something")
-	(slot-insert$ ?cliente requisitos_minimos 1 ?vivienda)
+	(if (and 
+			(not (member$ ?vivienda (slot-get ?cliente requisitos_minimos))) 
+			(not (member$ ?vivienda (slot-get ?cliente recomendaciones))))
+	then (slot-insert$ ?cliente requisitos_minimos 1 ?vivienda))
 )
 
 ; Identifica los edificios que cumplen necesidades minimas Y encajan con el perfil del cliente
@@ -199,9 +198,17 @@
 	(perfil-vivienda ?dir ?perfil)
 =>
     
-	(slot-insert$ ?cliente recomendaciones 1 ?vivienda)
-	(printout t "la vivienda esta en el index " (member$ ?vivienda (slot-get ?cliente requisitos_minimos)))
-	(slot-delete$ ?cliente requisitos_minimos (member$ ?vivienda (slot-get ?cliente requisitos_minimos)) (+ 1 (member$ ?vivienda (slot-get ?cliente requisitos_minimos))))
+	(if (not (member$ ?vivienda (slot-get ?cliente recomendaciones)))
+	then (slot-insert$ ?cliente recomendaciones 1 ?vivienda))
+
+	(if (member$ ?vivienda (slot-get ?cliente requisitos_minimos))
+	then (slot-delete$ 
+				?cliente requisitos_minimos 
+				(member$ ?vivienda (slot-get ?cliente requisitos_minimos)) 
+				(+ 1 (member$ ?vivienda (slot-get ?cliente requisitos_minimos)))
+		  )
+	)
+	
 )
 
 (reset)
@@ -210,5 +217,3 @@
 ; Para ejecutar en Protege
 ; 1. Ve a la pestana Jess
 ; 2. Run (batch "/home/david/Data/code/practicas_IA_4/ontologia/inmobiliaria.clp") en la barra de comandos
-
-;(batch "/home/jsevillamol/Documentos/UCM/Cuarto/IA/ontologia/inmobiliaria.clp")
