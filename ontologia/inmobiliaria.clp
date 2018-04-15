@@ -163,6 +163,12 @@
 	(assert (perfil-vivienda ?dir familia-numerosa))
 )
 
+
+;funcion auxiliar
+(deffunction next_index ($?list)
+	(return (+ (length$ $?list) 1))
+)
+
 ; Identifica los edificios que cumplen las necesidades minimas
 (defrule necesidades-minimas
 
@@ -191,10 +197,10 @@
 		)
 	(test (superclassp Vivienda ?tipo-vivienda))
 	(test (and (<= ?min ?price) (<= ?price ?max)))
+	(not (member$ ?vivienda (slot-get ?cliente requisitos_minimos)))
 =>
 	(assert (adecuado ?name ?dir))
-	;Hace falta hacer una funcion next_index que indique en que posición insertar la siguente vivienda
-	(slot-insert$ ?cliente requisitos_minimos (next_index requisitos_minimos ?cliente) ?vivienda)
+	(slot-insert$ ?cliente requisitos_minimos (next_index (slot-get ?cliente requisitos_minimos)) ?vivienda)
 )
 
 ; Identifica los edificios que cumplen necesidades minimas Y enajan con el perfil del cliente
@@ -225,9 +231,10 @@
 	(test (superclassp Vivienda ?tipo-vivienda))
 	(perfil-cliente ?name ?perfil)
 	(perfil-vivienda ?dir ?perfil)
+	(not (member$ ?vivienda (recomendaciones ?cliente)))
 =>
 	(assert(recomendado ?name ?dir))
-	(slot-insert$ ?cliente recomendaciones (next_index recomendaciones ?cliente) ?vivienda)
+	(slot-insert$ ?cliente recomendaciones (next_index (recomendaciones ?cliente)) ?vivienda)
 )
 
 ; Muestra los edificios que encajan con el perfil Y cumplen las necesidades minimas
