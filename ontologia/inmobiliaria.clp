@@ -103,6 +103,22 @@
 	(assert (perfil-vivienda ?dir soltero))
 )
 
+(defrule perfil-vivienda-pareja
+(object (is-a ?tipo-vivienda)
+		(direccion ?dir)
+		(jardin? ?garden)
+		(metros_cuadrados ?square_meters&:(< ?square_meters 300))
+		(n_baños ?n_baths&:(eq ?n_baths 1))
+		(n_dormitorios ?n_dorms&:(<= ?n_dorms 2))
+		(plazas_garaje ?n_garage)
+		(precio ?price)
+		(vendido_por ?seller)
+		)
+	(test (superclassp Vivienda ?tipo-vivienda))
+	=>
+	(assert (perfil-vivienda ?dir pareja))
+)
+
 (defrule perfil-vivienda-familia
 (object (is-a ?tipo-vivienda)
 		(direccion ?dir)
@@ -157,15 +173,15 @@
 	
 	(test (and (<= ?min ?price) (<= ?price ?max)))
 	(test (not (member$ ?vivienda (slot-get ?cliente requisitos_minimos))))
+	(test (not (member$ ?vivienda (slot-get ?cliente recomendaciones))))
 =>
-	(printout t "Something2")
+	(printout t "Something")
 	(slot-insert$ ?cliente requisitos_minimos 1 ?vivienda)
 )
 
-; Identifica los edificios que cumplen necesidades minimas Y enajan con el perfil del cliente
+; Identifica los edificios que cumplen necesidades minimas Y encajan con el perfil del cliente
 
 (defrule recomendado
-	(adecuado ?name ?dir)
 	(object (is-a Cliente)
 		(OBJECT ?cliente)
 		(nombre ?name))
@@ -174,72 +190,25 @@
 		(OBJECT ?vivienda)
 		(direccion ?dir))
 	(test (superclassp Vivienda ?tipo-vivienda))
-	(test (not (member$ ?vivienda (recomendaciones ?cliente))))
-	
+
+	(test (not (member$ ?vivienda (slot-get ?cliente recomendaciones))))
+
 	(test (member$ ?vivienda (slot-get ?cliente requisitos_minimos)))
-	(printout t "Something2")
 	
 	(perfil-cliente ?name ?perfil)
 	(perfil-vivienda ?dir ?perfil)
 =>
     
 	(slot-insert$ ?cliente recomendaciones 1 ?vivienda)
-	(Slot-delete$ ?cliente requisitos_minimos ?index (member$ ?vivienda (slot-get ?cliente requisitos_minimos)))
+	(printout t "la vivienda esta en el index " (member$ ?vivienda (slot-get ?cliente requisitos_minimos)))
+	(slot-delete$ ?cliente requisitos_minimos (member$ ?vivienda (slot-get ?cliente requisitos_minimos)) (+ 1 (member$ ?vivienda (slot-get ?cliente requisitos_minimos))))
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-; Muestra los edificios que encajan con el perfil Y cumplen las necesidades minimas
-
-(defrule mostrar-recomendaciones
-	?recomendacion<-(recomendado ?name ?dir)
-=>
-	(printout t "Recomendamos el piso " ?dir " al cliente " ?name)
-	(retract ?recomendacion)
-)
-
-; Y luego muestra los que cumplen las minimas pero no encajan con el perfil
-
-(defrule mostrar-adecuados
-	?recomendacion<-(adecuado ?name ?dir)
-=>
-	(printout t "El piso " ?dir " satisface las necesidades minimas del cliente " ?name)
-	(retract ?recomendacion)
-)
-
-
-
-
-
-
-
-
-
-
-
-
 
 (reset)
 (run)
-(facts)
 
 ; Para ejecutar en Protege
 ; 1. Ve a la pestana Jess
 ; 2. Run (batch "/home/david/Data/code/practicas_IA_4/ontologia/inmobiliaria.clp") en la barra de comandos
+
+;(batch "/home/jsevillamol/Documentos/UCM/Cuarto/IA/ontologia/inmobiliaria.clp")

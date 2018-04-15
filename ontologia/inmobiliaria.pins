@@ -1,7 +1,7 @@
-; Sun Apr 15 14:11:37 CEST 2018
+; Sun Apr 15 15:08:24 CEST 2018
 ; 
-;+ (version "3.4.8")
-;+ (build "Build 629")
+;+ (version "3.5")
+;+ (build "Build 663")
 
 ([inmobiliaria_Class0] of  Cliente
 
@@ -169,6 +169,15 @@
 	(plazas_garaje 2)
 	(precio 2000000)
 	(vendido_por [inmobiliaria_Class15]))
+
+([inmobiliaria_Class20000] of  Cliente
+
+	(discapacidad%3F FALSE)
+	(distrito_deseado [inmobiliaria_Class10])
+	(n_miembros_familia 2)
+	(nombre "Agapito")
+	(presupuesto_maximo 1000000000)
+	(presupuesto_minimo 0))
 
 ([inmobiliaria_Class21] of  Piso_bajo
 
