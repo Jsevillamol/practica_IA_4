@@ -6,76 +6,60 @@
 ; Mapa de clientes a perfiles
 
 (defrule perfil-cliente-clase-alta
-?cliente <- (object (is-a Cliente) 
-	(nombre ?name) 
-	(discapacidad? ?discapacity)
-	(distrito_deseado ?desired_district)
-	(n_miembros_familia ?n)
-	(presupuesto_maximo ?max)
+(object (is-a Cliente) 
+	(nombre ?name)
 	(presupuesto_minimo ?min&:(> ?min 1000000)))
 =>
 (assert (perfil-cliente ?name clase-alta)))
 
 (defrule perfil-cliente-clase-baja
-?cliente <- (object (is-a Cliente) 
-	(nombre ?name) 
-	(discapacidad? ?discapacity)
-	(distrito_deseado ?desired_district)
-	(n_miembros_familia ?n)
-	(presupuesto_maximo ?max&:(< ?max 10000))
-	(presupuesto_minimo ?min))
+(object (is-a Cliente) 
+	(nombre ?name)
+	(presupuesto_maximo ?max&:(< ?max 10000)))
 =>
 (assert (perfil-cliente ?name clase-baja)))
 
 (defrule perfil-cliente-soltero
-?cliente <- (object (is-a Cliente) 
-	(nombre ?name) 
-	(discapacidad? ?discapacity)
-	(distrito_deseado ?desired_district)
-	(n_miembros_familia ?n&:(eq ?n 1))
-	(presupuesto_maximo ?max)
-	(presupuesto_minimo ?min))
+(object (is-a Cliente) 
+	(nombre ?name)
+	(n_miembros_familia ?n&:(eq ?n 1)))
 =>
 (assert (perfil-cliente ?name soltero)))
 
 (defrule perfil-cliente-pareja
-?cliente <- (object (is-a Cliente) 
-	(nombre ?name) 
-	(discapacidad? ?discapacity)
-	(distrito_deseado ?desired_district)
-	(n_miembros_familia ?n&:(eq ?n 2))
-	(presupuesto_maximo ?max)
-	(presupuesto_minimo ?min))
+(object (is-a Cliente) 
+	(nombre ?name)
+	(n_miembros_familia ?n&:(eq ?n 2)))
 =>
 (assert (perfil-cliente ?name pareja)))
 
 (defrule perfil-familia
-?cliente <- (object (is-a Cliente) 
-	(nombre ?name) 
-	(discapacidad? ?discapacity)
-	(distrito_deseado ?desired_district)
+(object (is-a Cliente) 
+	(nombre ?name)
 	(n_miembros_familia ?n&:(or (eq ?n 3) (eq ?n 4)))
-	(presupuesto_maximo ?max)
-	(presupuesto_minimo ?min))
+	(presupuesto_maximo ?max))
 =>
 (assert (perfil-cliente ?name familia)))
 
 (defrule perfil-familia-numerosa
-?cliente <- (object (is-a Cliente) 
-	(nombre ?name) 
-	(discapacidad? ?discapacity)
-	(distrito_deseado ?desired_district)
+(object (is-a Cliente) 
+	(nombre ?name)
 	(n_miembros_familia ?n&:(> ?n 4))
-	(presupuesto_maximo ?max)
-	(presupuesto_minimo ?min))
+	(presupuesto_maximo ?max))
 =>
 (assert (perfil-cliente ?name soltero)))
+
+
+
 
 ; Mapa de edificios a perfiles para los que son adecuados
 
 
+
+
+
 (defrule perfil-vivienda-clase-alta
-	?vivienda <- (object (is-a ?tipo-vivienda)
+(object (is-a ?tipo-vivienda)
 		(direccion ?dir)
 		(chimenea? TRUE)
 		(cocina_independiente? TRUE)
@@ -88,11 +72,8 @@
 )
 
 (defrule perfil-vivienda-clase-baja
-	?vivienda <- (object (is-a ?tipo-vivienda)
+(object (is-a ?tipo-vivienda)
 		(direccion ?dir)
-		(chimenea? ?chimney)
-		(cocina_independiente? ?kitchen)
-		(distrito ?dist)
 		(jardin? ?garden)
 		(metros_cuadrados ?square_meters)
 		(n_baños ?n_baths)
@@ -107,11 +88,8 @@
 )
 
 (defrule perfil-vivienda-soltero
-	?vivienda <- (object (is-a ?tipo-vivienda)
+(object (is-a ?tipo-vivienda)
 		(direccion ?dir)
-		(chimenea? ?chimney)
-		(cocina_independiente? ?kitchen)
-		(distrito ?dist)
 		(jardin? ?garden)
 		(metros_cuadrados ?square_meters&:(< ?square_meters 200))
 		(n_baños ?n_baths&:(eq ?n_baths 1))
@@ -126,11 +104,8 @@
 )
 
 (defrule perfil-vivienda-familia
-	?vivienda <- (object (is-a ?tipo-vivienda)
+(object (is-a ?tipo-vivienda)
 		(direccion ?dir)
-		(chimenea? ?chimney)
-		(cocina_independiente? ?kitchen)
-		(distrito ?dist)
 		(jardin? ?garden)
 		(metros_cuadrados ?square_meters&:(> ?square_meters 100))
 		(n_baños ?n_baths&:(>= ?n_baths 1))
@@ -145,11 +120,8 @@
 )
 
 (defrule perfil-vivienda-familia-numerosa
-	?vivienda <- (object (is-a ?tipo-vivienda)
+(object (is-a ?tipo-vivienda)
 		(direccion ?dir)
-		(chimenea? ?chimney)
-		(cocina_independiente? ?kitchen)
-		(distrito ?dist)
 		(jardin? ?garden)
 		(metros_cuadrados ?square_meters&:(> ?square_meters 200))
 		(n_baños ?n_baths&:(>= ?n_baths 2))
