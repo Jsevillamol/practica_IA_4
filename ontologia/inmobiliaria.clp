@@ -166,7 +166,8 @@
 ; Identifica los edificios que cumplen las necesidades minimas
 (defrule necesidades-minimas
 
-	?cliente <- (object (is-a Cliente) 
+	(object (is-a Cliente)
+		(OBJECT ?cliente)
 		(nombre ?name) 
 		(discapacidad? ?discapacity)
 		(distrito_deseado ?desired_district)
@@ -174,7 +175,8 @@
 		(presupuesto_maximo ?max)
 		(presupuesto_minimo ?min))
 
-	?vivienda <- (object (is-a ?tipo-vivienda)
+	(object (is-a ?tipo-vivienda)
+		(OBJECT ?vivienda)
 		(direccion ?dir)
 		(chimenea? ?chimney)
 		(cocina_independiente? ?kitchen)
@@ -191,6 +193,8 @@
 	(test (and (<= ?min ?price) (<= ?price ?max)))
 =>
 	(assert (adecuado ?name ?dir))
+	;Hace falta hacer una funcion next_index que indique en que posición insertar la siguente vivienda
+	(slot-insert$ ?cliente requisitos_minimos (next_index requisitos_minimos ?cliente) ?vivienda)
 )
 
 ; Identifica los edificios que cumplen necesidades minimas Y enajan con el perfil del cliente
@@ -223,6 +227,7 @@
 	(perfil-vivienda ?dir ?perfil)
 =>
 	(assert(recomendado ?name ?dir))
+	(slot-insert$ ?cliente recomendaciones (next_index recomendaciones ?cliente) ?vivienda)
 )
 
 ; Muestra los edificios que encajan con el perfil Y cumplen las necesidades minimas
@@ -249,6 +254,4 @@
 
 ; Para ejecutar en Protege
 ; 1. Ve a la pestana Jess
-; 2. Run (batch "inmobiliaria.clp") en la barra de comandos
-; 3. Ok that did not work now what
-; 4. Dunno man. I dont work here.
+; 2. Run (batch "/ruta/inmobiliaria.clp") en la barra de comandos
