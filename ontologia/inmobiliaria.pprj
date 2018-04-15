@@ -1,4 +1,4 @@
-; Sun Apr 15 10:59:30 CEST 2018
+; Sun Apr 15 12:34:13 CEST 2018
 ; 
 ;+ (version "3.5")
 ;+ (build "Build 663")
@@ -20,16 +20,16 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[inmobiliaria_ProjectKB_Class10006]
-		[inmobiliaria_ProjectKB_Class10007]
-		[inmobiliaria_ProjectKB_Class10008]
-		[inmobiliaria_ProjectKB_Class10009]
-		[inmobiliaria_ProjectKB_Class30010]
-		[inmobiliaria_ProjectKB_Class30011]
-		[inmobiliaria_ProjectKB_Class30012]
-		[inmobiliaria_ProjectKB_Class30013]
-		[inmobiliaria_ProjectKB_Class30014]
-		[inmobiliaria_ProjectKB_Class30015]))
+		[inmobiliaria_ProjectKB_Class40019]
+		[inmobiliaria_ProjectKB_Class40020]
+		[inmobiliaria_ProjectKB_Class40021]
+		[inmobiliaria_ProjectKB_Class40022]
+		[inmobiliaria_ProjectKB_Class40023]
+		[inmobiliaria_ProjectKB_Class40024]
+		[inmobiliaria_ProjectKB_Class40025]
+		[inmobiliaria_ProjectKB_Class40026]
+		[inmobiliaria_ProjectKB_Class40027]
+		[inmobiliaria_ProjectKB_Class40028]))
 
 ([CLSES_TAB] of  Widget
 
@@ -57,26 +57,6 @@
 
 ([inmobiliaria_ProjectKB_Class10005] of  Property_List
 )
-
-([inmobiliaria_ProjectKB_Class10006] of  String
-
-	(name "Vivienda")
-	(string_value "direccion"))
-
-([inmobiliaria_ProjectKB_Class10007] of  String
-
-	(name "Cliente")
-	(string_value "nombre"))
-
-([inmobiliaria_ProjectKB_Class10008] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([inmobiliaria_ProjectKB_Class10009] of  String
-
-	(name "Distrito")
-	(string_value "nombre"))
 
 ([inmobiliaria_ProjectKB_Class10010] of  Widget
 
@@ -2573,43 +2553,6 @@
 ([inmobiliaria_ProjectKB_Class20235] of  Property_List
 )
 
-([inmobiliaria_ProjectKB_Class30010] of  String
-
-	(name ":RULE")
-	(string_value "%3ADEFINITION-NAME"))
-
-([inmobiliaria_ProjectKB_Class30011] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([inmobiliaria_ProjectKB_Class30012] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([inmobiliaria_ProjectKB_Class30013] of  String
-
-	(name ":FUNCTION")
-	(string_value "%3ADEFINITION-NAME"))
-
-([inmobiliaria_ProjectKB_Class30014] of  String
-
-	(name "Inmobiliaria")
-	(string_value "nombre"))
-
-([inmobiliaria_ProjectKB_Class30015] of  String
-
-	(name ":JESS-DEFINITION")
-	(string_value "%3ADEFINITION-NAME"))
-
-([inmobiliaria_ProjectKB_Class30016] of  Map_Entry
-
-	(key "suppress_instance_counting")
-	(key_class "java.lang.String")
-	(value "false")
-	(value_class "java.lang.String"))
-
 ([inmobiliaria_ProjectKB_Class30017] of  Property_List
 )
 
@@ -2895,7 +2838,7 @@
 ([inmobiliaria_ProjectKB_Class30080] of  String
 
 	(name "SearchTab_Query")
-	(string_value "Query Name: Q1\nMatch All:true\nLength: 4\nPiso	precio	is less than	Other:300000	1	\nPiso	ascensor?	is	Other:true	1	\nPiso	distrito	contains	Instance:inmobiliaria_Class9|Arganzuela	1	\nPiso	metros_cuadrados	is greater than	Other:70	1	\n\nQuery Name: Q2\nMatch All:true\nLength: 4\nChalet_independiente	jardin?	is	Other:true	1	\nChalet_independiente	chimenea?	is	Other:true	1	\nChalet_independiente	plazas_garaje	is	Other:2	1	\nChalet_independiente	distrito	contains	Instance:inmobiliaria_Class10|Moncloa-Aravaca	1	\n\nQuery Name: Q3\nMatch All:true\nLength: 1\nInmobiliaria_online	vende	contains	Query:Q3aux|Q3aux	1	\n\nQuery Name: Q3aux\nMatch All:true\nLength: 1\nPiso	distrito	contains	Instance:inmobiliaria_Class11|Latina	1	\n\nQuery Name: Q4\nMatch All:true\nLength: 3\nEstudio	cocina_independiente?	is	Other:true	1	\nEstudio	distrito	contains	Instance:inmobiliaria_Class12|Chamberí	1	\nEstudio	vendido_por	contains	Instance:inmobiliaria_Class13|TuCasa	1	\n\nQuery Name: Q5aux1\nMatch All:true\nLength: 2\nChalet	precio	is greater than	Other:1000000	1	\nChalet	vendido_por	contains	Query:Q5aux2|Q5aux2	1	\n\nQuery Name: Q5aux2\nMatch All:true\nLength: 1\nInmobiliaria_online	nombre	is not	Other:16584165316516416	1	\n\nQuery Name: Q5\nMatch All:true\nLength: 1\nDistrito	contiene	contains	Query:Q5aux1|Q5aux1	1	\n\nQuery Name: Q6aux\nMatch All:true\nLength: 2\nDistrito	criminalidad	is	Other:baja	1	\nDistrito	contaminación	is	Other:baja	1	\n\nQuery Name: Q6\nMatch All:true\nLength: 2\nVivienda	n_dormitorios	is	Other:3	1	\nVivienda	distrito	contains	Query:Q6aux|Q6aux	1	\n\nQuery Name: Q7\nMatch All:false\nLength: 3\nChalet	 	Other:	null	\nPiso_bajo	 	Other:	null	\nPiso	ascensor?	is	Other:true	1	\n\n"))
+	(string_value "Query Name: Q1. ¿Qué  pisos con ascensor hay en Arganzuela por menos de 300.000€ y más de 70  metros cuadrados ?\nMatch All:true\nLength: 4\nPiso	precio	is less than	Other:300000	1	\nPiso	ascensor?	is	Other:true	1	\nPiso	distrito	contains	Instance:inmobiliaria_Class9|Arganzuela	1	\nPiso	metros_cuadrados	is greater than	Other:70	1	\n\nQuery Name: Q2. ¿Qué  chalets  independientes con jardín , chimenea y dos plazas de garaje se  venden en  Moncloa - Aravaca ?\nMatch All:true\nLength: 4\nChalet_independiente	jardin?	is	Other:true	1	\nChalet_independiente	chimenea?	is	Other:true	1	\nChalet_independiente	plazas_garaje	is	Other:2	1	\nChalet_independiente	distrito	contains	Instance:inmobiliaria_Class10|Moncloa-Aravaca	1	\n\nQuery Name: Q3. ¿Qué  inmobiliarias online  tienen pisos a la  venta en Latina ?\nMatch All:true\nLength: 1\nInmobiliaria_online	vende	contains	Query:Q3aux. Pisos en Latina|Q3aux. Pisos en Latina	1	\n\nQuery Name: Q3aux. Pisos en Latina\nMatch All:true\nLength: 1\nPiso	distrito	contains	Instance:inmobiliaria_Class11|Latina	1	\n\nQuery Name: Q4. ¿Qué  estudios con cocina independiente vende  en Chamberí la inmobiliaria física TuCasa?\nMatch All:true\nLength: 3\nEstudio	cocina_independiente?	is	Other:true	1	\nEstudio	distrito	contains	Instance:inmobiliaria_Class12|Chamberí	1	\nEstudio	vendido_por	contains	Instance:inmobiliaria_Class13|TuCasa	1	\n\nQuery Name: Q5aux1. Pisos con precio mayor que 1M  vendidos por inmobiliarias online\nMatch All:true\nLength: 2\nChalet	precio	is greater than	Other:1000000	1	\nChalet	vendido_por	contains	Query:Q5aux2. Inmobiliarias online|Q5aux2. Inmobiliarias online	1	\n\nQuery Name: Q5aux2. Inmobiliarias online\nMatch All:true\nLength: 1\nInmobiliaria_online	nombre	is not	Other:16584165316516416	1	\n\nQuery Name: Q5. ¿Qué distritos tienen chalets en venta en inmobiliarias online con precios superiores al  millón de euros?\nMatch All:true\nLength: 1\nDistrito	contiene	contains	Query:Q5aux1. Pisos con precio mayor que 1M  vendidos por inmobiliarias online|Q5aux1. Pisos con precio mayor que 1M  vendidos por inmobiliarias online	1	\n\nQuery Name: Q6aux. Distritos con criminalidad baja y contaminación baja\nMatch All:true\nLength: 2\nDistrito	criminalidad	is	Other:baja	1	\nDistrito	contaminación	is	Other:baja	1	\n\nQuery Name: Q6. ¿Qué viviendas  de tres dormitorios  hay a la venta en distritos con criminalidad baja y nivel de contaminación bajo ?\nMatch All:true\nLength: 2\nVivienda	n_dormitorios	is	Other:3	1	\nVivienda	distrito	contains	Query:Q6aux. Distritos con criminalidad baja y contaminación baja|Q6aux. Distritos con criminalidad baja y contaminación baja	1	\n\nQuery Name: Q7. ¿Qué viviendas son accesibles (son chalets, pisos bajos o tienen ascensor)?\nMatch All:false\nLength: 3\nChalet	 		Other:	1	\nPiso_bajo	 		Other:	1	\nPiso	ascensor?	is	Other:true	1	\n\n"))
 
 ([inmobiliaria_ProjectKB_Class4] of  Widget
 
@@ -2903,14 +2846,71 @@
 	(property_list [inmobiliaria_ProjectKB_Class10005])
 	(widget_class_name "org.protege.owl.mm.portability.protege3.MappingMasterTab"))
 
-([inmobiliaria_ProjectKB_Class40017] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40019] of  String
+
+	(name "Vivienda")
+	(string_value "direccion"))
+
+([inmobiliaria_ProjectKB_Class40020] of  String
+
+	(name "Cliente")
+	(string_value "nombre"))
+
+([inmobiliaria_ProjectKB_Class40021] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
+
+([inmobiliaria_ProjectKB_Class40022] of  String
+
+	(name "Distrito")
+	(string_value "nombre"))
+
+([inmobiliaria_ProjectKB_Class40023] of  String
+
+	(name ":RULE")
+	(string_value "%3ADEFINITION-NAME"))
+
+([inmobiliaria_ProjectKB_Class40024] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([inmobiliaria_ProjectKB_Class40025] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([inmobiliaria_ProjectKB_Class40026] of  String
+
+	(name ":FUNCTION")
+	(string_value "%3ADEFINITION-NAME"))
+
+([inmobiliaria_ProjectKB_Class40027] of  String
+
+	(name "Inmobiliaria")
+	(string_value "nombre"))
+
+([inmobiliaria_ProjectKB_Class40028] of  String
+
+	(name ":JESS-DEFINITION")
+	(string_value "%3ADEFINITION-NAME"))
+
+([inmobiliaria_ProjectKB_Class40029] of  Map_Entry
+
+	(key "suppress_instance_counting")
+	(key_class "java.lang.String")
+	(value "false")
+	(value_class "java.lang.String"))
+
+([inmobiliaria_ProjectKB_Class40030] of  Map_Entry
 
 	(key "add_name_on_instance_form")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([inmobiliaria_ProjectKB_Class40018] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40031] of  Map_Entry
 
 	(key "change_tracking_active")
 	(key_class "java.lang.String")
@@ -3058,7 +3058,7 @@
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
 
-([KB_010327_Class3] of  Map
+([KB_036954_Class3] of  Map
 )
 
 ([KB_238435_Class0] of  String
@@ -3069,9 +3069,9 @@
 ([KB_238435_Class1] of  Map
 
 	(entries
-		[inmobiliaria_ProjectKB_Class30016]
-		[inmobiliaria_ProjectKB_Class40017]
-		[inmobiliaria_ProjectKB_Class40018]))
+		[inmobiliaria_ProjectKB_Class40029]
+		[inmobiliaria_ProjectKB_Class40030]
+		[inmobiliaria_ProjectKB_Class40031]))
 
 ([KB_238435_Class100] of  String
 
