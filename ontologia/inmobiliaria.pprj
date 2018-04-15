@@ -1,7 +1,7 @@
-; Sun Apr 15 12:34:13 CEST 2018
+; Sun Apr 15 13:05:14 CEST 2018
 ; 
-;+ (version "3.5")
-;+ (build "Build 663")
+;+ (version "3.4.8")
+;+ (build "Build 629")
 
 ([ANNOTATED_INSTANCE_WIDGET] of  Widget
 
@@ -12,6 +12,7 @@
 	(height 100)
 	(is_hidden FALSE)
 	(name ":ANNOTATION-TEXT")
+	(property_list [inmobiliaria_ProjectKB_Class10005])
 	(widget_class_name "edu.stanford.smi.protege.widget.YellowStickyWidget")
 	(width 200)
 	(x 0)
@@ -20,16 +21,16 @@
 ([BROWSER_SLOT_NAMES] of  Property_List
 
 	(properties
-		[inmobiliaria_ProjectKB_Class40019]
-		[inmobiliaria_ProjectKB_Class40020]
-		[inmobiliaria_ProjectKB_Class40021]
-		[inmobiliaria_ProjectKB_Class40022]
-		[inmobiliaria_ProjectKB_Class40023]
-		[inmobiliaria_ProjectKB_Class40024]
-		[inmobiliaria_ProjectKB_Class40025]
-		[inmobiliaria_ProjectKB_Class40026]
-		[inmobiliaria_ProjectKB_Class40027]
-		[inmobiliaria_ProjectKB_Class40028]))
+		[inmobiliaria_ProjectKB_Class7]
+		[inmobiliaria_ProjectKB_Class8]
+		[inmobiliaria_ProjectKB_Class9]
+		[inmobiliaria_ProjectKB_Class10]
+		[inmobiliaria_ProjectKB_Class11]
+		[inmobiliaria_ProjectKB_Class12]
+		[inmobiliaria_ProjectKB_Class13]
+		[inmobiliaria_ProjectKB_Class14]
+		[inmobiliaria_ProjectKB_Class15]
+		[inmobiliaria_ProjectKB_Class16]))
 
 ([CLSES_TAB] of  Widget
 
@@ -49,6 +50,11 @@
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.FormsTab"))
 
+([inmobiliaria_ProjectKB_Class10] of  String
+
+	(name "Distrito")
+	(string_value "nombre"))
+
 ([inmobiliaria_ProjectKB_Class10004] of  Widget
 
 	(is_hidden TRUE)
@@ -57,33 +63,6 @@
 
 ([inmobiliaria_ProjectKB_Class10005] of  Property_List
 )
-
-([inmobiliaria_ProjectKB_Class10010] of  Widget
-
-	(height 120)
-	(is_hidden FALSE)
-	(name "recomendaciones")
-	(property_list [inmobiliaria_ProjectKB_Class10011])
-	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
-	(width 360)
-	(x 0)
-	(y 180))
-
-([inmobiliaria_ProjectKB_Class10011] of  Property_List
-
-	(properties
-		[inmobiliaria_ProjectKB_Class10012]
-		[inmobiliaria_ProjectKB_Class10013]))
-
-([inmobiliaria_ProjectKB_Class10012] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-View References to Value"))
-
-([inmobiliaria_ProjectKB_Class10013] of  Boolean
-
-	(boolean_value FALSE)
-	(name "ButtonDisplayed-Delete Instance"))
 
 ([inmobiliaria_ProjectKB_Class10014] of  Widget
 
@@ -1806,6 +1785,36 @@
 
 	(name "layout properties"))
 
+([inmobiliaria_ProjectKB_Class11] of  String
+
+	(name ":RULE")
+	(string_value "%3ADEFINITION-NAME"))
+
+([inmobiliaria_ProjectKB_Class12] of  String
+
+	(name ":PAL-CONSTRAINT")
+	(string_value "%3APAL-NAME"))
+
+([inmobiliaria_ProjectKB_Class13] of  String
+
+	(name ":META-CLASS")
+	(string_value "%3ANAME"))
+
+([inmobiliaria_ProjectKB_Class14] of  String
+
+	(name ":FUNCTION")
+	(string_value "%3ADEFINITION-NAME"))
+
+([inmobiliaria_ProjectKB_Class15] of  String
+
+	(name "Inmobiliaria")
+	(string_value "nombre"))
+
+([inmobiliaria_ProjectKB_Class16] of  String
+
+	(name ":JESS-DEFINITION")
+	(string_value "%3ADEFINITION-NAME"))
+
 ([inmobiliaria_ProjectKB_Class17] of  Widget
 
 	(is_hidden TRUE)
@@ -1896,8 +1905,8 @@
 		[inmobiliaria_ProjectKB_Class20026]
 		[inmobiliaria_ProjectKB_Class20028]
 		[inmobiliaria_ProjectKB_Class20032]
-		[inmobiliaria_ProjectKB_Class10010]
-		[inmobiliaria_ProjectKB_Class10014]))
+		[inmobiliaria_ProjectKB_Class10014]
+		[inmobiliaria_ProjectKB_Class30008]))
 
 ([inmobiliaria_ProjectKB_Class20019] of  Property_List
 
@@ -2553,6 +2562,23 @@
 ([inmobiliaria_ProjectKB_Class20235] of  Property_List
 )
 
+([inmobiliaria_ProjectKB_Class30008] of  Widget
+
+	(height 120)
+	(is_hidden FALSE)
+	(name "recomendaciones")
+	(property_list [inmobiliaria_ProjectKB_Class30009])
+	(widget_class_name "edu.stanford.smi.protege.widget.InstanceListWidget")
+	(width 200)
+	(x 0)
+	(y 420))
+
+([inmobiliaria_ProjectKB_Class30009] of  Property_List
+
+	(properties
+		[inmobiliaria_ProjectKB_Class40010]
+		[inmobiliaria_ProjectKB_Class40011]))
+
 ([inmobiliaria_ProjectKB_Class30017] of  Property_List
 )
 
@@ -2838,79 +2864,55 @@
 ([inmobiliaria_ProjectKB_Class30080] of  String
 
 	(name "SearchTab_Query")
-	(string_value "Query Name: Q1. ¿Qué  pisos con ascensor hay en Arganzuela por menos de 300.000€ y más de 70  metros cuadrados ?\nMatch All:true\nLength: 4\nPiso	precio	is less than	Other:300000	1	\nPiso	ascensor?	is	Other:true	1	\nPiso	distrito	contains	Instance:inmobiliaria_Class9|Arganzuela	1	\nPiso	metros_cuadrados	is greater than	Other:70	1	\n\nQuery Name: Q2. ¿Qué  chalets  independientes con jardín , chimenea y dos plazas de garaje se  venden en  Moncloa - Aravaca ?\nMatch All:true\nLength: 4\nChalet_independiente	jardin?	is	Other:true	1	\nChalet_independiente	chimenea?	is	Other:true	1	\nChalet_independiente	plazas_garaje	is	Other:2	1	\nChalet_independiente	distrito	contains	Instance:inmobiliaria_Class10|Moncloa-Aravaca	1	\n\nQuery Name: Q3. ¿Qué  inmobiliarias online  tienen pisos a la  venta en Latina ?\nMatch All:true\nLength: 1\nInmobiliaria_online	vende	contains	Query:Q3aux. Pisos en Latina|Q3aux. Pisos en Latina	1	\n\nQuery Name: Q3aux. Pisos en Latina\nMatch All:true\nLength: 1\nPiso	distrito	contains	Instance:inmobiliaria_Class11|Latina	1	\n\nQuery Name: Q4. ¿Qué  estudios con cocina independiente vende  en Chamberí la inmobiliaria física TuCasa?\nMatch All:true\nLength: 3\nEstudio	cocina_independiente?	is	Other:true	1	\nEstudio	distrito	contains	Instance:inmobiliaria_Class12|Chamberí	1	\nEstudio	vendido_por	contains	Instance:inmobiliaria_Class13|TuCasa	1	\n\nQuery Name: Q5aux1. Pisos con precio mayor que 1M  vendidos por inmobiliarias online\nMatch All:true\nLength: 2\nChalet	precio	is greater than	Other:1000000	1	\nChalet	vendido_por	contains	Query:Q5aux2. Inmobiliarias online|Q5aux2. Inmobiliarias online	1	\n\nQuery Name: Q5aux2. Inmobiliarias online\nMatch All:true\nLength: 1\nInmobiliaria_online	nombre	is not	Other:16584165316516416	1	\n\nQuery Name: Q5. ¿Qué distritos tienen chalets en venta en inmobiliarias online con precios superiores al  millón de euros?\nMatch All:true\nLength: 1\nDistrito	contiene	contains	Query:Q5aux1. Pisos con precio mayor que 1M  vendidos por inmobiliarias online|Q5aux1. Pisos con precio mayor que 1M  vendidos por inmobiliarias online	1	\n\nQuery Name: Q6aux. Distritos con criminalidad baja y contaminación baja\nMatch All:true\nLength: 2\nDistrito	criminalidad	is	Other:baja	1	\nDistrito	contaminación	is	Other:baja	1	\n\nQuery Name: Q6. ¿Qué viviendas  de tres dormitorios  hay a la venta en distritos con criminalidad baja y nivel de contaminación bajo ?\nMatch All:true\nLength: 2\nVivienda	n_dormitorios	is	Other:3	1	\nVivienda	distrito	contains	Query:Q6aux. Distritos con criminalidad baja y contaminación baja|Q6aux. Distritos con criminalidad baja y contaminación baja	1	\n\nQuery Name: Q7. ¿Qué viviendas son accesibles (son chalets, pisos bajos o tienen ascensor)?\nMatch All:false\nLength: 3\nChalet	 		Other:	1	\nPiso_bajo	 		Other:	1	\nPiso	ascensor?	is	Other:true	1	\n\n"))
+	(string_value "Query Name: Q1\nMatch All:true\nLength: 4\nPiso	precio	is less than	Other:300000	1	\nPiso	ascensor?	is	Other:true	1	\nPiso	distrito	contains	Instance:inmobiliaria_Class9|Arganzuela	1	\nPiso	metros_cuadrados	is greater than	Other:70	1	\n\nQuery Name: Q2\nMatch All:true\nLength: 4\nChalet_independiente	jardin?	is	Other:true	1	\nChalet_independiente	chimenea?	is	Other:true	1	\nChalet_independiente	plazas_garaje	is	Other:2	1	\nChalet_independiente	distrito	contains	Instance:inmobiliaria_Class10|Moncloa-Aravaca	1	\n\nQuery Name: Q3\nMatch All:true\nLength: 1\nInmobiliaria_online	vende	contains	Query:Q3aux|Q3aux	1	\n\nQuery Name: Q3aux\nMatch All:true\nLength: 1\nPiso	distrito	contains	Instance:inmobiliaria_Class11|Latina	1	\n\nQuery Name: Q4\nMatch All:true\nLength: 3\nEstudio	cocina_independiente?	is	Other:true	1	\nEstudio	distrito	contains	Instance:inmobiliaria_Class12|Chamberí	1	\nEstudio	vendido_por	contains	Instance:inmobiliaria_Class13|TuCasa	1	\n\nQuery Name: Q5aux1\nMatch All:true\nLength: 2\nChalet	precio	is greater than	Other:1000000	1	\nChalet	vendido_por	contains	Query:Q5aux2|Q5aux2	1	\n\nQuery Name: Q5aux2\nMatch All:true\nLength: 1\nInmobiliaria_online	nombre	is not	Other:16584165316516416	1	\n\nQuery Name: Q5\nMatch All:true\nLength: 1\nDistrito	contiene	contains	Query:Q5aux1|Q5aux1	1	\n\nQuery Name: Q6aux\nMatch All:true\nLength: 2\nDistrito	criminalidad	is	Other:baja	1	\nDistrito	contaminación	is	Other:baja	1	\n\nQuery Name: Q6\nMatch All:true\nLength: 2\nVivienda	n_dormitorios	is	Other:3	1	\nVivienda	distrito	contains	Query:Q6aux|Q6aux	1	\n\nQuery Name: Q7\nMatch All:false\nLength: 3\nChalet	 	Other:	null	\nPiso_bajo	 	Other:	null	\nPiso	ascensor?	is	Other:true	1	\n\n"))
 
-([inmobiliaria_ProjectKB_Class4] of  Widget
+([inmobiliaria_ProjectKB_Class4] of  Property_List
 
-	(is_hidden TRUE)
-	(property_list [inmobiliaria_ProjectKB_Class10005])
-	(widget_class_name "org.protege.owl.mm.portability.protege3.MappingMasterTab"))
+	(name "layout properties"))
 
-([inmobiliaria_ProjectKB_Class40019] of  String
+([inmobiliaria_ProjectKB_Class40010] of  Boolean
 
-	(name "Vivienda")
-	(string_value "direccion"))
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-View References to Value"))
 
-([inmobiliaria_ProjectKB_Class40020] of  String
+([inmobiliaria_ProjectKB_Class40011] of  Boolean
 
-	(name "Cliente")
-	(string_value "nombre"))
+	(boolean_value FALSE)
+	(name "ButtonDisplayed-Delete Instance"))
 
-([inmobiliaria_ProjectKB_Class40021] of  String
-
-	(name ":INSTANCE-ANNOTATION")
-	(string_value "%3AANNOTATION-TEXT"))
-
-([inmobiliaria_ProjectKB_Class40022] of  String
-
-	(name "Distrito")
-	(string_value "nombre"))
-
-([inmobiliaria_ProjectKB_Class40023] of  String
-
-	(name ":RULE")
-	(string_value "%3ADEFINITION-NAME"))
-
-([inmobiliaria_ProjectKB_Class40024] of  String
-
-	(name ":PAL-CONSTRAINT")
-	(string_value "%3APAL-NAME"))
-
-([inmobiliaria_ProjectKB_Class40025] of  String
-
-	(name ":META-CLASS")
-	(string_value "%3ANAME"))
-
-([inmobiliaria_ProjectKB_Class40026] of  String
-
-	(name ":FUNCTION")
-	(string_value "%3ADEFINITION-NAME"))
-
-([inmobiliaria_ProjectKB_Class40027] of  String
-
-	(name "Inmobiliaria")
-	(string_value "nombre"))
-
-([inmobiliaria_ProjectKB_Class40028] of  String
-
-	(name ":JESS-DEFINITION")
-	(string_value "%3ADEFINITION-NAME"))
-
-([inmobiliaria_ProjectKB_Class40029] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40017] of  Map_Entry
 
 	(key "suppress_instance_counting")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([inmobiliaria_ProjectKB_Class40030] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40018] of  Map
+
+	(entries [inmobiliaria_ProjectKB_Class40019]))
+
+([inmobiliaria_ProjectKB_Class40019] of  Map_Entry
+
+	(key "inmobiliaria_Class10000")
+	(key_class "edu.stanford.smi.protege.model.Frame")
+	(value "34 335 202 123")
+	(value_class "java.awt.Rectangle"))
+
+([inmobiliaria_ProjectKB_Class40020] of  Map_Entry
+
+	(key "InstanceDisplay.yellow_stickies")
+	(key_class "java.lang.String")
+	(value "inmobiliaria_ProjectKB_Class40018")
+	(value_class "java.util.Map"))
+
+([inmobiliaria_ProjectKB_Class40021] of  Map_Entry
 
 	(key "add_name_on_instance_form")
 	(key_class "java.lang.String")
 	(value "false")
 	(value_class "java.lang.String"))
 
-([inmobiliaria_ProjectKB_Class40031] of  Map_Entry
+([inmobiliaria_ProjectKB_Class40022] of  Map_Entry
 
 	(key "change_tracking_active")
 	(key_class "java.lang.String")
@@ -2926,12 +2928,22 @@
 ([inmobiliaria_ProjectKB_Class6] of  Property_List
 )
 
+([inmobiliaria_ProjectKB_Class7] of  String
+
+	(name "Vivienda")
+	(string_value "direccion"))
+
 ([inmobiliaria_ProjectKB_Class75] of  Widget
 
 	(is_hidden FALSE)
 	(name ":JESS-ENGINE")
 	(property_list [inmobiliaria_ProjectKB_Class82])
 	(widget_class_name "edu.stanford.smi.protege.widget.FormWidget"))
+
+([inmobiliaria_ProjectKB_Class8] of  String
+
+	(name "Cliente")
+	(string_value "nombre"))
 
 ([inmobiliaria_ProjectKB_Class82] of  Property_List
 
@@ -2985,6 +2997,11 @@
 
 	(boolean_value FALSE)
 	(name "ButtonDisplayed-View References to Value"))
+
+([inmobiliaria_ProjectKB_Class9] of  String
+
+	(name ":INSTANCE-ANNOTATION")
+	(string_value "%3AANNOTATION-TEXT"))
 
 ([inmobiliaria_ProjectKB_Class90] of  Boolean
 
@@ -3051,15 +3068,13 @@
 		[ANNOTATED_INSTANCE_WIDGET]
 		[CREATOR_WIDGET]
 		[CREATION_TIMESTAMP_WIDGET]
-		[ANNOTATION_TEXT_WIDGET]))
+		[ANNOTATION_TEXT_WIDGET]
+		[inmobiliaria_ProjectKB_Class4]))
 
 ([INSTANCES_TAB] of  Widget
 
 	(is_hidden FALSE)
 	(widget_class_name "edu.stanford.smi.protege.widget.InstancesTab"))
-
-([KB_036954_Class3] of  Map
-)
 
 ([KB_238435_Class0] of  String
 
@@ -3069,9 +3084,11 @@
 ([KB_238435_Class1] of  Map
 
 	(entries
-		[inmobiliaria_ProjectKB_Class40029]
-		[inmobiliaria_ProjectKB_Class40030]
-		[inmobiliaria_ProjectKB_Class40031]))
+		[inmobiliaria_ProjectKB_Class40017]
+		[inmobiliaria_ProjectKB_Class40020]
+		[inmobiliaria_ProjectKB_Class40021]
+		[inmobiliaria_ProjectKB_Class40022])
+	(referenced_maps [inmobiliaria_ProjectKB_Class40018]))
 
 ([KB_238435_Class100] of  String
 
@@ -3160,6 +3177,9 @@
 
 	(name "classes_file_name")
 	(string_value "inmobiliaria.pont"))
+
+([KB_385975_Class6] of  Map
+)
 
 ([LAYOUT_PROPERTIES] of  Property_List
 

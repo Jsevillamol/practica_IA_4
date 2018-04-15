@@ -164,78 +164,75 @@
 )
 
 
-;funcion auxiliar
-(deffunction next_index ($?list)
-	(return (+ (length$ $?list) 1))
-)
 
 ; Identifica los edificios que cumplen las necesidades minimas
 (defrule necesidades-minimas
 
 	(object (is-a Cliente)
 		(OBJECT ?cliente)
-		(nombre ?name) 
-		(discapacidad? ?discapacity)
+		(nombre ?name)
 		(distrito_deseado ?desired_district)
-		(n_miembros_familia ?n)
 		(presupuesto_maximo ?max)
 		(presupuesto_minimo ?min))
 
 	(object (is-a ?tipo-vivienda)
 		(OBJECT ?vivienda)
 		(direccion ?dir)
-		(chimenea? ?chimney)
-		(cocina_independiente? ?kitchen)
 		(distrito ?desired_district)
-		(jardin? ?garden)
-		(metros_cuadrados ?square_meters)
-		(n_baños ?n_baths)
-		(n_dormitorios ?n_dorms)
-		(plazas_garaje ?n_garage)
-		(precio ?price)
-		(vendido_por ?seller)
-		)
+		(precio ?price))
+	
 	(test (superclassp Vivienda ?tipo-vivienda))
+	
 	(test (and (<= ?min ?price) (<= ?price ?max)))
-	(not (member$ ?vivienda (slot-get ?cliente requisitos_minimos)))
+	(test (not (member$ ?vivienda (slot-get ?cliente requisitos_minimos))))
 =>
-	(assert (adecuado ?name ?dir))
-	(slot-insert$ ?cliente requisitos_minimos (next_index (slot-get ?cliente requisitos_minimos)) ?vivienda)
+	(printout t "Something2")
+	(slot-insert$ ?cliente requisitos_minimos 1 ?vivienda)
 )
 
 ; Identifica los edificios que cumplen necesidades minimas Y enajan con el perfil del cliente
 
 (defrule recomendado
 	(adecuado ?name ?dir)
-	?cliente <- (object (is-a Cliente) 
-		(nombre ?name) 
-		(discapacidad? ?discapacity)
-		(distrito_deseado ?desired_district)
-		(n_miembros_familia ?n)
-		(presupuesto_maximo ?max)
-		(presupuesto_minimo ?min))
+	(object (is-a Cliente)
+		(OBJECT ?cliente)
+		(nombre ?name))
 
-	?vivienda <- (object (is-a ?tipo-vivienda)
-		(direccion ?dir)
-		(chimenea? ?chimney)
-		(cocina_independiente? ?kitchen)
-		(distrito ?desired_district)
-		(jardin? ?garden)
-		(metros_cuadrados ?square_meters)
-		(n_baños ?n_baths)
-		(n_dormitorios ?n_dorms)
-		(plazas_garaje ?n_garage)
-		(precio ?price)
-		(vendido_por ?seller)
-		)
+	(object (is-a ?tipo-vivienda)
+		(OBJECT ?vivienda)
+		(direccion ?dir))
 	(test (superclassp Vivienda ?tipo-vivienda))
+	(test (not (member$ ?vivienda (recomendaciones ?cliente))))
+	
+	(test (member$ ?vivienda (slot-get ?cliente requisitos_minimos)))
+	(printout t "Something2")
+	
 	(perfil-cliente ?name ?perfil)
 	(perfil-vivienda ?dir ?perfil)
-	(not (member$ ?vivienda (recomendaciones ?cliente)))
 =>
-	(assert(recomendado ?name ?dir))
-	(slot-insert$ ?cliente recomendaciones (next_index (recomendaciones ?cliente)) ?vivienda)
+    
+	(slot-insert$ ?cliente recomendaciones 1 ?vivienda)
+	(Slot-delete$ ?cliente requisitos_minimos ?index (member$ ?vivienda (slot-get ?cliente requisitos_minimos)))
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ; Muestra los edificios que encajan con el perfil Y cumplen las necesidades minimas
 
@@ -255,10 +252,22 @@
 	(retract ?recomendacion)
 )
 
+
+
+
+
+
+
+
+
+
+
+
+
 (reset)
 (run)
 (facts)
 
 ; Para ejecutar en Protege
 ; 1. Ve a la pestana Jess
-; 2. Run (batch "/ruta/inmobiliaria.clp") en la barra de comandos
+; 2. Run (batch "/home/david/Data/code/practicas_IA_4/ontologia/inmobiliaria.clp") en la barra de comandos

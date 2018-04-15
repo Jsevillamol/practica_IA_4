@@ -1,7 +1,7 @@
-; Sun Apr 15 12:34:13 CEST 2018
+; Sun Apr 15 13:05:14 CEST 2018
 ; 
-;+ (version "3.5")
-;+ (build "Build 663")
+;+ (version "3.4.8")
+;+ (build "Build 629")
 
 ([inmobiliaria_Class0] of  Cliente
 
@@ -26,6 +26,13 @@
 	(criminalidad baja)
 	(nombre "Moncloa-Aravaca"))
 
+([inmobiliaria_Class10000] of  %3AINSTANCE-ANNOTATION
+
+	(%3AANNOTATED-INSTANCE [recomendaciones])
+	(%3AANNOTATION-TEXT "Interesaria darle un valor a cada VIvienda mostrando el valor de adecuación. Pero no parece poderse.")
+	(%3ACREATION-TIMESTAMP "2018.04.15 12:26:51.540 CEST")
+	(%3ACREATOR "david"))
+
 ([inmobiliaria_Class10018] of  Cliente
 
 	(discapacidad%3F FALSE)
@@ -33,7 +40,7 @@
 	(n_miembros_familia 1)
 	(nombre "Jaime")
 	(presupuesto_maximo 100000)
-	(presupuesto_minimo 0))
+	(presupuesto_minimo 94010))
 
 ([inmobiliaria_Class11] of  Distrito
 
