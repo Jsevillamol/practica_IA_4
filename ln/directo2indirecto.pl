@@ -32,16 +32,16 @@ myString_atom(String, Atom) :- atom_string(Atom, String).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % TEST1: "maría me dijo : \" juan es mi amigo \"".
-% RESULTADO1: "maría me dijo que juan era su amigo".
+% TEST1: "maría me dijo que juan era su amigo".
 
 % TEST2: "miguel me dijo : \" estoy contento de verte \"".
-% RESULTADO1: "miguel me dijo que estaba contento de verme".
+% TEST2: "miguel me dijo que estaba contento de verme".
 
 % TEST3: "lucía me dijo : \" necesito un cambio en mi vida \"".
-% RESULTADO1: "lucía me dijo que necesitaba un cambio en su vida".
+% TEST3: "lucía me dijo que necesitaba un cambio en su vida".
 
 % TEST4: "luis me preguntó : \" ¿ estás ocupada esta noche ? \"".
-% RESULTADO1: "luis me preguntó que si estaba ocupada esa noche".
+% TEST4: "luis me preguntó que si estaba ocupada esa noche". --> WRONG
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FUNCIONES AUXILIARES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -52,73 +52,79 @@ myString_atom(String, Atom) :- atom_string(Atom, String).
 % TEST: transformarSubordinada([estoy,contento,de,verte], FraseIndirecta, contexto(sujeto(3, singular), ci(1, singular))).
 % TEST: transformarSubordinada(FraseDirecta, [estaba, contento, de, verme], contexto(sujeto(3, singular), ci(1, singular))).
 
-% transformarSubordinada(FraseDirecta, FraseIndirecta, Contexto)
-transformarSubordinada([], [], _).
+%TEST: transformarSubordinadaPrima([yo, verte, estoy], FraseIndirecta, contexto(sujeto(3, singular), ci(1, singular))).
+
+transformarSubordinada(Directa, Indirecta, Contexto):-
+	maplist(transformarPalabra(Contexto), Directa, Indirecta).
 
 % Pronombres
-transformarSubordinada([PronombreDirecto | Directa], [PronombreIndirecto | Indirecta], Contexto):-
+transformarPalabra(Contexto, PronombreDirecto, PronombreIndirecto):-
 	esPronombrePersonal(PronombreDirecto, DPersona, Numero, Genero),
 	esPronombrePersonal(PronombreIndirecto, IPersona, Numero, Genero),
-	transformarPersona(DPersona, IPersona, Contexto),
-	transformarSubordinada(Directa, Indirecta, Contexto).
+	transformarPersona(DPersona, IPersona, Contexto).
 
 % Verbo infinitivo + pronombre reflexivo
-transformarSubordinada([CompuestaDirecta | Directa], [CompuestaIndirecta | Indirecta], Contexto):-
+transformarPalabra(Contexto, CompuestaDirecta , CompuestaIndirecta):-
 	esVerbo(_, Verbo, _, _, _, _),
 	esPronombreComplementoIndirecto(PronombreD, DPersona, Numero),
 	atom_concat(Verbo, PronombreD, CompuestaDirecta),
 	esPronombreComplementoIndirecto(PronombreI, IPersona, Numero),
 	atom_concat(Verbo, PronombreI, CompuestaIndirecta),
-	transformarPersona(DPersona, IPersona, Contexto),
-	transformarSubordinada(Directa, Indirecta, Contexto).
+	transformarPersona(Contexto, DPersona, IPersona).
 
 % Verbos
-transformarSubordinada([VerboD | Directa], [VerboI | Indirecta], Contexto):-
+transformarPalabra(Contexto, VerboD, VerboI):-
 	esVerbo(VerboD, Infinitivo, presente, DPersona, Numero, _),
 	esVerbo(VerboI, Infinitivo, pasado, IPersona, Numero, _),
-	transformarPersona(DPersona, IPersona, Contexto),
-	transformarSubordinada(Directa, Indirecta, Contexto).
+	transformarPersona(Contexto, DPersona, IPersona).
 
 % Posesivos
-transformarSubordinada([PosesivoD | Directa], [PosesivoI | Indirecta], Contexto):-
+transformarPalabra(Contexto, PosesivoD, PosesivoI):-
 	esPosesivo(PosesivoD, DPersona, Numero, GeneroPoseido, NumeroPoseido),
 	esPosesivo(PosesivoI, IPersona, Numero, GeneroPoseido, NumeroPoseido),
-	transformarPersona(DPersona, IPersona, Contexto),
-	transformarSubordinada(Directa, Indirecta, Contexto).
+	transformarPersona(Contexto, DPersona, IPersona).
 
 % Pronombres reflexivos
-transformarSubordinada([PronombreD | Directa], [PronombreI | Indirecta], Contexto):-
+transformarPalabra(Contexto, PronombreD, PronombreI):-
 	esPronombreReflexivo(PronombreD, DPersona, Numero),
 	esPronombreReflexivo(PronombreI, IPersona, Numero),
-	transformarPersona(DPersona, IPersona, Contexto),
-	transformarSubordinada(Directa, Indirecta, Contexto).
+	transformarPersona(Contexto, DPersona, IPersona).
 
 % Demostrativos
-transformarSubordinada([DemostrativoD | Directa], [DemostrativoI | Indirecta], Contexto):-
+transformarPalabra(_, DemostrativoD, DemostrativoI):-
 	esDemostrativo(DemostrativoD, Persona, Numero, cercano),
-	esDemostrativo(DemostrativoI, Persona, Numero, lejano),
-	transformarSubordinada(Directa, Indirecta, Contexto).
+	esDemostrativo(DemostrativoI, Persona, Numero, lejano).
 
-transformarSubordinada([Palabra | Directa], [Palabra | Indirecta], Contexto):-
-	transformarSubordinada(Directa, Indirecta, Contexto).
+% Resto
+transformarPalabra(_, X, X):-
+	\+ esPronombrePersonal(X, _, _, _),
+
+	%esVerbo(_, Verbo, _, _, _, _),
+	%esPronombreComplementoIndirecto(Pronombre, _, _),
+	%\+ atom_concat(Verbo, Pronombre, X),
+
+	\+ esVerbo(X, _, _, _, _, _),
+	\+ esPosesivo(X, _, _, _, _),
+	\+ esPronombreReflexivo(X, _, _),
+	\+ esDemostrativo(X, _, _, _).
 
 
 % TEST: transformarPersona(DPersona, 3, contexto(sujeto(3, singular), ci(1, singular))).
 % transformarPersona(PersonaDirecta, PersonaIndirecta, Contexto).
 
 transformarPersona(
+	contexto(sujeto(SPersona, _), _),
 	1, 
-	SPersona, 
-	contexto(sujeto(SPersona, _), _)
+	SPersona
 	).
 
 transformarPersona(
+	contexto(_, ci(CIPersona, _)),
 	2, 
-	CIPersona, 
-	contexto(_, ci(CIPersona, _))
+	CIPersona 
 	).
 
-transformarPersona(3, 3, _).
+transformarPersona(_, 3, 3).
 
 componerFraseDirecta(afirmativo, FrasePrincipal, OracionSubordinada, Salida):-
 	append([FrasePrincipal, [":", "\""], OracionSubordinada ,["\""]], Salida).
