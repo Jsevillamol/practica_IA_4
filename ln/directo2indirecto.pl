@@ -5,7 +5,8 @@
 
 consulta:- 
 	write('Escribe frase entre comillas'), nl, 
-	write('o [] para parar'), nl,
+	write('Ejemplo: "maría me dijo : \" juan es mi amigo \"".'), nl, 
+	write('o "". para parar'), nl,
 	read(Entrada),
 	split_string(Entrada, " ", "", StringList),
 	maplist(myString_atom, StringList, Frase),
@@ -16,7 +17,7 @@ trata([]):- write('final').
 % tratamiento caso general
 trata(F):- 
 	%print(F), nl,
-	frase(Frase, F, []),
+	frase(Frase, F, []), !,
 	maplist(atom_string, Frase, Aux),
 	atomic_list_concat(Aux, " ", Salida),
 	write(Salida), nl,
@@ -48,20 +49,20 @@ myString_atom(String, Atom) :- atom_string(Atom, String).
 % TEST: transformarSubordinada([yo, verte, estoy], FraseIndirecta, contexto(sujeto(3, singular), ci(1, singular))).
 % TEST: transformarSubordinada(FraseDirecta, [él, verme, estaba], contexto(sujeto(3, singular), ci(1, singular))).
 % TEST: transformarSubordinada([juan, es, mi, amigo], FraseIndirecta, contexto(sujeto(3, singular), ci(1, singular))).
-% TEST: transformarSubordinada(FraseDirecta, [juan, era, su, amigo], contexto(sujeto(3, singular), ci(1, singular))). -> wrong
+% TEST: transformarSubordinada(FraseDirecta, [juan, era, su, amigo], contexto(sujeto(3, singular), ci(1, singular))).
 % TEST: transformarSubordinada([estoy,contento,de,verte], FraseIndirecta, contexto(sujeto(3, singular), ci(1, singular))).
 % TEST: transformarSubordinada(FraseDirecta, [estaba, contento, de, verme], contexto(sujeto(3, singular), ci(1, singular))).
 
-%TEST: transformarSubordinadaPrima([yo, verte, estoy], FraseIndirecta, contexto(sujeto(3, singular), ci(1, singular))).
-
-transformarSubordinada(Directa, Indirecta, Contexto):-
+transformarSubordinada(Contexto, Directa, Indirecta):-
 	maplist(transformarPalabra(Contexto), Directa, Indirecta).
+
+% TEST: transformarPalabra(contexto(sujeto(3, singular), ci(1, singular)), verte, X).
 
 % Pronombres
 transformarPalabra(Contexto, PronombreDirecto, PronombreIndirecto):-
 	esPronombrePersonal(PronombreDirecto, DPersona, Numero, Genero),
 	esPronombrePersonal(PronombreIndirecto, IPersona, Numero, Genero),
-	transformarPersona(DPersona, IPersona, Contexto).
+	transformarPersona(Contexto, DPersona, IPersona).
 
 % Verbo infinitivo + pronombre reflexivo
 transformarPalabra(Contexto, CompuestaDirecta , CompuestaIndirecta):-
@@ -98,20 +99,18 @@ transformarPalabra(_, DemostrativoD, DemostrativoI):-
 % Resto
 transformarPalabra(_, X, X):-
 	\+ esPronombrePersonal(X, _, _, _),
-
-	%esVerbo(_, Verbo, _, _, _, _),
-	%esPronombreComplementoIndirecto(Pronombre, _, _),
-	%\+ atom_concat(Verbo, Pronombre, X),
-
+	\+ esPronombreEnclitico(X),
 	\+ esVerbo(X, _, _, _, _, _),
 	\+ esPosesivo(X, _, _, _, _),
 	\+ esPronombreReflexivo(X, _, _),
 	\+ esDemostrativo(X, _, _, _).
 
+esPronombreEnclitico(X):-
+	esVerbo(_, Verbo, _, _, _, _),
+	esPronombreComplementoIndirecto(Pronombre, _, _),
+	atom_concat(Verbo, Pronombre, X).
 
-% TEST: transformarPersona(DPersona, 3, contexto(sujeto(3, singular), ci(1, singular))).
-% transformarPersona(PersonaDirecta, PersonaIndirecta, Contexto).
-
+% transformarPersona(Contexto, PersonaDirecta, PersonaIndirecta).
 transformarPersona(
 	contexto(sujeto(SPersona, _), _),
 	1, 
@@ -145,66 +144,68 @@ componerFraseIndirecta(interrogativo, FrasePrincipal, Resultado, Salida):-
 % TEST: frase(Salida, [maría, me, dijo, ":", "\"", juan, es, mi, amigo,"\""], []).
 % TEST: frase(Salida, [maría, me, dijo, que, juan, era, su, amigo], []).
 % TEST: frase(Salida, [luis, me, preguntó, que, si, estaba, ocupada, esa, noche], []).
-
+% TEST: frase(Salida, [luis, me, preguntó, que, si, yo, estaba, ocupada, esa, noche], []).
 frase(Salida) --> (fraseDirecta(Salida) ; fraseIndirecta(Salida)).
 
 fraseDirecta(Salida) --> 
-	frasePrincipal(FrasePrincipal, Contexto, Modo), 
-	[":"], ["\""],  oracionSubordinada(OracionSubordinadaDirecta, Modo, presente), ["\""],
+	frasePrincipal(FrasePrincipal, Contexto, Modo, GeneroSujeto), 
+	[":"], ["\""],  oracionSubordinada(OracionSubordinadaDirecta, Modo, presente, GeneroSujeto), ["\""],
 	{
-		transformarSubordinada(OracionSubordinadaDirecta, OracionSubordinadaIndirecta, Contexto),
-		oracionSubordinada(_, _, pasado, OracionSubordinadaIndirecta, []), % Check grammatical correctness
+		transformarSubordinada(Contexto, OracionSubordinadaDirecta, OracionSubordinadaIndirecta),
+		oracionSubordinada(_, _, pasado, _, OracionSubordinadaIndirecta, []), % Check grammatical correctness
 		componerFraseIndirecta(Modo, FrasePrincipal, OracionSubordinadaIndirecta, Salida)
 	}.
 
 fraseIndirecta(Salida) -->
-	frasePrincipal(FrasePrincipal, Contexto, Modo), 
+	frasePrincipal(FrasePrincipal, Contexto, Modo, GeneroSujeto), 
 	[que],
 	([si] ; []),
-	oracionSubordinada(OracionSubordinadaIndirecta, afirmativo, pasado),
+	oracionSubordinada(OracionSubordinadaIndirecta, afirmativo, pasado, _),
 	{
-		transformarSubordinada(OracionSubordinadaDirecta, OracionSubordinadaIndirecta, Contexto),
-		oracionSubordinada(_, _, presente, OracionSubordinadaDirecta, []), % Check grammatical correctness
+		transformarSubordinada(Contexto, OracionSubordinadaDirecta, OracionSubordinadaIndirecta),
+		oracionSubordinada(_, _, presente, GeneroSujeto, OracionSubordinadaDirecta, []), % Check grammatical correctness
 		componerFraseDirecta(Modo, FrasePrincipal, OracionSubordinadaDirecta, Salida)
 	}.
 
-% TEST: frasePrincipal(FrasePrincipal, Contexto, Modo, [maría, me, dijo], []).
-
-frasePrincipal(FrasePrincipal, contexto(sujeto(SPersona, SNumero), ci(CIPersona, CINumero)), Modo) -->
-	sujeto(Sujeto, SPersona, SNumero, _), 
+% TEST: frasePrincipal(FrasePrincipal, Contexto, Modo, SGenero, [maría, me, dijo], []).
+frasePrincipal(FrasePrincipal, contexto(sujeto(SPersona, SNumero), ci(CIPersona, CINumero)), Modo, SGenero) -->
+	sujeto(Sujeto, SPersona, SNumero, SGenero), 
 	[Pronombre], {esPronombreComplementoIndirecto(Pronombre, CIPersona, CINumero)}, 
 	[Verbo], {esVerbo(Verbo, _, _, SPersona, SNumero, declarativo(Modo))},
 	{append([Sujeto, [Pronombre, Verbo]],FrasePrincipal)}.
 
-% TEST: sujeto(Persona, Numero, Genero, [maría], []).
-% TEST: sujeto(Persona, Numero, Genero, [juan], []).
+% TEST: sujeto(S, Persona, Numero, Genero, [maría], []).
+% TEST: sujeto(S, Persona, Numero, Genero, [yo], []).
 sujeto([Nombre], 3, Numero, Genero) --> [Nombre], {esNombrePropio(Nombre, Genero, Numero)}.
 sujeto([Pronombre], Persona, Numero, Genero) --> [Pronombre], {esPronombrePersonal(Pronombre,Persona, Numero, Genero)}.
 % sujeto([Pronombre], Persona, Numero, Genero) --> sintagmaNominal
 
-% TEST: oracionSubordinada(OracionSubordinada, Modo, Tiempo, [juan, es, mi, amigo], []).
+% TEST: oracionSubordinada(OracionSubordinada, Modo, Tiempo, Genero1aPersona, [juan, es, mi, amigo], []).
 % TEST: oracionSubordinada(OracionSubordinada, Modo, Tiempo, [juan, era, su, amigo], []).
-oracionSubordinada(OracionSubordinada, afirmativo, Tiempo)--> 
-	(sujeto(Sujeto, Persona, Numero, Genero) ; []),
+% TEST: oracionSubordinada(OracionSubordinada, Modo, Tiempo, [yo, estaba, ocupada, esa, noche], []).
+oracionSubordinada(OracionSubordinada, afirmativo, Tiempo, Genero1aPersona)--> 
+	(sujeto(Sujeto, Persona, Numero, Genero) ; {Sujeto = []}),
 	[Verbo], {esVerbo(Verbo, _, Tiempo, Persona, Numero, copulativo)}, 
 	atributo(Atributo, Genero, Numero),
 	(complementoTemporal(CN) ; {CN = []}),
-	{append([Sujeto, [Verbo], Atributo, CN], OracionSubordinada)}.
+	{append([Sujeto, [Verbo], Atributo, CN], OracionSubordinada)},
+	{(Persona \= 1) ; (Genero == Genero1aPersona) }.
 
-oracionSubordinada(OracionSubordinada, afirmativo, Tiempo)-->
-	(sujeto(Sujeto, Persona, Numero, _) ; []), 
+oracionSubordinada(OracionSubordinada, afirmativo, Tiempo, Genero1aPersona)-->
+	(sujeto(Sujeto, Persona, Numero, Genero) ; {Sujeto = []}), 
 	[Verbo], {esVerbo(Verbo, _, Tiempo, Persona, Numero, transitivo)}, 
 	complementoDirecto(CD), 
 	(complementoCircunstancial(CC) ; CC = []),
-	{append([Sujeto, [Verbo], CD, CC], OracionSubordinada)}.
+	{append([Sujeto, [Verbo], CD, CC], OracionSubordinada)},
+	{(Persona \= 1) ; (Genero = Genero1aPersona) }.
 
-oracionSubordinada(OracionSubordinada, interrogativo, Tiempo)-->
+oracionSubordinada(OracionSubordinada, interrogativo, Tiempo, Genero1aPersona)-->
 	["¿"], 
 	%(PronombreInterrogativo ; []),
-	oracionSubordinada(OracionSubordinada, afirmativo, Tiempo) 
+	oracionSubordinada(OracionSubordinada, afirmativo, Tiempo, Genero1aPersona) 
 	,["?"].
 
-% TEST: atributo(Genero, Numero, [ocupada], []).
+% TEST: atributo(Atributo, Genero, Numero, [ocupada], []).
 atributo(SA, Genero, Numero) --> sintagmaAdjetival(SA, Genero, Numero).
 atributo(SN, Genero, Numero) --> sintagmaNominal(SN, Genero, Numero).
 
@@ -217,21 +218,19 @@ sintagmaNominal([Det, Sust], Genero, Numero) -->
 
 sintagmaNominal([Nombre],Genero, Numero) --> [Nombre], {esNombrePropio(Nombre, Genero, Numero)}.
 
-% TEST: sintagmaAdjetival(Genero, Numero, [contento,de,verte], []).
-% TEST: esAdjetivo(contento, Genero, Numero).
+% TEST: sintagmaAdjetival(SA, Genero, Numero, [contento,de,verte], []).
 sintagmaAdjetival(SA, Genero,Numero) --> 
 	[Adj], {esAdjetivo(Adj, Genero, Numero)},
-	(complementoAdjetivo(CA) ; []),
+	(complementoAdjetivo(CA) ; {CA = []}),
 	{append([[Adj], CA], SA)}.
 
 complementoAdjetivo(CA) --> sintagmaPreposicional(CA).
 
-%TEST: sintagmaPreposicional([de, verte], []).
+%TEST: sintagmaPreposicional(SP, [de, verte], []).
 
-sintagmaPreposicional(SP) --> 
+sintagmaPreposicional([Preposicion | Termino]) --> 
 	[Preposicion], {esPreposicion(Preposicion)},
-	termino(T),
-	{append([[Preposicion], T], SP)}.
+	termino(Termino).
 
 termino(SN) --> sintagmaNominal(SN, _, _) ; subordinadaSustantiva(SN).
 subordinadaSustantiva([Compuesta]) --> [Compuesta], 
@@ -243,7 +242,7 @@ subordinadaSustantiva([Compuesta]) --> [Compuesta],
 
 complementoCircunstancial(CC) --> sintagmaPreposicional(CC).
 
-% TEST: complementoTemporal([esta, noche], []).
+% TEST: complementoTemporal(CT, [esta, noche], []).
 complementoTemporal([Demostrativo, T]) -->
 	[Demostrativo],{esDemostrativo(Demostrativo, femenino, singular, _)},
 	[T], {T = mañana ; T=tarde ; T=noche}.
@@ -304,7 +303,7 @@ esVerbo(dijeron, decir, pasado, 3, plural, declarativo(afirmativo)).
 % verbo ver
 esVerbo(veo, ver, presente, 1, singular, transitivo).
 
-% TODO: generar automaticamente conjugaciones regulares
+% Conjugación automática de verbos regulares 
 
 esVerbo(Verbo, Infinitivo, presente, 1, singular, Tipo):-
 	esLexemaVerboRegular(Lexema, ar, Tipo),
